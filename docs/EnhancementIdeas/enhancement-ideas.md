@@ -36,7 +36,7 @@ so they can experience more of it. Adding in more "tasks", more NPCs, etc. would
 ## More to gameplay
 
 In its current state, this game is walking and talking simulator. Most games of this genre have an additional element to make the gameplay more engaging.
-This often involves the inclusion of enemies or some kind of battle system, with either overworld combat (like The [Legend of Zelda](https://www.youtube.com/watch?v=SGtMqO7_DKY)) or static encounters (like [Pokémon](https://www.youtube.com/watch?v=Jpdy9pZyGH4)).
+This often involves the inclusion of enemies or some kind of battle system, with either overworld combat (like The [Legend of Zelda](https://www.youtube.com/watch?v=SGtMqO7_DKY)) or a separate battle system (like [Pokémon](https://www.youtube.com/watch?v=Jpdy9pZyGH4)).
 Often games also have overworld movement challenges, such as needing to navigate through a dungeon or having to solve a puzzle.
 This game engine has a lot of flexibility in the direction it gets taken in, but any additional gameplay elements would greatly increase this game's engagement and fun factor.
 

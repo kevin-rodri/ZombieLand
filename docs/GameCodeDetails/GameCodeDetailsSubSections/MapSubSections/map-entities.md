@@ -50,7 +50,7 @@ that keeps the entity as a part of the map, so that it can be brought back whene
 ### Existence Flag
 
 A map entity can optionally define an `existenceFlag`. A flag is a boolean value, and the game keeps track of multiple flags
-in order to track where the player's progress is at, determine which events should play out, etc. More on flags can be read about [here](./scripts.md#Flags)
+in order to track where the player's progress is at, determine which events should play out, etc. More on flags can be read about [here](./scripts.md#Flags).
 
 If an entity's `existenceFlag` becomes set during the game, the entity will no longer "exist", and the game will not run its update and draw logic anymore.
 If the entity's `existenceFlag` becomes unset, it will "exist" again and the game will run its logic like normal.
