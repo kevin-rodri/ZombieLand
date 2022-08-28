@@ -23,9 +23,9 @@ public class Camera extends Rectangle {
     private int leftoverSpaceX, leftoverSpaceY;
 
     // current map entities that are to be included in this frame's update/draw cycle
-    private ArrayList<Enemy> activeEnemies = new ArrayList<>();
     private ArrayList<EnhancedMapTile> activeEnhancedMapTiles = new ArrayList<>();
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
+    private ArrayList<Trigger> activeTriggers = new ArrayList<>();
 
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
@@ -50,36 +50,21 @@ public class Camera extends Rectangle {
     public void update(Player player) {
         updateMapTiles();
         updateMapEntities(player);
+        updateScripts();
     }
 
-    // update each map tile if it is animated in order to keep animations consistent
     private void updateMapTiles() {
-        for (MapTile tile : map.getMapTiles()) {
-            if (tile != null && tile.isAnimated()) {
-                tile.update();
-            }
+        for (MapTile tile : map.getAnimatedMapTiles()) {
+            // update each animated map tile in order to keep animations consistent
+            tile.update();
         }
-//        Point tileIndex = getTileIndexByCameraPosition();
-//        for (int i = tileIndex.y - UPDATE_OFF_SCREEN_RANGE; i <= tileIndex.y + height + UPDATE_OFF_SCREEN_RANGE; i++) {
-//            for (int j = tileIndex.x - UPDATE_OFF_SCREEN_RANGE; j <= tileIndex.x + width + UPDATE_OFF_SCREEN_RANGE; j++) {
-//                MapTile tile = map.getMapTile(j, i);
-//                if (tile != null) {
-//                    tile.update();
-//                }
-//            }
-//        }
     }
 
     // update map entities currently a part of the update/draw cycle
     // active entities are calculated each frame using the loadActiveEntity methods below
     public void updateMapEntities(Player player) {
-        activeEnemies = loadActiveEnemies();
         activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
         activeNPCs = loadActiveNPCs();
-
-        for (Enemy enemy : activeEnemies) {
-            enemy.update(player);
-        }
 
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
             enhancedMapTile.update(player);
@@ -90,42 +75,24 @@ public class Camera extends Rectangle {
         }
     }
 
-    // determine which enemies are active (within range of the camera)
-    // if enemy is currently active and was also active last frame, nothing special happens and enemy is included in active list
-    // if enemy is currently active but last frame was inactive, it will have its status set to active and enemy is included in active list
-    // if enemy is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its respawnable
-    //      (which will set it back up to its default state), and not include it in the active list
-    //      next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will essentially be "respawned" in its starting state
-    // if enemy is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
-    private ArrayList<Enemy> loadActiveEnemies() {
-        ArrayList<Enemy> activeEnemies = new ArrayList<>();
-        for (int i = map.getEnemies().size() - 1; i >= 0; i--) {
-            Enemy enemy = map.getEnemies().get(i);
+    // updates any currently running script
+    // only one script should be able to be running (active) at a time
+    private void updateScripts() {
+        // if there is an active interact script, update the script
+        if (map.getActiveInteractScript() != null) {
+            map.getActiveInteractScript().update();
+        }
 
-            if (isMapEntityActive(enemy)) {
-                activeEnemies.add(enemy);
-                if (enemy.mapEntityStatus == MapEntityStatus.INACTIVE) {
-                    enemy.setMapEntityStatus(MapEntityStatus.ACTIVE);
-                }
-            } else if (enemy.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
-                enemy.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enemy.isRespawnable()) {
-                    enemy.initialize();
-                }
-            } else if (enemy.getMapEntityStatus() == MapEntityStatus.REMOVED) {
-                map.getEnemies().remove(i);
+        // if there is an active trigger, update the script
+        activeTriggers = loadActiveTriggers();
+        for (Trigger trigger : activeTriggers) {
+            if (trigger.getTriggerScript() != null && trigger.getTriggerScript().isActive()) {
+                trigger.getTriggerScript().update();
             }
         }
-        return activeEnemies;
     }
 
-    // determine which enhanced map tiles are active (within range of the camera)
-    // if enhanced map tile is currently active and was also active last frame, nothing special happens and enhanced map tile is included in active list
-    // if enhanced map tile is currently active but last frame was inactive, it will have its status set to active and enhanced map tile is included in active list
-    // if enhanced map tile is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its respawnable
-    //      (which will set it back up to its default state), and not include it in the active list
-    //      next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will essentially be "respawned" in its starting state
-    // if enhanced map tile is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
+    // determine which enhanced map tiles are active (exist and are within range of the camera)
     private ArrayList<EnhancedMapTile> loadActiveEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> activeEnhancedMapTiles = new ArrayList<>();
         for (int i = map.getEnhancedMapTiles().size() - 1; i >= 0; i--) {
@@ -138,9 +105,6 @@ public class Camera extends Rectangle {
                 }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 enhancedMapTile.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enhancedMapTile.isRespawnable()) {
-                    enhancedMapTile.initialize();
-                }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.REMOVED) {
                 map.getEnhancedMapTiles().remove(i);
             }
@@ -148,13 +112,7 @@ public class Camera extends Rectangle {
         return activeEnhancedMapTiles;
     }
 
-    // determine which npcs are active (within range of the camera)
-    // if npc is currently active and was also active last frame, nothing special happens and npc is included in active list
-    // if npc is currently active but last frame was inactive, it will have its status set to active and npc is included in active list
-    // if npc is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its respawnable
-    //      (which will set it back up to its default state), and not include it in the active list
-    //      next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will essentially be "respawned" in its starting state
-    // if npc is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
+    // determine which npcs are active (exist and are within range of the camera)
     private ArrayList<NPC> loadActiveNPCs() {
         ArrayList<NPC> activeNPCs = new ArrayList<>();
         for (int i = map.getNPCs().size() - 1; i >= 0; i--) {
@@ -167,9 +125,6 @@ public class Camera extends Rectangle {
                 }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 npc.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (npc.isRespawnable()) {
-                    npc.initialize();
-                }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.REMOVED) {
                 map.getNPCs().remove(i);
             }
@@ -177,73 +132,140 @@ public class Camera extends Rectangle {
         return activeNPCs;
     }
 
+    // determine which trigger map tiles are active (exist and are within range of the camera)
+    private ArrayList<Trigger> loadActiveTriggers() {
+        ArrayList<Trigger> activeTriggers = new ArrayList<>();
+        for (int i = map.getTriggers().size() - 1; i >= 0; i--) {
+            Trigger trigger = map.getTriggers().get(i);
+
+            if (isMapEntityActive(trigger)) {
+                activeTriggers.add(trigger);
+                if (trigger.mapEntityStatus == MapEntityStatus.INACTIVE) {
+                    trigger.setMapEntityStatus(MapEntityStatus.ACTIVE);
+                }
+            } else if (trigger.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
+                trigger.setMapEntityStatus(MapEntityStatus.INACTIVE);
+            } else if (trigger.getMapEntityStatus() == MapEntityStatus.REMOVED) {
+                map.getTriggers().remove(i);
+            }
+        }
+        return activeTriggers;
+    }
+
     /*
         determines if map entity (enemy, enhanced map tile, or npc) is active by the camera's standards
         1. if entity's status is REMOVED, it is not active, no questions asked
-        2. if entity's status is not REMOVED, then there's additional checks that take place:
+        2. if an entity is hidden, it is not active
+        3. if entity's status is not REMOVED and the entity is not hidden, then there's additional checks that take place:
             1. if entity's isUpdateOffScreen attribute is true, it is active
             2. OR if the camera determines that it is in its boundary range, it is active
      */
     private boolean isMapEntityActive(MapEntity mapEntity) {
-        return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
+        return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && !mapEntity.isHidden() && mapEntity.exists() && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-        drawMapTiles(graphicsHandler);
-        drawMapEntities(graphicsHandler);
+        drawMapTilesBottomLayer(graphicsHandler);
+        drawMapTilesTopLayer(graphicsHandler);
     }
 
-    // draws visible map tiles to the screen
+    public void draw(Player player, GraphicsHandler graphicsHandler) {
+        drawMapTilesBottomLayer(graphicsHandler);
+        drawMapEntities(player, graphicsHandler);
+        drawMapTilesTopLayer(graphicsHandler);
+    }
+
+    // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen
     // so this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value
-    public void drawMapTiles(GraphicsHandler graphicsHandler) {
+    public void drawMapTilesBottomLayer(GraphicsHandler graphicsHandler) {
         Point tileIndex = getTileIndexByCameraPosition();
         for (int i = tileIndex.y - 1; i <= tileIndex.y + height + 1; i++) {
             for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
                 MapTile tile = map.getMapTile(j, i);
                 if (tile != null) {
-                    tile.draw(graphicsHandler);
+                    tile.drawBottomLayer(graphicsHandler);
                 }
+            }
+        }
+
+        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
+            if (containsDraw(enhancedMapTile)) {
+                enhancedMapTile.drawBottomLayer(graphicsHandler);
+            }
+        }
+    }
+
+    // draws the top layer of visible map tiles to the screen where applicable
+    public void drawMapTilesTopLayer(GraphicsHandler graphicsHandler) {
+        Point tileIndex = getTileIndexByCameraPosition();
+        for (int i = tileIndex.y - 1; i <= tileIndex.y + height + 1; i++) {
+            for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
+                MapTile tile = map.getMapTile(j, i);
+                if (tile != null && tile.getTopLayer() != null) {
+                    tile.drawTopLayer(graphicsHandler);
+                }
+            }
+        }
+
+        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
+            if (containsDraw(enhancedMapTile) && enhancedMapTile.getTopLayer() != null) {
+                enhancedMapTile.drawTopLayer(graphicsHandler);
             }
         }
     }
 
     // draws active map entities to the screen
-    public void drawMapEntities(GraphicsHandler graphicsHandler) {
-        for (Enemy enemy : activeEnemies) {
-            if (containsDraw(enemy)) {
-                enemy.draw(graphicsHandler);
-            }
-        }
-        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
-            if (containsDraw(enhancedMapTile)) {
-                enhancedMapTile.draw(graphicsHandler);
-            }
-        }
+    public void drawMapEntities(Player player, GraphicsHandler graphicsHandler) {
+        ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
+
+        // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
+        // if drawn here, npc will later be "overlapped" by player
+        // if drawn later, npc will "cover" player
         for (NPC npc : activeNPCs) {
             if (containsDraw(npc)) {
-                npc.draw(graphicsHandler);
+                if (npc.getBounds().getY() < player.getBounds().getY1()  + (player.getBounds().getHeight() / 2f)) {
+                    npc.draw(graphicsHandler);
+                }
+                else {
+                    drawNpcsAfterPlayer.add(npc);
+                }
             }
         }
+
+        // player is drawn to screen
+        player.draw(graphicsHandler);
+
+        // npcs determined to be drawn after player from the above step are drawn here
+        for (NPC npc : drawNpcsAfterPlayer) {
+            npc.draw(graphicsHandler);
+        }
+
+        // Uncomment this to see triggers drawn on screen
+        // helps for placing them in the correct spot/debugging
+        /*
+        for (Trigger trigger : activeTriggers) {
+            if (containsDraw(trigger)) {
+                trigger.draw(graphicsHandler);
+            }
+        }
+        */
     }
+
 
     // checks if a game object's position falls within the camera's current radius
     public boolean containsUpdate(GameObject gameObject) {
-        return getX1() - (tileWidth * UPDATE_OFF_SCREEN_RANGE) < gameObject.getX() + gameObject.getScaledWidth() &&
+        return getX1() - (tileWidth * UPDATE_OFF_SCREEN_RANGE) < gameObject.getX() + gameObject.getWidth() &&
                 getEndBoundX() + (tileWidth * UPDATE_OFF_SCREEN_RANGE) > gameObject.getX() &&
-                getY1() - (tileHeight * UPDATE_OFF_SCREEN_RANGE) <  gameObject.getY() + gameObject.getScaledHeight()
+                getY1() - (tileHeight * UPDATE_OFF_SCREEN_RANGE) <  gameObject.getY() + gameObject.getHeight()
                 && getEndBoundY() + (tileHeight * UPDATE_OFF_SCREEN_RANGE) > gameObject.getY();
     }
 
     // checks if a game object's position falls within the camera's current radius
-    // this does not include the extra range granted by the UDPATE_OFF_SCREEN_RANGE value, because there is no point to drawing graphics that can't be seen
+    // this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value, because there is no point to drawing graphics that can't be seen
     public boolean containsDraw(GameObject gameObject) {
-        return getX1() - tileWidth < gameObject.getX() + gameObject.getScaledWidth() && getEndBoundX() + tileWidth > gameObject.getX() &&
-                getY1() - tileHeight <  gameObject.getY() + gameObject.getScaledHeight() && getEndBoundY() + tileHeight >  gameObject.getY();
-    }
-
-    public ArrayList<Enemy> getActiveEnemies() {
-        return activeEnemies;
+        return getX1() - tileWidth < gameObject.getX() + gameObject.getWidth() && getEndBoundX() + tileWidth > gameObject.getX() &&
+                getY1() - tileHeight <  gameObject.getY() + gameObject.getHeight() && getEndBoundY() + tileHeight >  gameObject.getY();
     }
 
     public ArrayList<EnhancedMapTile> getActiveEnhancedMapTiles() {
@@ -254,6 +276,10 @@ public class Camera extends Rectangle {
         return activeNPCs;
     }
 
+    public ArrayList<Trigger> getActiveTriggers() {
+        return activeTriggers;
+    }
+
     // gets end bound X position of the camera (start position is always 0)
     public float getEndBoundX() {
         return x + (width * tileWidth) + leftoverSpaceX;
@@ -262,5 +288,13 @@ public class Camera extends Rectangle {
     // gets end bound Y position of the camera (start position is always 0)
     public float getEndBoundY() {
         return y + (height * tileHeight) + leftoverSpaceY;
+    }
+
+    public boolean isAtTopOfMap() {
+        return this.getY() <= 0;
+    }
+
+    public boolean isAtBottomOfMap() {
+        return this.getEndBoundY() >= map.getEndBoundY();
     }
 }

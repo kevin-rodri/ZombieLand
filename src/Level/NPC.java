@@ -1,94 +1,96 @@
 package Level;
 
 import Engine.GraphicsHandler;
-import Engine.Key;
-import Engine.Keyboard;
 import GameObject.Frame;
-import GameObject.ImageEffect;
-import GameObject.Rectangle;
 import GameObject.SpriteSheet;
-import SpriteFont.SpriteFont;
-import Utils.Stopwatch;
+import Utils.Direction;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 // This class is a base class for all npcs in the game -- all npcs should extend from it
 public class NPC extends MapEntity {
-    protected boolean talkedTo = false;
-    protected SpriteFont message;
-    protected int talkedToTime;
-    protected Stopwatch timer = new Stopwatch();
+    protected int id = 0;
 
-    public NPC(float x, float y, SpriteSheet spriteSheet, String startingAnimation, int talkedToTime) {
+    public NPC(int id, float x, float y, SpriteSheet spriteSheet, String startingAnimation) {
         super(x, y, spriteSheet, startingAnimation);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+        this.id = id;
     }
 
-    public NPC(float x, float y, HashMap<String, Frame[]> animations, String startingAnimation, int talkedToTime) {
+    public NPC(int id, float x, float y, HashMap<String, Frame[]> animations, String startingAnimation) {
         super(x, y, animations, startingAnimation);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+        this.id = id;
     }
 
-    public NPC(BufferedImage image, float x, float y, String startingAnimation, int talkedToTime) {
-        super(image, x, y, startingAnimation);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+    public NPC(int id, float x, float y, Frame[] frames) {
+        super(x, y, frames);
+        this.id = id;
     }
 
-    public NPC(BufferedImage image, float x, float y, int talkedToTime) {
-        super(image, x, y);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+    public NPC(int id, float x, float y, Frame frame) {
+        super(x, y, frame);
+        this.id = id;
     }
 
-    public NPC(BufferedImage image, float x, float y, int talkedToTime, float scale) {
-        super(image, x, y, scale);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+    public NPC(int id, float x, float y) {
+        super(x, y);
+        this.id = id;
     }
 
-    public NPC(BufferedImage image, float x, float y, int talkedToTime, float scale, ImageEffect imageEffect) {
-        super(image, x, y, scale, imageEffect);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+    public int getId() { return id; }
+
+    public void facePlayer(Player player) {
+        if (Math.round(getBoundsX2()) - (getBounds().getWidth() / 2) < Math.round(player.getBoundsX2())) {
+            this.currentAnimationName = "STAND_RIGHT";
+        }
+        else if (Math.round(getBoundsX1()) + (getBounds().getWidth() / 2) > Math.round(player.getBoundsX1())) {
+            this.currentAnimationName = "STAND_LEFT";
+        }
     }
 
-    public NPC(BufferedImage image, float x, float y, int talkedToTime, float scale, ImageEffect imageEffect, Rectangle bounds) {
-        super(image, x, y, scale, imageEffect, bounds);
-        this.message = createMessage();
-        this.talkedToTime = talkedToTime;
+    public void stand(Direction direction) {
+        if (direction == Direction.RIGHT) {
+            this.currentAnimationName = "STAND_RIGHT";
+        }
+        else if (direction == Direction.LEFT) {
+            this.currentAnimationName = "STAND_LEFT";
+        }
     }
 
-    protected SpriteFont createMessage() {
-        return null;
+    public void walk(Direction direction, float speed) {
+        if (direction == Direction.RIGHT) {
+            this.currentAnimationName = "WALK_RIGHT";
+        }
+        else if (direction == Direction.LEFT) {
+            this.currentAnimationName = "WALK_LEFT";
+        }
+        else {
+            if (this.currentAnimationName.contains("RIGHT")) {
+                this.currentAnimationName = "WALK_RIGHT";
+            }
+            else {
+                this.currentAnimationName = "WALK_LEFT";
+            }
+        }
+        if (direction == Direction.UP) {
+            moveY(-speed);
+        }
+        else if (direction == Direction.DOWN) {
+            moveY(speed);
+        }
+        else if (direction == Direction.LEFT) {
+            moveX(-speed);
+        }
+        else if (direction == Direction.RIGHT) {
+            moveX(speed);
+        }
     }
 
     public void update(Player player) {
         super.update();
-        checkTalkedTo(player);
-    }
-
-    public void checkTalkedTo(Player player) {
-        if (intersects(player) && Keyboard.isKeyDown(Key.SPACE)) {
-            talkedTo = true;
-            timer.setWaitTime(talkedToTime);
-        };
-        if (talkedTo && timer.isTimeUp()) {
-            talkedTo = false;
-        }
     }
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
-        if (message != null && talkedTo) {
-            drawMessage(graphicsHandler);
-        }
     }
-
-    // A subclass can override this method to specify what message it displays upon being talked to
-    public void drawMessage(GraphicsHandler graphicsHandler) {}
 }

@@ -3,6 +3,8 @@ package Level;
 import Engine.Config;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
+import GameObject.Rectangle;
+import Utils.Direction;
 import Utils.Point;
 
 import java.io.File;
@@ -36,8 +38,8 @@ public abstract class Map {
     // camera class that handles the viewable part of the map that is seen by the player of a game during a level
     protected Camera camera;
 
-    // tile player should start on when this map is first loaded
-    protected Point playerStartTile;
+    // location player should start on when this map is first loaded
+    protected Point playerStartPosition;
 
     // the location of the "mid point" of the screen
     // this is what tells the game that the player has reached the center of the screen, therefore the camera should move instead of the player
@@ -52,14 +54,25 @@ public abstract class Map {
     protected String mapFileName;
 
     // lists to hold map entities that are a part of the map
-    protected ArrayList<Enemy> enemies;
     protected ArrayList<EnhancedMapTile> enhancedMapTiles;
     protected ArrayList<NPC> npcs;
+    protected ArrayList<Trigger> triggers;
+
+    protected Script activeInteractScript;
 
     // if set to false, camera will not move as player moves
     protected boolean adjustCamera = true;
 
-    public Map(String mapFileName, Tileset tileset, Point playerStartTile) {
+    // map tiles in map that are animated
+    protected ArrayList<MapTile> animatedMapTiles;
+
+    // flag manager instance to keep track of flags set while map is loaded
+    protected FlagManager flagManager;
+
+    // map's textbox instance
+    protected Textbox textbox;
+
+    public Map(String mapFileName, Tileset tileset) {
         this.mapFileName = mapFileName;
         this.tileset = tileset;
         setupMap();
@@ -69,19 +82,16 @@ public abstract class Map {
         this.endBoundY = height * tileset.getScaledSpriteHeight();
         this.xMidPoint = ScreenManager.getScreenWidth() / 2;
         this.yMidPoint = (ScreenManager.getScreenHeight() / 2);
-        this.playerStartTile = playerStartTile;
+        this.playerStartPosition = new Point(0, 0);
     }
 
     // sets up map by reading in the map file to create the tile map
     // loads in enemies, enhanced map tiles, and npcs
     // and instantiates a Camera
     public void setupMap() {
-        loadMapFile();
+        animatedMapTiles = new ArrayList<>();
 
-        this.enemies = loadEnemies();
-        for (Enemy enemy: this.enemies) {
-            enemy.setMap(this);
-        }
+        loadMapFile();
 
         this.enhancedMapTiles = loadEnhancedMapTiles();
         for (EnhancedMapTile enhancedMapTile: this.enhancedMapTiles) {
@@ -93,7 +103,15 @@ public abstract class Map {
             npc.setMap(this);
         }
 
+        this.triggers = loadTriggers();
+        for (Trigger trigger: this.triggers) {
+            trigger.setMap(this);
+        }
+
+        this.loadScripts();
+
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+        this.textbox = new Textbox(this);
     }
 
     // reads in a map file to create the map's tilemap
@@ -133,6 +151,10 @@ public abstract class Map {
                 MapTile tile = tileset.getTile(tileIndex).build(xLocation, yLocation);
                 tile.setMap(this);
                 setMapTile(j, i, tile);
+
+                if (tile.isAnimated()) {
+                    animatedMapTiles.add(tile);
+                }
             }
         }
 
@@ -150,8 +172,7 @@ public abstract class Map {
 
     // gets player start position based on player start tile (basically the start tile's position on the map)
     public Point getPlayerStartPosition() {
-        MapTile tile = getMapTile(Math.round(playerStartTile.x), Math.round(playerStartTile.y));
-        return new Point(tile.getX(), tile.getY());
+        return playerStartPosition;
     }
 
     // get position on the map based on a specific tile index
@@ -211,7 +232,14 @@ public abstract class Map {
 
     // set specific map tile from tile map to a new map tile
     public void setMapTile(int x, int y, MapTile tile) {
-        mapTiles[getConvertedIndex(x, y)] = tile;
+        if (isInBounds(x, y)) {
+            MapTile oldMapTile = getMapTile(x, y);
+            animatedMapTiles.remove(oldMapTile);
+            mapTiles[getConvertedIndex(x, y)] = tile;
+            if (tile.isAnimated()) {
+                animatedMapTiles.add(tile);
+            }
+        }
     }
 
     // returns a tile based on a position in the map
@@ -226,8 +254,8 @@ public abstract class Map {
 
     // returns the index of a tile (x index and y index) based on a position in the map
     public Point getTileIndexByPosition(float xPosition, float yPosition) {
-        int xIndex = Math.round(xPosition / tileset.getScaledSpriteWidth());
-        int yIndex = Math.round(yPosition / tileset.getScaledSpriteHeight());
+        int xIndex = Math.round(xPosition) / tileset.getScaledSpriteWidth();
+        int yIndex = Math.round(yPosition) / tileset.getScaledSpriteHeight();
         return new Point(xIndex, yIndex);
     }
 
@@ -243,9 +271,7 @@ public abstract class Map {
     }
 
     // list of enemies defined to be a part of the map, should be overridden in a subclass
-    protected ArrayList<Enemy> loadEnemies() {
-        return new ArrayList<>();
-    }
+    protected void loadScripts() { }
 
     // list of enhanced map tiles defined to be a part of the map, should be overridden in a subclass
     protected ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
@@ -257,23 +283,43 @@ public abstract class Map {
         return new ArrayList<>();
     }
 
+    protected ArrayList<Trigger> loadTriggers() {
+        return new ArrayList<>();
+    }
+
     public Camera getCamera() {
         return camera;
     }
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
-    }
     public ArrayList<EnhancedMapTile> getEnhancedMapTiles() {
         return enhancedMapTiles;
     }
+
     public ArrayList<NPC> getNPCs() {
         return npcs;
     }
+    public ArrayList<Trigger> getTriggers() { return triggers; }
 
-    // returns all active enemies (enemies that are a part of the current update cycle) -- this changes every frame by the Camera class
-    public ArrayList<Enemy> getActiveEnemies() {
-        return camera.getActiveEnemies();
+    public ArrayList<MapTile> getAnimatedMapTiles() {
+        return animatedMapTiles;
+    }
+
+    public Script getActiveInteractScript() {
+        return activeInteractScript;
+    }
+
+    // this method is only used to set activeInteractScript back to null after the script is finished running
+    public void setActiveInteractScript(Script script) {
+        activeInteractScript = script;
+    }
+
+    public NPC getNPCById(int id) {
+        for (NPC npc : npcs) {
+            if (npc.getId() == id) {
+                return npc;
+            }
+        }
+        return null;
     }
 
     // returns all active enhanced map tiles (enhanced map tiles that are a part of the current update cycle) -- this changes every frame by the Camera class
@@ -286,10 +332,8 @@ public abstract class Map {
         return camera.getActiveNPCs();
     }
 
-    // add an enemy to the map's list of enemies
-    public void addEnemy(Enemy enemy) {
-        enemy.setMap(this);
-        this.enemies.add(enemy);
+    public ArrayList<Trigger> getActiveTriggers() {
+        return camera.getActiveTriggers();
     }
 
     // add an enhanced map tile to the map's list of enhanced map tiles
@@ -304,8 +348,125 @@ public abstract class Map {
         this.npcs.add(npc);
     }
 
+    // add a trigger to the map's list of triggers
+    public void addTrigger(Trigger trigger) {
+        trigger.setMap(this);
+        this.triggers.add(trigger);
+    }
+
     public void setAdjustCamera(boolean adjustCamera) {
         this.adjustCamera = adjustCamera;
+    }
+
+
+    public ArrayList<MapEntity> getSurroundingMapEntities(Player player) {
+        ArrayList<MapEntity> surroundingMapEntities = new ArrayList<>();
+
+        // gets surrounding tiles
+        Point playerCurrentTile = getTileIndexByPosition((int)player.getBoundsX1(), (int)player.getBoundsY1());
+        for (int i = (int)playerCurrentTile.y - 1; i <= playerCurrentTile.y + 1; i++) {
+            for (int j = (int)playerCurrentTile.x - 1; j <= playerCurrentTile.x + 1; j++) {
+                MapTile mapTile = getMapTile(j, i);
+                if (mapTile != null && mapTile.getInteractScript() != null) {
+                    surroundingMapEntities.add(mapTile);
+                }
+            }
+        }
+        // gets active surrounding npcs
+        surroundingMapEntities.addAll(getActiveNPCs());
+        surroundingMapEntities.addAll(getActiveEnhancedMapTiles());
+        return surroundingMapEntities;
+    }
+
+    public void entityInteract(Player player) {
+        ArrayList<MapEntity> surroundingMapEntities = getSurroundingMapEntities(player);
+        ArrayList<MapEntity> playerTouchingMapEntities = new ArrayList<>();
+        for (MapEntity mapEntity : surroundingMapEntities) {
+            if (mapEntity.getInteractScript() != null && mapEntity.intersects(player.getInteractionRange())) {
+                playerTouchingMapEntities.add(mapEntity);
+            }
+        }
+        MapEntity interactedEntity = null;
+        if (playerTouchingMapEntities.size() == 1) {
+            if (isInteractedEntityValid(playerTouchingMapEntities.get(0), player)) {
+                interactedEntity = playerTouchingMapEntities.get(0);
+            }
+        }
+        else if (playerTouchingMapEntities.size() > 1) {
+            MapEntity currentLargestAreaOverlappedEntity = null;
+            float currentLargestAreaOverlapped = 0;
+            for (MapEntity mapEntity : playerTouchingMapEntities) {
+                if (isInteractedEntityValid(mapEntity, player)) {
+                    float areaOverlapped = mapEntity.getAreaOverlapped(player.getInteractionRange());
+                    if (areaOverlapped > currentLargestAreaOverlapped) {
+                        currentLargestAreaOverlappedEntity = mapEntity;
+                        currentLargestAreaOverlapped = areaOverlapped;
+                    }
+                }
+            }
+            interactedEntity = currentLargestAreaOverlappedEntity;
+        }
+        if (interactedEntity != null) {
+            interactedEntity.getInteractScript().setIsActive(true);
+            activeInteractScript = interactedEntity.getInteractScript();
+        }
+    }
+
+    private boolean isInteractedEntityValid(MapEntity interactedEntity, Player player) {
+        Rectangle playerBounds = player.getBounds();
+        Rectangle entityBounds = interactedEntity.getBounds();
+        boolean xDirValid = true;
+        boolean yDirValid = true;
+        if (player.getLastWalkingXDirection() == Direction.LEFT && playerBounds.getX1() < entityBounds.getX2()) {
+            xDirValid = false;
+        }
+
+        else if (player.getLastWalkingXDirection() == Direction.RIGHT && playerBounds.getX2() > entityBounds.getX1()) {
+            xDirValid = false;
+        }
+
+        else if (player.getLastWalkingXDirection() == Direction.NONE) {
+            xDirValid = false;
+        }
+
+        if (player.getLastWalkingYDirection() == Direction.UP && playerBounds.getY1() < entityBounds.getY2()) {
+            yDirValid = false;
+        }
+
+        else if (player.getLastWalkingYDirection() == Direction.DOWN && playerBounds.getY2() > entityBounds.getY1()) {
+            yDirValid = false;
+        }
+
+        else if (player.getLastWalkingYDirection() == Direction.NONE) {
+            yDirValid = false;
+        }
+
+        if (!xDirValid && !yDirValid) {
+            return false;
+        }
+
+        if (playerBounds.getY1() >= entityBounds.getY2()) {
+            Rectangle playerTopBounds = new Rectangle(playerBounds.getX(), playerBounds.getY() - 1, playerBounds.getWidth(), 1);
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerTopBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getWidth() / 3f), entityBounds.getWidth());
+        }
+        else if (playerBounds.getY2() <= entityBounds.getY1()) {
+            Rectangle playerBottomBounds = new Rectangle(playerBounds.getX(), playerBounds.getY2() + 1, playerBounds.getWidth(), 1);
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerBottomBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getWidth() / 3f), entityBounds.getWidth());
+        }
+        else if (playerBounds.getX1() >= entityBounds.getX2()) {
+            Rectangle playerLeftBounds = new Rectangle(playerBounds.getX() - 1, playerBounds.getY(), 1, playerBounds.getHeight());
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerLeftBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getHeight() / 3f), entityBounds.getHeight());
+        }
+        else if (playerBounds.getX2() <= entityBounds.getX()) {
+            Rectangle playerRightBounds = new Rectangle(playerBounds.getX2() + 1, playerBounds.getY(), 1, playerBounds.getHeight());
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerRightBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getHeight() / 3f), entityBounds.getHeight());
+        }
+
+        return false;
     }
 
     public void update(Player player) {
@@ -314,6 +475,9 @@ public abstract class Map {
             adjustMovementX(player);
         }
         camera.update(player);
+        if (textbox.isActive()) {
+            textbox.update();
+        }
     }
 
     // based on the player's current X position (which in a level can potentially be updated each frame),
@@ -377,4 +541,22 @@ public abstract class Map {
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
     }
+
+    public void draw(Player player, GraphicsHandler graphicsHandler) {
+        camera.draw(player, graphicsHandler);
+        if (textbox.isActive()) {
+            textbox.draw(graphicsHandler);
+        }
+    }
+
+    public FlagManager getFlagManager() { return flagManager; }
+
+    public void setFlagManager(FlagManager flagManager) {
+        this.flagManager = flagManager;
+    }
+
+    public Textbox getTextbox() { return textbox; }
+
+    public int getEndBoundX() { return endBoundX; }
+    public int getEndBoundY() { return endBoundY; }
 }

@@ -119,4 +119,17 @@ public class SpriteFont {
 			drawLocationY += font.getSize();
 		}
 	}
+
+	// this can be called instead of regular draw to have the text drop to the next line in graphics space on a new line character
+	public void drawWithParsedNewLines(GraphicsHandler graphicsHandler, int gapBetweenLines) {
+		int drawLocationY = Math.round(this.y);
+		for (String line: text.split("\n")) {
+			if (outlineColor != null && !outlineColor.equals(color)) {
+				graphicsHandler.drawStringWithOutline(line, Math.round(x), drawLocationY, font, color, outlineColor, outlineThickness);
+			} else {
+				graphicsHandler.drawString(line, Math.round(x), drawLocationY, font, color);
+			}
+			drawLocationY += font.getSize() + gapBetweenLines;
+		}
+	}
 }

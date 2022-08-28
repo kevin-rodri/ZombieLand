@@ -6,9 +6,6 @@ parent: Game Code Details
 permalink: /GameCodeDetails/Level
 ---
 
-# Navigation Structure
-{: .no_toc }
-
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -19,10 +16,10 @@ permalink: /GameCodeDetails/Level
 
 # Level
 
-## How does the platformer level work?
+## How does the game's level work?
 
 The `PlayLevelScreen` class (documentation for that class found [here](./ScreensSubSections/play-level-screen.md)) continually runs `update` and `draw` calls
-on its instantiated `Map` and `Player` classes, which carries out the platformer level. The `Map` and `Player` classes
+on its instantiated `Map` and `Player` classes, which carries out the level. The `Map` and `Player` classes
 hold all the game code that brings the level together -- this is the most complicated aspect of this application (as expected)
 but it isn't so bad once you get the hang of how the `Map` and `Player` classes work together and how the classes are structured.
 
@@ -37,5 +34,5 @@ Documentation for usage of the Map Editor can be found [here]().
 ## The Level package
 
 The `Level` package in this project contains all the "core" classes and game logic necessary for the platformer game to play out. Many of the classes
-found in here exist solely to be extended from by a different class to be built upon, so you can think of them as a template -- examples of this include the
-`Player`, `Enemy`, `NPC`, `EnhancedMapTile`, and `Tileset` classes.
+found in the `Level` package exist solely to be extended from. You can think of them as templates -- examples of this include the
+`Player`, `NPC`, `EnhancedMapTile`, and `Tileset` classes.
