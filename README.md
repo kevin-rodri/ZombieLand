@@ -1,6 +1,6 @@
 # SER225 RPG Game
 
-## What is this?
+## What is this???
 This is a game created for Quinnipiac's SER225 Agile Development class.
 Students will be paired up in teams for an entire semester, and will utilize agile development to work further on this game.
 This usually involves adding features and fixing bugs (I'm sure there are bugs...)
@@ -21,4 +21,9 @@ Changes to content in the `docs` folder will not show up on the website unless t
 ## Credits
 **Alex Thimineur**: Programmed the game, made the art.
 
+<<<<<<< HEAD
 **Kevin Rodriguez, Harsh Gandhi**
+=======
+Kevin Rodriguez
+Brian Wanamaker
+>>>>>>> 3b04e789122a16c571639112efc5d20f95a2d353
