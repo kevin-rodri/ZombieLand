@@ -57,7 +57,9 @@ public abstract class Map {
     protected ArrayList<EnhancedMapTile> enhancedMapTiles;
     protected ArrayList<NPC> npcs;
     protected ArrayList<Trigger> triggers;
+    protected ArrayList<Enemy> enemies;
 
+   
     protected Script activeInteractScript;
 
     // if set to false, camera will not move as player moves
@@ -103,6 +105,11 @@ public abstract class Map {
             npc.setMap(this);
         }
 
+        this.enemies = loadEnemies();
+        for (Enemy enemies: this.enemies) {
+            enemies.setMap(this);
+        }
+        
         this.triggers = loadTriggers();
         for (Trigger trigger: this.triggers) {
             trigger.setMap(this);
@@ -278,6 +285,11 @@ public abstract class Map {
         return new ArrayList<>();
     }
 
+    //list of enemies defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<Enemy> loadEnemies(){
+        return new ArrayList<>();
+    }
+
     // list of npcs defined to be a part of the map, should be overridden in a subclass
     protected ArrayList<NPC> loadNPCs() {
         return new ArrayList<>();
@@ -298,6 +310,10 @@ public abstract class Map {
     public ArrayList<NPC> getNPCs() {
         return npcs;
     }
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     public ArrayList<Trigger> getTriggers() { return triggers; }
 
     public ArrayList<MapTile> getAnimatedMapTiles() {
@@ -336,6 +352,10 @@ public abstract class Map {
         return camera.getActiveTriggers();
     }
 
+    public ArrayList<Enemy> getActiveEnemies(){
+        return camera.getActiveEnemies();
+    }
+
     // add an enhanced map tile to the map's list of enhanced map tiles
     public void addEnhancedMapTile(EnhancedMapTile enhancedMapTile) {
         enhancedMapTile.setMap(this);
@@ -346,6 +366,12 @@ public abstract class Map {
     public void addNPC(NPC npc) {
         npc.setMap(this);
         this.npcs.add(npc);
+    }
+
+    //add an enemy to the map's list of enemies
+    public void addEnemy(Enemy enemy) {
+        enemy.setMap(this);
+        this.enemies.add(enemy);
     }
 
     // add a trigger to the map's list of triggers

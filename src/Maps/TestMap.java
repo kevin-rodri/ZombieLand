@@ -1,6 +1,7 @@
 package Maps;
 
 import EnhancedMapTiles.Rock;
+import Level.Enemy;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
@@ -13,8 +14,11 @@ import Scripts.TestMap.LostBallScript;
 import Scripts.TestMap.TreeScript;
 import Scripts.TestMap.WalrusScript;
 import Tilesets.CommonTileset;
+import Utils.Direction;
 
 import java.util.ArrayList;
+
+import Enemies.Zombie;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
@@ -45,6 +49,14 @@ public class TestMap extends Map {
         npcs.add(dinosaur);
 
         return npcs;
+    }
+
+    @Override
+    public ArrayList<Enemy> loadEnemies(){
+        ArrayList<Enemy> enemy = new ArrayList<>();
+        Zombie zombie = new Zombie(getMapTile(4, 26).getLocation().subtractY(40), Direction.RIGHT);
+        enemy.add(zombie);
+        return enemy;
     }
 
     @Override
