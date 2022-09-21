@@ -21,9 +21,6 @@ Changes to content in the `docs` folder will not show up on the website unless t
 ## Credits
 **Alex Thimineur**: Programmed the game, made the art.
 
-<<<<<<< HEAD
-**Kevin Rodriguez, Harsh Gandhi**
-=======
-Kevin Rodriguez
-Brian Wanamaker
->>>>>>> 3b04e789122a16c571639112efc5d20f95a2d353
+**Kevin Rodriguez, Harsh Gandhi, Brian Wanamaker**: Modified game
+
+

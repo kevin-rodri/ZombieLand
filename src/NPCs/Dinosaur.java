@@ -8,7 +8,6 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Utils.Point;
-
 import java.util.HashMap;
 
 // This class is for the dinosaur NPC
