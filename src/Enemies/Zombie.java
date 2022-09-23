@@ -23,7 +23,7 @@ public class Zombie extends Enemy {
     private Direction facingDirection;
 
     public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),72 , 30), "WALK_RIGHT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),50 , 65), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
         this.initialize();
     }

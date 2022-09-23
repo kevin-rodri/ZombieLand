@@ -242,6 +242,12 @@ public class Camera extends Rectangle {
     // draws active map entities to the screen
     public void drawMapEntities(Player player, GraphicsHandler graphicsHandler) {
         ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
+        
+        for (Enemy enemy : activeEnemies) {
+            if (containsDraw(enemy)) {
+                enemy.draw(graphicsHandler);
+            }
+        }
 
         // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
         // if drawn here, npc will later be "overlapped" by player

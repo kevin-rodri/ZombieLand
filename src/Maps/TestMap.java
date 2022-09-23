@@ -54,7 +54,8 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Enemy> loadEnemies(){
         ArrayList<Enemy> enemy = new ArrayList<>();
-        Zombie zombie = new Zombie(getMapTile(4, 26).getLocation().subtractY(40), Direction.RIGHT);
+        // after playing with this, I have given up on picking a good starting point... 
+        Zombie zombie = new Zombie(getMapTile(4, 28).getLocation().subtractY(450), Direction.RIGHT);
         enemy.add(zombie);
         return enemy;
     }

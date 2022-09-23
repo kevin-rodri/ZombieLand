@@ -106,8 +106,8 @@ public abstract class Map {
         }
 
         this.enemies = loadEnemies();
-        for (Enemy enemies: this.enemies) {
-            enemies.setMap(this);
+        for (Enemy enemy: this.enemies) {
+            enemy.setMap(this);
         }
         
         this.triggers = loadTriggers();
@@ -401,6 +401,7 @@ public abstract class Map {
         // gets active surrounding npcs
         surroundingMapEntities.addAll(getActiveNPCs());
         surroundingMapEntities.addAll(getActiveEnhancedMapTiles());
+        surroundingMapEntities.addAll(getActiveEnemies());
         return surroundingMapEntities;
     }
 
