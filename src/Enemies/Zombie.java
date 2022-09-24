@@ -7,8 +7,6 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
-import Level.MapEntity;
-import Level.Player;
 import Utils.Direction;
 import Utils.Point;
 import java.util.HashMap;
@@ -18,12 +16,11 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-    private float movementSpeed = .5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
 
     public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),50 , 65), "WALK_RIGHT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),23, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
         this.initialize();
     }
@@ -39,33 +36,48 @@ public class Zombie extends Enemy {
         }
     }
 
-    @Override
-    public void update(Player player) {
-        float moveAmountX = 0;
-        float moveAmountY = 0;
+    // Update player's state
+    public void update(){
+        super.update();
+    }
 
-        // if on ground, walk forward based on facing direction
-            if (facingDirection == Direction.RIGHT) {
-                moveAmountX += movementSpeed;
-            } else {
-                moveAmountX -= movementSpeed;
-            }
-        }
-
-
+    
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
+        // hopefully will do after my issue with magenta
         return new HashMap<String, Frame[]>() {{
+            put("STAND_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .build()
+        });
+        put("STAND_RIGHT", new Frame[] {
+               new FrameBuilder(spriteSheet.getSprite(0, 0))
+                       .withScale(3)
+                       .build()
+       });
+
            put("WALK_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(0, 0))
+                   new FrameBuilder(spriteSheet.getSprite(1, 0))
                            .withScale(3)
-                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                           .build()
+                           .build(), 
+
+                    new FrameBuilder(spriteSheet.getSprite(1, 1))
+                    .withScale(3)
+                    .build()
+
            });
             put("WALK_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(3)
-                            .build()
+                new FrameBuilder(spriteSheet.getSprite(1, 0))
+                .withScale(3)
+                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                .build(), 
+
+         new FrameBuilder(spriteSheet.getSprite(1, 1))
+         .withScale(3)
+         .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+         .build()
             });
         }};
     }

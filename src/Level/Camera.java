@@ -273,12 +273,13 @@ public class Camera extends Rectangle {
 
         // Uncomment this to see triggers drawn on screen
         // helps for placing them in the correct spot/debugging
-        
-        for (Trigger trigger : activeTriggers) {
+        /*
+         * for (Trigger trigger : activeTriggers) {
             if (containsDraw(trigger)) {
                 trigger.draw(graphicsHandler);
             }
         }
+         */
         
     }
 

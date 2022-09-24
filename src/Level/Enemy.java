@@ -3,6 +3,7 @@ package Level;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Engine.GraphicsHandler;
+import Utils.Direction;
 import java.util.HashMap;
 
 // This class is a base class for all enemies in the game -- all enemies should extend from it
@@ -37,6 +38,36 @@ public class Enemy extends MapEntity {
         super.update();
         if (intersects(player)) {
             touchedPlayer(player);
+        }
+    }
+
+    // allows enemy freedom to walk around the map (from the npc class)
+    public void walk(Direction direction, float speed) {
+        if (direction == Direction.RIGHT) {
+            this.currentAnimationName = "WALK_RIGHT";
+        }
+        else if (direction == Direction.LEFT) {
+            this.currentAnimationName = "WALK_LEFT";
+        }
+        else {
+            if (this.currentAnimationName.contains("RIGHT")) {
+                this.currentAnimationName = "WALK_RIGHT";
+            }
+            else {
+                this.currentAnimationName = "WALK_LEFT";
+            }
+        }
+        if (direction == Direction.UP) {
+            moveY(-speed);
+        }
+        else if (direction == Direction.DOWN) {
+            moveY(speed);
+        }
+        else if (direction == Direction.LEFT) {
+            moveX(-speed);
+        }
+        else if (direction == Direction.RIGHT) {
+            moveX(speed);
         }
     }
 
