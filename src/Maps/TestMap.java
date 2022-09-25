@@ -1,12 +1,13 @@
 package Maps;
-
+import NPCs.*;
+import NPCs.Lives;
+import Players.*;
+import Screens.PlayLevelScreen;
 import EnhancedMapTiles.Rock;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
-import NPCs.Dinosaur;
-import NPCs.Walrus;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
 import Scripts.TestMap.LostBallScript;
@@ -43,7 +44,11 @@ public class TestMap extends Map {
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
-
+        
+        
+        Lives point = new Lives(3, getMapTile(20, 1).getLocation().subtractY(40));
+        npcs.add(point);
+        
         return npcs;
     }
 
