@@ -7,6 +7,7 @@ import Utils.Direction;
 import java.util.HashMap;
 
 // This class is a base class for all enemies in the game -- all enemies should extend from it
+// taken from SER-225 platformer game
 public class Enemy extends MapEntity {
 
     public Enemy(float x, float y, SpriteSheet spriteSheet, String startingAnimation) {

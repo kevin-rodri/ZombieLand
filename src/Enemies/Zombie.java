@@ -7,15 +7,19 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
+import Level.Player;
+import Level.PlayerState;
 import Utils.Direction;
 import Utils.Point;
 import java.util.HashMap;
 
 /*
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
+ * Code is from the SER-225 platformer game 
  */
 public class Zombie extends Enemy {
 
+    private float zombieSpeed = 1.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
 
@@ -37,44 +41,35 @@ public class Zombie extends Enemy {
     }
 
     // Update player's state
-    public void update(){
-        super.update();
+    public void update(Player player){
+        // this conditional will be temporary as I added it to test if the walk method works
+        if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
+            walk(facingDirection, zombieSpeed);
+        }
+        super.update(player);
     }
 
-    
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         // hopefully will do after my issue with magenta
         return new HashMap<String, Frame[]>() {{
-            put("STAND_LEFT", new Frame[] {
-                new FrameBuilder(spriteSheet.getSprite(0, 0))
-                        .withScale(3)
-                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                        .build()
-        });
-        put("STAND_RIGHT", new Frame[] {
-               new FrameBuilder(spriteSheet.getSprite(0, 0))
-                       .withScale(3)
-                       .build()
-       });
-
            put("WALK_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(1, 0))
+                   new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
                            .withScale(3)
                            .build(), 
 
-                    new FrameBuilder(spriteSheet.getSprite(1, 1))
+                    new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
                     .withScale(3)
                     .build()
-
+            
            });
             put("WALK_LEFT", new Frame[] {
-                new FrameBuilder(spriteSheet.getSprite(1, 0))
+                new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
                 .withScale(3)
                 .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                 .build(), 
 
-         new FrameBuilder(spriteSheet.getSprite(1, 1))
+         new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
          .withScale(3)
          .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
          .build()
