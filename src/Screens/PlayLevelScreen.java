@@ -1,6 +1,7 @@
 package Screens;
 
 import java.awt.Color;
+
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +12,6 @@ import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
 import Players.Cat;
-import Players.Lives;
 import SpriteFont.SpriteFont;
 import Utils.Direction;
 import Utils.Point;

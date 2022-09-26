@@ -42,7 +42,7 @@ public class Cat extends Player {
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
                             .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build()
             });
