@@ -15,8 +15,8 @@ import java.util.HashMap;
 public class Alex extends Player {
 
     public Alex(float x, float y) {
-        super(new SpriteSheet(ImageLoader.load("Alex.png"), 24, 24), x, y, "STAND_RIGHT");
-        walkSpeed = 1.5f;
+        super(new SpriteSheet(ImageLoader.load("AlexWithA8th.png"), 24, 24), x, y, "STAND_RIGHT");
+        walkSpeed = 1.8f;
     }
 
     public void update() {
@@ -62,11 +62,23 @@ public class Alex extends Player {
                    new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
                             .withScale(3)
                             .withBounds(6, 12, 12, 7)
-                            .build()/*,
+                            .build(),
                   new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
                             .withScale(3)
                             .withBounds(6, 12, 12, 7)
-                            .build() */
+                            .build(),
+                  new FrameBuilder(spriteSheet.getSprite(1, 5), 200)
+                            .withScale(3)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
+                  new FrameBuilder(spriteSheet.getSprite(1, 6), 200)
+                            .withScale(3)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
+                  new FrameBuilder(spriteSheet.getSprite(1, 7), 200)
+                            .withScale(3)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
             });
 
             put("WALK_LEFT", new Frame[] {
@@ -89,12 +101,27 @@ public class Alex extends Player {
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
-                            .build() /*,
+                            .build(),
                     new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
-                            .build() */
+                            .build(),
+                   new FrameBuilder(spriteSheet.getSprite(1, 5), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
+                  new FrameBuilder(spriteSheet.getSprite(1, 6), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
+                  new FrameBuilder(spriteSheet.getSprite(1, 7), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(6, 12, 12, 7)
+                            .build(),
             });
         }};
     }
