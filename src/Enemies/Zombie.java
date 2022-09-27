@@ -46,7 +46,7 @@ public class Zombie extends Enemy {
         if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             walk(facingDirection, zombieSpeed);
         }
-        super.update(player);
+        super.update();
     }
 
     @Override
