@@ -10,13 +10,13 @@ import Level.Player;
 
 import java.util.HashMap;
 
-// This is the class for the Cat player character
+// This is the class for the Alex player character
 // basically just sets some values for physics and then defines animations
-public class Cat extends Player {
+public class Alex extends Player {
 
-    public Cat(float x, float y) {
-        super(new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24), x, y, "STAND_RIGHT");
-        walkSpeed = 2.3f;
+    public Alex(float x, float y) {
+        super(new SpriteSheet(ImageLoader.load("Alex.png"), 24, 24), x, y, "STAND_RIGHT");
+        walkSpeed = 1.5f;
     }
 
     public void update() {
@@ -25,7 +25,7 @@ public class Cat extends Player {
 
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
-    //   drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
+        // drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
     }
 
     @Override
@@ -55,14 +55,18 @@ public class Cat extends Player {
                             .withScale(3)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                   new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
                             .withScale(3)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                   new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
                             .withScale(3)
                             .withBounds(6, 12, 12, 7)
-                            .build()
+                            .build()/*,
+                  new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
+                            .withScale(3)
+                            .withBounds(6, 12, 12, 7)
+                            .build() */
             });
 
             put("WALK_LEFT", new Frame[] {
@@ -85,7 +89,12 @@ public class Cat extends Player {
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
-                            .build()
+                            .build() /*,
+                    new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(6, 12, 12, 7)
+                            .build() */
             });
         }};
     }

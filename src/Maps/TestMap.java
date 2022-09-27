@@ -8,6 +8,8 @@ import Level.NPC;
 import Level.Trigger;
 import NPCs.Dinosaur;
 import NPCs.Walrus;
+import PowerUp.DoublePoints;
+import PowerUp.Nuke;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
 import Scripts.TestMap.LostBallScript;
@@ -47,6 +49,16 @@ public class TestMap extends Map {
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
+
+        DoublePoints doublePoints = new DoublePoints(3, getMapTile(14, 5).getLocation().subtractY(40));
+        doublePoints.setInteractScript(new WalrusScript());
+        npcs.add(doublePoints);
+
+        Nuke nuke = new Nuke(4, getMapTile(14, 2). getLocation().subtractY(40));
+        nuke.setInteractScript(new WalrusScript());
+        npcs.add(nuke);
+
+
 
         return npcs;
     }
