@@ -26,7 +26,7 @@ public class Cat extends Player {
 
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
-        // drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
+    //   drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
     }
 
     @Override

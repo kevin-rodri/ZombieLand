@@ -4,7 +4,6 @@ import Engine.GraphicsHandler;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Utils.Direction;
-
 import java.util.HashMap;
 
 // This class is a base class for all npcs in the game -- all npcs should extend from it
