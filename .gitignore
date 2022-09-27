@@ -2,9 +2,11 @@
 .settings
 .project
 *.iml
+.DS_Store
 bin/
 .idea/
 classes/
+.DS_Store
 out/
 TestResources/
 _site

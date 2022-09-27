@@ -18,6 +18,7 @@ public class Cat extends Player {
         super(new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24), x, y, "STAND_RIGHT");
         walkSpeed = 2.3f;
     }
+    
 
     public void update() {
         super.update();
@@ -25,7 +26,7 @@ public class Cat extends Player {
 
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
-        // drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
+    //   drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Cat extends Player {
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
                             .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build()
             });
