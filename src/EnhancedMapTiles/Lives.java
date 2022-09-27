@@ -38,6 +38,7 @@ public class Lives extends EnhancedMapTile {
 		}
 	}
 
+
 	private boolean canMoveLeft(Player player) {
 		return player.getBoundsX1() <= getBoundsX2() && player.getBoundsX2() > getBoundsX2() && canMoveX(player);
 	}

@@ -75,10 +75,7 @@ public class PlayLevelScreen extends Screen {
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
 		
-//		this.lives = new Lives(20, 10);
-//		this.lives.setMap(map);
-//		this.lives.setLocation(20, 10);
-//		this.lives.setFacingDirection(Direction.LEFT);
+
 
 
 
@@ -123,8 +120,7 @@ public class PlayLevelScreen extends Screen {
 		case RUNNING:
 			player.update();
 			map.update(player);
-//			lives.update();
-//			map.update(lives);
+
 			
 			break;
 		// if level has been completed, bring up level cleared screen
@@ -145,7 +141,6 @@ public class PlayLevelScreen extends Screen {
 		switch (playLevelScreenState) {
 		case RUNNING:
 			map.draw(player, graphicsHandler);
-//			map.draw(lives, graphicsHandler);
 
 
 			break;
