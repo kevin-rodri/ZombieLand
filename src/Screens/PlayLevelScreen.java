@@ -2,6 +2,7 @@ package Screens;
 
 import java.awt.Color;
 
+
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import Level.*;
 import Maps.TestMap;
 import Players.Cat;
 import SpriteFont.SpriteFont;
+import Players.Alex;
 import Utils.Direction;
 import Utils.Point;
 
@@ -66,7 +68,7 @@ public class PlayLevelScreen extends Screen {
 		// setup player
 	
 
-		this.player = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player.setMap(map);
 		Point playerStartPosition = map.getPlayerStartPosition();
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
@@ -171,4 +173,5 @@ public class PlayLevelScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
+
 }
