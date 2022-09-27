@@ -94,7 +94,7 @@ public class GamePanel extends JPanel {
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
-
+		pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
 		// if game is paused, draw pause gfx over Screen gfx
 		if (isGamePaused) {
 			pauseLabel.draw(graphicsHandler);
@@ -103,12 +103,14 @@ public class GamePanel extends JPanel {
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) 
+	{
 		super.paintComponent(g);
 		// every repaint call will schedule this method to be called
 		// when called, it will setup the graphics handler and then call this class's draw method
 		graphicsHandler.setGraphics((Graphics2D) g);
-		if (doPaint) {
+		if (doPaint) 
+		{
 			draw();
 		}
 	}

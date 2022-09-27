@@ -6,12 +6,13 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
-import Players.Cat;
+import Players.Alex;
 import Utils.Direction;
 import Utils.Point;
 
 // This class is for when the platformer game is actually being played
-public class PlayLevelScreen extends Screen {
+public class PlayLevelScreen extends Screen 
+{
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
     protected Player player;
@@ -37,7 +38,7 @@ public class PlayLevelScreen extends Screen {
         map.setFlagManager(flagManager);
 
         // setup player
-        this.player = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         this.player.setMap(map);
         Point playerStartPosition = map.getPlayerStartPosition();
         this.player.setLocation(playerStartPosition.x, playerStartPosition.y);

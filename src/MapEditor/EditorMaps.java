@@ -13,7 +13,6 @@ public class EditorMaps {
             add("TitleScreen");
         }};
     }
-
     public static Map getMapByName(String mapName) {
         switch(mapName) {
             case "TestMap":
