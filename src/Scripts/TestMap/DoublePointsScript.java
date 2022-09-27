@@ -17,12 +17,15 @@ public class DoublePointsScript extends Script<NPC> {
 
     AudioInputStream audioInputStream;
     static String filePath;
+    Clip clip;
 
-    @Override
+    //@Override
     protected void setup() {
-        //audioInputStream = AudioSystem.getAudioInputStream(new File(Config.RESOURCES_PATH + doublepoints.ogg).getAbsoluteFile());
-        //dpoints = AudioSystem.getClip();
-        //dpoints.open(audioInputStream);
+        //audioInputStream = AudioSystem.getAudioInputStream(new File(Config.RESOURCES_PATH + "nuke.wav").getAbsoluteFile());
+        //clip = AudioSystem.getClip();
+        //clip.open(audioInputStream);
+        //clip.play();
+
 
 
 
