@@ -17,7 +17,7 @@ import java.util.HashMap;
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
  * Code is from the SER-225 platformer game 
  */
-public class Zombie extends Enemy {
+public class Zombie extends Enemy implements SoundController {
 
     private float zombieSpeed = 1.5f;
     private Direction startFacingDirection;
@@ -45,6 +45,7 @@ public class Zombie extends Enemy {
         // this conditional will be temporary as I added it to test if the walk method works
         if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             walk(facingDirection, zombieSpeed);
+            playMusic(2);
         }
         super.update();
     }
