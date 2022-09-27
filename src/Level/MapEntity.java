@@ -59,6 +59,16 @@ public class MapEntity extends GameObject {
         this.isUpdateOffScreen = isUpdateOffScreen;
     }
 
+    public void initialize() {
+        this.x = startPositionX;
+        this.y = startPositionY;
+        this.amountMovedX = 0;
+        this.amountMovedY = 0;
+        this.previousX = startPositionX;
+        this.previousY = startPositionY;
+        updateCurrentFrame();
+    }
+    
     public Script getInteractScript() { return interactScript; }
     public void setInteractScript(Script interactScript) {
         this.interactScript = interactScript;

@@ -1,6 +1,7 @@
 package Maps;
 
 import EnhancedMapTiles.Rock;
+import Level.Enemy;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
@@ -15,8 +16,11 @@ import Scripts.TestMap.LostBallScript;
 import Scripts.TestMap.TreeScript;
 import Scripts.TestMap.WalrusScript;
 import Tilesets.CommonTileset;
+import Utils.Direction;
 
 import java.util.ArrayList;
+
+import Enemies.Zombie;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
@@ -57,6 +61,15 @@ public class TestMap extends Map {
 
 
         return npcs;
+    }
+
+    @Override
+    public ArrayList<Enemy> loadEnemies(){
+        ArrayList<Enemy> enemy = new ArrayList<>();
+        // after playing with this, I have given up on picking a good starting point... 
+        Zombie zombie = new Zombie(getMapTile(10, 6).getLocation(), Direction.RIGHT);
+        enemy.add(zombie);
+        return enemy;
     }
 
     @Override

@@ -5,6 +5,7 @@
 bin/
 .idea/
 classes/
+.DS_Store
 out/
 TestResources/
 _site
