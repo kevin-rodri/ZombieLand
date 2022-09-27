@@ -1,15 +1,22 @@
 package Maps;
+import NPCs.*;
 
+import NPCs.Lives;
+import Players.*;
+import Screens.PlayLevelScreen;
 import EnhancedMapTiles.Rock;
 import Level.Enemy;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
 import Level.Trigger;
+
+
 import NPCs.Dinosaur;
 import NPCs.Walrus;
 import PowerUp.DoublePoints;
 import PowerUp.Nuke;
+
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
 import Scripts.TestMap.LostBallScript;
@@ -34,9 +41,11 @@ public class TestMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
         enhancedMapTiles.add(new Rock(getMapTile(2, 7).getLocation()));
+        enhancedMapTiles.add(new EnhancedMapTiles.Lives(getMapTile(18, 21).getLocation()));
         return enhancedMapTiles;
     }
-
+    
+  
     @Override
     public ArrayList<NPC> loadNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
@@ -49,6 +58,13 @@ public class TestMap extends Map {
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
+
+        
+        
+        Lives point = new Lives(3, getMapTile(20, 1).getLocation().subtractY(40));
+        npcs.add(point);
+        
+
 
         DoublePoints doublePoints = new DoublePoints(3, getMapTile(14, 5).getLocation().subtractY(40));
         doublePoints.setInteractScript(new WalrusScript());
