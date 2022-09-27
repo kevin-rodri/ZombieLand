@@ -3,6 +3,7 @@ import NPCs.*;
 
 import NPCs.Lives;
 import Players.*;
+import PowerUp.ExtraLife;
 import Screens.PlayLevelScreen;
 import EnhancedMapTiles.Rock;
 import Level.Enemy;
@@ -59,13 +60,6 @@ public class TestMap extends Map {
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
 
-        
-        
-        Lives point = new Lives(3, getMapTile(20, 1).getLocation().subtractY(40));
-        npcs.add(point);
-        
-
-
         DoublePoints doublePoints = new DoublePoints(3, getMapTile(14, 5).getLocation().subtractY(40));
         doublePoints.setInteractScript(new WalrusScript());
         npcs.add(doublePoints);
@@ -73,6 +67,10 @@ public class TestMap extends Map {
         Nuke nuke = new Nuke(4, getMapTile(14, 2). getLocation().subtractY(40));
         nuke.setInteractScript(new WalrusScript());
         npcs.add(nuke);
+
+        ExtraLife lifeup = new ExtraLife(5, getMapTile(20, 1).getLocation().subtractY(40));
+        nuke.setInteractScript(new WalrusScript());
+        npcs.add(lifeup);
 
 
 
