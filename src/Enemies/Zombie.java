@@ -45,7 +45,7 @@ public class Zombie extends Enemy implements SoundController {
         // this conditional will be temporary as I added it to test if the walk method works
         if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             walk(facingDirection, zombieSpeed);
-            playMusic(2);
+           
         }
         super.update();
     }
