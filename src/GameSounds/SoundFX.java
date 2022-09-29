@@ -10,8 +10,8 @@ import javax.sound.sampled.Clip;
 public class SoundFX {
 
     Clip clip;
-    URL soundURL[] = new URL[5];
-    String soundeffects[] = new String[5];
+    URL soundURL[] = new URL[10];
+    String soundeffects[] = new String[10];
 public static void main(String[]args){
     SoundFX test = new SoundFX();
     test.setFile(0);
@@ -26,6 +26,7 @@ public static void main(String[]args){
         soundeffects[1]= ".//Resources//sounds/DoublePoints.wav";
         soundeffects[2]= ".//Resources//sounds/225GameSoundtrack.wav";
         soundeffects[3]= ".//Resources//sounds/Footstep.wav";
+        soundeffects[4]= ".//Resources//sounds/HealthPack.wav";
       
     }
 
