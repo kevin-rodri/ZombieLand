@@ -35,7 +35,8 @@ public static void main(String[]args){
             AudioInputStream ais = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(ais);
-            System.out.println("PRINTING");
+            //System.out.println("PRINTING");
+            //Game lags when you touch zombie
             
 
         } catch (Exception e) {
