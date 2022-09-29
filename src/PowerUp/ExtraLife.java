@@ -13,7 +13,7 @@ import Level.Player;
 import Level.PlayerState;
 import Utils.Point;
 
-public class ExtraLife extends NPC  {
+public class ExtraLife extends NPC implements SoundController {
     public ExtraLife(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Heart.png"), 13, 13), "STAND_LEFT");
     }
@@ -21,6 +21,7 @@ public class ExtraLife extends NPC  {
     public void update(Player player) {
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
+            playSE(4);
 
         }
         super.update(player);
