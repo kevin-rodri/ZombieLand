@@ -39,7 +39,7 @@ public class PlayLevelScreen extends Screen {
 				if(counter > 9) {
 					t.stop();
 				}
-				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,Color.white);
+				instructions = new SpriteFont("WAVE: " + counter + "/10", 50, 50, "Comic Sans", 20,Color.white);
 				counter++;
 			}
 		});
@@ -53,7 +53,7 @@ public class PlayLevelScreen extends Screen {
 	public void initialize() {
 		// setup state
 		flagManager = new FlagManager();
-		instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20, Color.white);
+		instructions = new SpriteFont("WAVE: " + counter + "/10", 50, 50, "Comic Sans", 20, Color.white);
 		time();
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
