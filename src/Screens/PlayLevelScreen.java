@@ -168,4 +168,5 @@ public class PlayLevelScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
+
 }
