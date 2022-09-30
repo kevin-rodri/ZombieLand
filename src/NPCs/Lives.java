@@ -31,16 +31,16 @@ public class Lives extends NPC  {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(3)
-//                            .withBounds(7, 13, 11, 7)
+                            .withScale(1)
+                            .withBounds(7, 13, 11, 7)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(0, 0))
-                           .withScale(3)
-//                           .withBounds(7, 13, 11, 7)
+                           .withScale(1)
+                           .withBounds(7, 13, 11, 7)
                            .build()
-           });
+           }); 
         }};
     }
 
