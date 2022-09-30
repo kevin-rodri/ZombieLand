@@ -1,6 +1,7 @@
 package PowerUp;
 
 import Builders.FrameBuilder;
+
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import GameObject.Frame;

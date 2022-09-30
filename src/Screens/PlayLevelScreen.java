@@ -1,7 +1,7 @@
 package Screens;
 
 import java.awt.Color;
-
+import PowerUp.weapons;
 
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
@@ -23,7 +23,7 @@ public class PlayLevelScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	protected Player lives;
+	protected Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont instructions;
 	protected WinScreen winScreen;
@@ -36,10 +36,11 @@ public class PlayLevelScreen extends Screen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(counter > 9) {
+				if (counter > 9) {
 					t.stop();
 				}
-				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,Color.white);
+				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,
+						Color.white);
 				counter++;
 			}
 		});
@@ -67,21 +68,19 @@ public class PlayLevelScreen extends Screen {
 
 		// setup player
 
-
-        this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player.setMap(map);
 		Point playerStartPosition = map.getPlayerStartPosition();
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-
-
-
-
-
+		this.player2 = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.player2.setMap(map);
+		this.player2.setLocation(670, 120);
+		// getMapTile(14, 2).getLocation().subtractY(40)
+//		this.player2.setFacingDirection(Direction.LEFT);
 		// let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
-
 
 		// setup map scripts to have references to the map and player
 		for (MapTile mapTile : map.getMapTiles()) {
@@ -118,9 +117,13 @@ public class PlayLevelScreen extends Screen {
 		// if level is "running" update player and map to keep game logic for the
 		// platformer level going
 		case RUNNING:
-			player.update();
-			map.update(player);
-
+			if (weapons.check == true) {
+				player2.update();
+				map.update(player2);
+			} else {
+				player.update();
+				map.update(player);
+			}
 
 			break;
 		// if level has been completed, bring up level cleared screen
@@ -140,8 +143,13 @@ public class PlayLevelScreen extends Screen {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 		case RUNNING:
-			map.draw(player, graphicsHandler);
+			if (weapons.check == true) {
+				map.draw(player2, graphicsHandler);
 
+			} else {
+				map.draw(player, graphicsHandler);
+
+			}
 
 			break;
 		case LEVEL_COMPLETED:
