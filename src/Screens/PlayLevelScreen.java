@@ -1,12 +1,17 @@
 package Screens;
 
 import java.awt.Color;
+
 import PowerUp.weapons;
 
 import javax.swing.Timer;
+
+import Enemies.Shooting;
+import GameObject.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Engine.GraphicsHandler;
+import Engine.Key;
 import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
@@ -17,17 +22,24 @@ import SpriteFont.SpriteFont;
 import Players.Alex;
 import Utils.Direction;
 import Utils.Point;
+import Engine.KeyLocker;
+import Engine.Keyboard;
+import java.util.HashMap;
+import Screens.PlayLevelScreen;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	protected Player player2;
+	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont instructions;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
+	protected Key shootingKey = Key.S;
+	protected KeyLocker keyLocker = new KeyLocker();
+
 	protected int counter = 0;
 	Timer t;
 
@@ -77,8 +89,7 @@ public class PlayLevelScreen extends Screen {
 		this.player2 = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player2.setMap(map);
 		this.player2.setLocation(670, 120);
-		// getMapTile(14, 2).getLocation().subtractY(40)
-//		this.player2.setFacingDirection(Direction.LEFT);
+		this.player2.setFacingDirection(player.getFacingDirection());
 		// let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
 
@@ -108,7 +119,6 @@ public class PlayLevelScreen extends Screen {
 			}
 		}
 
-		winScreen = new WinScreen(this);
 	}
 
 	public void update() {
@@ -120,6 +130,29 @@ public class PlayLevelScreen extends Screen {
 			if (weapons.check == true) {
 				player2.update();
 				map.update(player2);
+
+				boolean shoot = true;
+
+				if (shoot == true && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
+					shoot = false;
+					float movementSpeed;
+					if (player2.getFacingDirection() == Direction.RIGHT) {
+						movementSpeed = 1.5f;
+//		            fireballX = Math.round(getX()) + getWidth();
+
+					} else {
+						movementSpeed = -1.5f;
+//					fireballX = Math.round(getX()) + 4;
+
+					}
+//				  int fireballY = Math.round(getY()) + 4;	
+					Shooting bullet = new Shooting(player2.getLocation(), movementSpeed, 10000);
+
+//				 add fireball enemy to the map for it to offically spawn in the level
+					map.addEnemy(bullet);
+					shoot = true;
+				}
+
 			} else {
 				player.update();
 				map.update(player);
