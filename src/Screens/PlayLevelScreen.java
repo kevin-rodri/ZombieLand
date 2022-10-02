@@ -2,6 +2,7 @@ package Screens;
 
 import java.awt.Color;
 
+
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -18,9 +19,10 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
-import Players.Cat;
+import Players.AlexWithAPistol;
 import SpriteFont.SpriteFont;
 import Players.Alex;
+import Players.AlexWithAPistol;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -90,7 +92,7 @@ public class PlayLevelScreen extends Screen {
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-		this.player2 = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player2.setMap(map);
 		this.player2.setLocation(670, 120);
 		this.player2.setFacingDirection(player.getFacingDirection());

@@ -1,6 +1,7 @@
 package PowerUp;
 
 import Builders.FrameBuilder;
+
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import GameObject.Frame;
@@ -9,7 +10,7 @@ import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
-import Players.Cat;
+import Players.AlexWithAPistol;
 import Screens.PlayLevelScreen;
 import Screens.PlayLevelScreen.PlayLevelScreenState;
 import Scripts.TestMap.DoublePointsScript;
