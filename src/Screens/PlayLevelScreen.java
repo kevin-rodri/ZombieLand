@@ -22,6 +22,7 @@ import SpriteFont.SpriteFont;
 import Players.Alex;
 import Utils.Direction;
 import Utils.Point;
+import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class PlayLevelScreen extends Screen {
 	protected FlagManager flagManager;
 	protected Key shootingKey = Key.S;
 	protected KeyLocker keyLocker = new KeyLocker();
+    private Stopwatch Timer = new Stopwatch();
+
 
 	protected int counter = 0;
 	Timer t;
@@ -130,27 +133,26 @@ public class PlayLevelScreen extends Screen {
 			if (weapons.check == true) {
 				player2.update();
 				map.update(player2);
-
-				boolean shoot = true;
-
-				if (shoot == true && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
-					shoot = false;
+//				Timer.isTimeUp();
+				
+				if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 					float movementSpeed;
+					int fireballX;
 					if (player2.getFacingDirection() == Direction.RIGHT) {
 						movementSpeed = 1.5f;
-//		            fireballX = Math.round(getX()) + getWidth();
+//						fireballX = (int) (player2.getX2() - player2.getX1());
 
 					} else {
 						movementSpeed = -1.5f;
-//					fireballX = Math.round(getX()) + 4;
-
+//						fireballX = (int) (player2.getX2() - player2.getX1());
 					}
-//				  int fireballY = Math.round(getY()) + 4;	
+//				  int fireballY = (int) (player2.getY2() - player2.getY1());
 					Shooting bullet = new Shooting(player2.getLocation(), movementSpeed, 10000);
+//				   Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
 
 //				 add fireball enemy to the map for it to offically spawn in the level
 					map.addEnemy(bullet);
-					shoot = true;
+					Timer.setWaitTime(500);
 				}
 
 			} else {
