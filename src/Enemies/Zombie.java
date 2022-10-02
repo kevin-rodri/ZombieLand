@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-    private float zombieSpeed = 1.5f;
+	private float zombieSpeed = 1.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
 
@@ -45,8 +45,18 @@ public class Zombie extends Enemy {
         // this conditional will be temporary as I added it to test if the walk method works
         if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             walk(facingDirection, zombieSpeed);
-                }
+        }
         super.update();
+    }
+    
+    public void remove(Shooting shooting, Player player2 ) {
+    	 if (shooting.intersects(this)) {
+             this.setIsHidden(true);
+             
+          
+             //this.setInteractScript(DoublePointsScript);
+         }
+    	 super.update();
     }
 
     @Override
@@ -81,4 +91,5 @@ public class Zombie extends Enemy {
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
     }
+
 }

@@ -7,6 +7,7 @@ import PowerUp.weapons;
 import javax.swing.Timer;
 
 import Enemies.Shooting;
+import Enemies.Zombie;
 import GameObject.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -152,6 +153,8 @@ public class PlayLevelScreen extends Screen {
 
 //				 add fireball enemy to the map for it to offically spawn in the level
 					map.addEnemy(bullet);
+					Zombie zombie = new Zombie(player2.getLocation(), Direction.RIGHT);
+					zombie.remove(bullet, player2);
 					Timer.setWaitTime(500);
 				}
 
