@@ -37,6 +37,7 @@ import Enemies.Zombie;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
+	public static Point location;
 
     public TestMap() {
         super("test_map.txt", new CommonTileset());
@@ -91,6 +92,7 @@ public class TestMap extends Map {
         ArrayList<Enemy> enemy = new ArrayList<>();
         // after playing with this, I have given up on picking a good starting point... 
         Zombie zombie = new Zombie(getMapTile(10, 6).getLocation(), Direction.RIGHT);
+        location = zombie.getLocation();
         enemy.add(zombie);
         return enemy;
     }
