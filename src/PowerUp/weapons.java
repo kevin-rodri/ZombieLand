@@ -25,7 +25,7 @@ public class weapons extends NPC implements SoundController{
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
 	 public weapons(int id, Point location) {
-	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("gamePistol.png"), 45, 50), "STAND_RIGHT");
+	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("gamePistol.png"), 45, 45), "STAND_RIGHT");
 	    }
 
 	    public void update(Player player) {
