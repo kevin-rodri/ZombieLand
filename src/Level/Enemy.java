@@ -45,35 +45,40 @@ public class Enemy extends MapEntity {
     }
     
 
-    // allows enemy freedom to walk around the map (from the npc class)
-    public void walk(Direction direction, float speed) {
-        if (direction == Direction.RIGHT) {
+   // allows enemy freedom to walk around the map (from the npc class)
+   // Note: changed move methods to check for collision
+   public void walk(Direction direction, float speed) {
+    if (direction == Direction.RIGHT) {
+        this.currentAnimationName = "WALK_RIGHT";
+    }
+    else if (direction == Direction.LEFT) {
+        this.currentAnimationName = "WALK_LEFT";
+    }
+    else {
+        if (this.currentAnimationName.contains("RIGHT")) {
             this.currentAnimationName = "WALK_RIGHT";
         }
-        else if (direction == Direction.LEFT) {
+        else {
             this.currentAnimationName = "WALK_LEFT";
         }
-        else {
-            if (this.currentAnimationName.contains("RIGHT")) {
-                this.currentAnimationName = "WALK_RIGHT";
-            }
-            else {
-                this.currentAnimationName = "WALK_LEFT";
-            }
-        }
-        if (direction == Direction.UP) {
-            moveY(-speed);
-        }
-        else if (direction == Direction.DOWN) {
-            moveY(speed);
-        }
-        else if (direction == Direction.LEFT) {
-            moveX(-speed);
-        }
-        else if (direction == Direction.RIGHT) {
-            moveX(speed);
-        }
     }
+    if (direction == Direction.UP) {
+        moveYHandleCollision(-speed);
+    }
+    else if (direction == Direction.DOWN) {
+        moveYHandleCollision(speed);
+    }
+    else if (direction == Direction.LEFT) {
+        moveXHandleCollision(-speed);
+    }
+    else if (direction == Direction.RIGHT) {
+        moveXHandleCollision(speed);
+    }
+}
+// method that will be used to ensure any enemy walks to the player
+public void walktoPlayer(Direction direction, float speed, Player player) {
+    walk(direction, speed);
+}
 
     // A subclass can override this method to specify what it does when it touches the player
 	public void touchedPlayer(Player player) {

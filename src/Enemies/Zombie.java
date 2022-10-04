@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-	private float zombieSpeed = 1.5f;
+	private float zombieSpeed = 0.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
 
@@ -41,13 +41,35 @@ public class Zombie extends Enemy {
     }
 
     // Update player's state
-    public void update(Player player){
-        // this conditional will be temporary as I added it to test if the walk method works
-        if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
-            walk(facingDirection, zombieSpeed);
-        }
-        super.update();
+   public void update(Player player){
+    // will be used to update direction of enemy
+    Direction targetDirection;
+    // Will get player's key movements in order to move zombie to the direction player is heading towards
+    float xPosition = player.getX() - x;
+    float yPosition = player.getY() - y;
+    
+    if (xPosition > zombieSpeed){
+         targetDirection = Direction.RIGHT;
+         walktoPlayer(targetDirection, zombieSpeed, player);
+    } else {
+       targetDirection = Direction.LEFT;
+        walktoPlayer(targetDirection, zombieSpeed, player);
     }
+
+    if (yPosition < zombieSpeed){
+        targetDirection = Direction.UP;
+        walktoPlayer(targetDirection, zombieSpeed, player);
+    } else {
+        targetDirection = Direction.DOWN;
+        walktoPlayer(targetDirection, zombieSpeed, player);
+    }
+
+    // added this to avoid the glicthy collision
+    if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
+            this.setIsHidden(true);
+    }   
+    super.update();
+}
     
     public void remove(Shooting shooting, Player player2 ) {
     	 if (shooting.intersects(this)) {
@@ -66,10 +88,12 @@ public class Zombie extends Enemy {
            put("WALK_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
                            .withScale(3)
+                           .withBounds(10, 10, 20, 20)
                            .build(), 
 
                     new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
                     .withScale(3)
+                    .withBounds(10, 10, 20, 20)
                     .build()
             
            });
@@ -77,11 +101,13 @@ public class Zombie extends Enemy {
                 new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
                 .withScale(3)
                 .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                .withBounds(10, 10, 20, 20)
                 .build(), 
 
          new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
          .withScale(3)
          .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+         .withBounds(10, 10, 20, 20)
          .build()
             });
         }};

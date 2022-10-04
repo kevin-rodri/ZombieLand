@@ -6,7 +6,6 @@ import NPCs.*;
 import NPCs.Lives;
 import Players.*;
 import PowerUp.ExtraLife;
-import Screens.PlayLevelScreen;
 import EnhancedMapTiles.Rock;
 import Level.Enemy;
 import Level.EnhancedMapTile;
@@ -29,8 +28,7 @@ import Tilesets.CommonTileset;
 import Utils.Direction;
 
 import java.util.ArrayList;
-
-import Enemies.Shooting;
+import java.util.Random;
 import Enemies.Zombie;
 
 
@@ -88,9 +86,34 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Enemy> loadEnemies(){
         ArrayList<Enemy> enemy = new ArrayList<>();
-        // after playing with this, I have given up on picking a good starting point... 
-        Zombie zombie = new Zombie(getMapTile(10, 6).getLocation(), Direction.RIGHT);
-        enemy.add(zombie);
+        // after playing with this, I have given up on picking a good starting point...
+        Random random = new Random();
+        // generate a number from 1 - 11
+        int randomX  = 1 + random.nextInt(10);
+        // generate a number from 1 - 11
+        int randomY  = 1 + random.nextInt(10);
+        Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
+        enemy.add(zombieOne);
+         randomX  = 1 + random.nextInt(10);
+        // generate a number from 1 - 11
+        randomY  = 1 + random.nextInt(10);
+        Zombie zombieTwo = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
+        enemy.add(zombieTwo);
+      
+
+        for (int i = 0; i < enemy.size(); i++){
+             Enemy enemies = enemy.get(i);
+            if (enemy.size() == 2){
+                    for (int j = 0; j < 10; j++){
+                        // generate a number from 1 - 11
+                   randomX  = 1 + random.nextInt(10);
+                   // generate a number from 1 - 11
+                   randomY  = 1 + random.nextInt(10);
+                     Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                     enemy.add(zombieWaveOne);     
+                   }
+                } 
+            }
         return enemy;
     }
 
