@@ -22,6 +22,7 @@ public class Zombie extends Enemy {
 	private float zombieSpeed = 1.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
+    public static boolean check = true;
 
     public Zombie(Point location, Direction facingDirection) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),23, 24), "WALK_RIGHT");
@@ -41,23 +42,18 @@ public class Zombie extends Enemy {
     }
 
     // Update player's state
-    public void update(Player player){
+    public void update(Player player, Shooting shooting){
         // this conditional will be temporary as I added it to test if the walk method works
-        if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
+    	if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             walk(facingDirection, zombieSpeed);
+            this.setIsHidden(true);
+        }
+    	if (shooting.intersects(this)){
+            this.setIsHidden(true);
         }
         super.update();
     }
-    
-    public void remove(Shooting shooting, Player player2 ) {
-    	 if (shooting.intersects(this)) {
-             this.setIsHidden(true);
-             
-          
-             //this.setInteractScript(DoublePointsScript);
-         }
-    	 super.update();
-    }
+ 
 
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {

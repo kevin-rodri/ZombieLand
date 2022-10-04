@@ -2,7 +2,6 @@ package Screens;
 
 import java.awt.Color;
 
-
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -43,8 +42,7 @@ public class PlayLevelScreen extends Screen {
 	protected FlagManager flagManager;
 	protected Key shootingKey = Key.S;
 	protected KeyLocker keyLocker = new KeyLocker();
-    private Stopwatch Timer = new Stopwatch();
-
+	private Stopwatch Timer = new Stopwatch();
 
 	protected int counter = 0;
 	Timer t;
@@ -137,26 +135,23 @@ public class PlayLevelScreen extends Screen {
 				player2.update();
 				map.update(player2);
 //				Timer.isTimeUp();
-				
+
 				if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 					float movementSpeed;
-					int fireballX;
+					float fireballX;
 					if (player2.getFacingDirection() == Direction.RIGHT) {
 						movementSpeed = 1.5f;
-//						fireballX = (int) (player2.getX2() - player2.getX1());
-
+						fireballX = Math.round(player2.getX()) + 50;
 					} else {
 						movementSpeed = -1.5f;
-//						fireballX = (int) (player2.getX2() - player2.getX1());
+	                    fireballX = Math.round(player2.getX());
 					}
 //				  int fireballY = (int) (player2.getY2() - player2.getY1());
-					Shooting bullet = new Shooting(player2.getLocation(), movementSpeed, 10000);
-//				   Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
+	                int fireballY = Math.round(player2.getY()) + 18;
+					Shooting bullet = new Shooting(new Point(fireballX,fireballY), movementSpeed, 10000);
 
-//				 add fireball enemy to the map for it to offically spawn in the level
+					//				 add fireball enemy to the map for it to offically spawn in the level
 					map.addEnemy(bullet);
-					Zombie zombie = new Zombie(player2.getLocation(), Direction.RIGHT);
-					zombie.remove(bullet, player2);
 					Timer.setWaitTime(500);
 				}
 

@@ -63,6 +63,8 @@ public class Shooting extends Enemy {
 		super.touchedPlayer(player);
 		this.mapEntityStatus = MapEntityStatus.REMOVED;
 	}
+	
+
 
 	@Override
 	public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {

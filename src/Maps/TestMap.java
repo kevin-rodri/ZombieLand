@@ -27,6 +27,7 @@ import Scripts.TestMap.TreeScript;
 import Scripts.TestMap.WalrusScript;
 import Tilesets.CommonTileset;
 import Utils.Direction;
+import Utils.Point;
 
 import java.util.ArrayList;
 
