@@ -79,6 +79,7 @@ public class Enemy extends MapEntity {
 	public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
+	
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
