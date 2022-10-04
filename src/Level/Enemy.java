@@ -84,6 +84,7 @@ public void walktoPlayer(Direction direction, float speed, Player player) {
 	public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
+	
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {

@@ -11,7 +11,7 @@ import Level.Player;
 import java.util.HashMap;
 
 // This is the class for the Alex player character
-// basically just sets some values for physics and then defines animations
+// basically just sets some values for physics and then defines animations 
 public class Alex extends Player {
 
     public Alex(float x, float y) {

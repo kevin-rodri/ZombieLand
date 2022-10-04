@@ -19,26 +19,60 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
+
 	private float zombieSpeed = 0.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
 
-    public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"),23, 24), "WALK_RIGHT");
-        this.startFacingDirection = facingDirection;
-        this.initialize();
-    }
+	
+	public static boolean disappear;
+	private float zombieSpeed = 1.5f;
+	private Direction startFacingDirection;
+	private Direction facingDirection;
+	public static boolean check = true;
 
-    @Override
-    public void initialize() {
-        super.initialize();
-        facingDirection = startFacingDirection;
-        if (facingDirection == Direction.RIGHT) {
-            currentAnimationName = "WALK_RIGHT";
-        } else if (facingDirection == Direction.LEFT) {
-            currentAnimationName = "WALK_LEFT";
-        }
-    }
+	public Zombie(Point location, Direction facingDirection) {
+		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
+		this.startFacingDirection = facingDirection;
+		this.initialize();
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		facingDirection = startFacingDirection;
+		if (facingDirection == Direction.RIGHT) {
+			currentAnimationName = "WALK_RIGHT";
+		} else if (facingDirection == Direction.LEFT) {
+			currentAnimationName = "WALK_LEFT";
+		}
+	}
+
+
+	// Update player's state
+	public void update(Player player) {
+		// this conditional will be temporary as I added it to test if the walk method
+		// works
+		if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING) {
+			walk(facingDirection, zombieSpeed);
+		}
+		if(disappear == true) {
+			this.setIsHidden(true);
+		}
+		super.update();
+	}
+
+	public void removeZombie(Shooting shooting) {
+		// this conditional will be temporary as I added it to test if the walk method
+		// works
+		if (shooting.overlaps(this)) {
+			disappear = true;
+			System.out.println(true);
+			update();
+		}
+		super.update();
+	}
+
 
     // Update player's state
    public void update(Player player){
@@ -113,9 +147,11 @@ public class Zombie extends Enemy {
         }};
     }
 
-    @Override
-    public void draw(GraphicsHandler graphicsHandler) {
-        super.draw(graphicsHandler);
-    }
+
+
+	@Override
+	public void draw(GraphicsHandler graphicsHandler) {
+		super.draw(graphicsHandler);
+	}
 
 }

@@ -26,6 +26,7 @@ import Scripts.TestMap.TreeScript;
 import Scripts.TestMap.WalrusScript;
 import Tilesets.CommonTileset;
 import Utils.Direction;
+import Utils.Point;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,6 +35,7 @@ import Enemies.Zombie;
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
+	public static Point location;
 
     public TestMap() {
         super("test_map.txt", new CommonTileset());
@@ -86,6 +88,7 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Enemy> loadEnemies(){
         ArrayList<Enemy> enemy = new ArrayList<>();
+
         // after playing with this, I have given up on picking a good starting point...
         Random random = new Random();
         // generate a number from 1 - 11
@@ -114,6 +117,7 @@ public class TestMap extends Map {
                    }
                 } 
             }
+            
         return enemy;
     }
 
