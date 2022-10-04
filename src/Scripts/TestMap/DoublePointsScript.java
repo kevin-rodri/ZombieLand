@@ -4,6 +4,7 @@ import Engine.Config;
 import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
+import MoneySystem.MoneyBase;
 
 public class DoublePointsScript extends Script<NPC> {
 
@@ -11,7 +12,9 @@ public class DoublePointsScript extends Script<NPC> {
 
     @Override
     protected void setup() {
-
+        showTextbox();
+        addTextToTextboxQueue("DOUBLEPOINTS!");
+        //MoneyBase.addMoney();
 
     }
 

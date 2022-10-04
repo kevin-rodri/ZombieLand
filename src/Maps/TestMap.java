@@ -19,10 +19,7 @@ import PowerUp.DoublePoints;
 import PowerUp.Nuke;
 
 import Scripts.SimpleTextScript;
-import Scripts.TestMap.DinoScript;
-import Scripts.TestMap.LostBallScript;
-import Scripts.TestMap.TreeScript;
-import Scripts.TestMap.WalrusScript;
+import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 
@@ -61,7 +58,7 @@ public class TestMap extends Map {
         npcs.add(dinosaur);
 
         DoublePoints doublePoints = new DoublePoints(3, getMapTile(14, 5).getLocation().subtractY(40));
-        doublePoints.setInteractScript(new WalrusScript());
+        doublePoints.setInteractScript(new DoublePointsScript());
         npcs.add(doublePoints);
 
         Nuke nuke = new Nuke(4, getMapTile(14, 2). getLocation().subtractY(40));

@@ -17,6 +17,7 @@ import SpriteFont.SpriteFont;
 import Players.Alex;
 import Utils.Direction;
 import Utils.Point;
+import MoneySystem.MoneyBase;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -29,6 +30,8 @@ public class PlayLevelScreen extends Screen {
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected int counter = 0;
+	protected SpriteFont moneyDisplay;
+	//protected int moneyCount = MoneyBase.moneyCount;
 	Timer t;
 
 	private void time() {
@@ -39,8 +42,11 @@ public class PlayLevelScreen extends Screen {
 				if(counter > 9) {
 					t.stop();
 				}
+				//String moneyCountst = String.valueOf(moneyCount);
 				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,Color.white);
+				moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount , 300, 20, "Comic Sans", 20,Color.green);
 				counter++;
+				MoneyBase.addMoneyOT();
 			}
 		});
 		t.start();
@@ -54,11 +60,13 @@ public class PlayLevelScreen extends Screen {
 		// setup state
 		flagManager = new FlagManager();
 		instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20, Color.white);
+		moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount , 300, 20, "Comic Sans", 20,Color.green);
 		time();
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
 		flagManager.addFlag("hasTalkedToDinosaur", false);
 		flagManager.addFlag("hasFoundBall", false);
+
 
 		// define/setup map
 		this.map = new TestMap();
@@ -149,6 +157,8 @@ public class PlayLevelScreen extends Screen {
 			break;
 		}
 		instructions.draw(graphicsHandler);
+		moneyDisplay.draw(graphicsHandler);
+
 
 	}
 

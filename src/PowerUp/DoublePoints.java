@@ -10,6 +10,7 @@ import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
 import Utils.Point;
+import MoneySystem.MoneyBase;
 
 import java.util.HashMap;
 
@@ -23,6 +24,8 @@ public class DoublePoints extends NPC implements SoundController {
     public void update(Player player) {
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
+            MoneyBase.addMoneyX2();
+
             try {
                 playSE(1);
        
