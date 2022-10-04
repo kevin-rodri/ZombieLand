@@ -1,6 +1,8 @@
 package Maps;
 import NPCs.*;
 
+
+
 import NPCs.Lives;
 import Players.*;
 import PowerUp.ExtraLife;
@@ -17,18 +19,22 @@ import NPCs.Dinosaur;
 import NPCs.Walrus;
 import PowerUp.DoublePoints;
 import PowerUp.Nuke;
-
+import PowerUp.weapons;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
 import Utils.Direction;
+import Utils.Point;
 
 import java.util.ArrayList;
 
+import Enemies.Shooting;
 import Enemies.Zombie;
+
 
 // Represents a test map to be used in a level
 public class TestMap extends Map {
+	public static Point location;
 
     public TestMap() {
         super("test_map.txt", new CommonTileset());
@@ -61,12 +67,16 @@ public class TestMap extends Map {
         doublePoints.setInteractScript(new DoublePointsScript());
         npcs.add(doublePoints);
 
-        Nuke nuke = new Nuke(4, getMapTile(14, 2). getLocation().subtractY(40));
+        Nuke nuke = new Nuke(4, getMapTile(14, 2).getLocation().subtractY(40));
         nuke.setInteractScript(new WalrusScript());
         npcs.add(nuke);
+        
+        weapons pistol = new weapons(6, getMapTile(14, 3).getLocation().subtractY(40));
+        nuke.setInteractScript(new WalrusScript());
+        npcs.add(pistol);
 
         ExtraLife lifeup = new ExtraLife(5, getMapTile(20, 1).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
+        lifeup.setInteractScript(new WalrusScript());
         npcs.add(lifeup);
 
 
@@ -79,6 +89,7 @@ public class TestMap extends Map {
         ArrayList<Enemy> enemy = new ArrayList<>();
         // after playing with this, I have given up on picking a good starting point... 
         Zombie zombie = new Zombie(getMapTile(10, 6).getLocation(), Direction.RIGHT);
+        location = zombie.getLocation();
         enemy.add(zombie);
         return enemy;
     }

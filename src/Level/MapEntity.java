@@ -6,6 +6,8 @@ import GameObject.SpriteSheet;
 
 import java.util.HashMap;
 
+import Enemies.Shooting;
+
 // This class represents a map entity, which is any "entity" on a map besides the player
 // it is basically a game object with a few extra features for handling things what to do upon the player interacting with them
 public class MapEntity extends GameObject {
@@ -98,4 +100,5 @@ public class MapEntity extends GameObject {
     public void setExistenceFlag(String existenceFlag) {
         this.existenceFlag = existenceFlag;
     }
+
 }
