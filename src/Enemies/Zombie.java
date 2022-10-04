@@ -23,12 +23,7 @@ public class Zombie extends Enemy {
 	private float zombieSpeed = 0.5f;
     private Direction startFacingDirection;
     private Direction facingDirection;
-
-	
 	public static boolean disappear;
-	private float zombieSpeed = 1.5f;
-	private Direction startFacingDirection;
-	private Direction facingDirection;
 	public static boolean check = true;
 
 	public Zombie(Point location, Direction facingDirection) {
@@ -49,18 +44,7 @@ public class Zombie extends Enemy {
 	}
 
 
-	// Update player's state
-	public void update(Player player) {
-		// this conditional will be temporary as I added it to test if the walk method
-		// works
-		if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING) {
-			walk(facingDirection, zombieSpeed);
-		}
-		if(disappear == true) {
-			this.setIsHidden(true);
-		}
-		super.update();
-	}
+
 
 	public void removeZombie(Shooting shooting) {
 		// this conditional will be temporary as I added it to test if the walk method
@@ -101,10 +85,13 @@ public class Zombie extends Enemy {
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             this.setIsHidden(true);
-    }   
-    super.update();
-}
-    
+     }   
+     if(disappear == true) {
+        this.setIsHidden(true);
+    }
+     super.update();
+    }
+
     public void remove(Shooting shooting, Player player2 ) {
     	 if (shooting.intersects(this)) {
              this.setIsHidden(true);
