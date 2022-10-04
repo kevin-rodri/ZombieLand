@@ -152,10 +152,13 @@ public class PlayLevelScreen extends Screen {
 
 					//				 add fireball enemy to the map for it to offically spawn in the level
 					map.addEnemy(bullet);
+					Zombie zombie = new Zombie(TestMap.location, Direction.RIGHT);
+					zombie.removeZombie(bullet);
 					Timer.setWaitTime(500);
 				}
 
 			} else {
+				
 				player.update();
 				map.update(player);
 			}
