@@ -18,8 +18,7 @@ import Utils.Stopwatch;
 
 public class Shooting extends Enemy {
 	private float movementSpeed;
-	private Stopwatch existenceTimer = new Stopwatch();
-
+	public Stopwatch existenceTimer = new Stopwatch();
 
 	public Shooting(Point location, float movementSpeed, int existenceTime) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("pistolBullet.png"), 7, 7), "DEFAULT");
@@ -27,7 +26,6 @@ public class Shooting extends Enemy {
 
 		// how long the fireball will exist for before disappearing
 		existenceTimer.setWaitTime(existenceTime);
-
 		// this enemy will not respawn after it has been removed
 //	        isRespawnable = false;
 
@@ -42,6 +40,7 @@ public class Shooting extends Enemy {
 		// map
 		if (existenceTimer.isTimeUp()) {
 			this.mapEntityStatus = MapEntityStatus.REMOVED;
+			
 		} else {
 			// move fireball forward
 			moveXHandleCollision(movementSpeed);

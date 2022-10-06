@@ -113,7 +113,8 @@ public class TestMap extends Map {
                    // generate a number from 1 - 11
                    randomY  = 1 + random.nextInt(10);
                      Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
-                     enemy.add(zombieWaveOne);     
+                     enemy.add(zombieWaveOne);  
+                     location = zombieWaveOne.getLocation();
                    }
                 } 
             }
