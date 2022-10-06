@@ -2,33 +2,50 @@ package Screens;
 
 import java.awt.Color;
 
+import PowerUp.weapons;
 
 import javax.swing.Timer;
+
+import Enemies.Shooting;
+import Enemies.Zombie;
+import GameObject.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Engine.GraphicsHandler;
+import Engine.Key;
 import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
-import Players.Cat;
+import Players.AlexWithAPistol;
 import SpriteFont.SpriteFont;
 import Players.Alex;
+import Players.AlexWithAPistol;
 import Utils.Direction;
 import Utils.Point;
+
 import MoneySystem.MoneyBase;
+
+import Utils.Stopwatch;
+import Engine.KeyLocker;
+import Engine.Keyboard;
+import java.util.HashMap;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	protected Player lives;
+	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont instructions;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
+	protected Key shootingKey = Key.S;
+	protected KeyLocker keyLocker = new KeyLocker();
+	private Stopwatch Timer = new Stopwatch();
+
 	protected int counter = 0;
 	protected SpriteFont moneyDisplay;
 	//protected int moneyCount = MoneyBase.moneyCount;
@@ -39,12 +56,14 @@ public class PlayLevelScreen extends Screen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(counter > 9) {
+				if (counter > 9) {
 					t.stop();
 				}
 				//String moneyCountst = String.valueOf(moneyCount);
-				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,Color.white);
-				moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount , 300, 20, "Comic Sans", 20,Color.green);
+				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20, Color.white);
+				moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount, 300, 20, "Comic Sans", 20, Color.green);
+				instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20,
+						Color.white);
 				counter++;
 				MoneyBase.addMoneyOT();
 			}
@@ -60,7 +79,7 @@ public class PlayLevelScreen extends Screen {
 		// setup state
 		flagManager = new FlagManager();
 		instructions = new SpriteFont("NUMBER OF WAVES: " + counter + "/10", 300, 50, "Comic Sans", 20, Color.white);
-		moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount , 300, 20, "Comic Sans", 20,Color.green);
+		moneyDisplay = new SpriteFont("$ " + MoneyBase.moneyCount, 300, 20, "Comic Sans", 20, Color.green);
 		time();
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
@@ -75,21 +94,18 @@ public class PlayLevelScreen extends Screen {
 
 		// setup player
 
-
-        this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player.setMap(map);
 		Point playerStartPosition = map.getPlayerStartPosition();
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-
-
-
-
-
+		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.player2.setMap(map);
+		this.player2.setLocation(670, 120);
+		this.player2.setFacingDirection(player.getFacingDirection());
 		// let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
-
 
 		// setup map scripts to have references to the map and player
 		for (MapTile mapTile : map.getMapTiles()) {
@@ -117,24 +133,51 @@ public class PlayLevelScreen extends Screen {
 			}
 		}
 
-		winScreen = new WinScreen(this);
 	}
 
 	public void update() {
 		// based on screen state, perform specific actions
 		switch (playLevelScreenState) {
-		// if level is "running" update player and map to keep game logic for the
-		// platformer level going
-		case RUNNING:
-			player.update();
-			map.update(player);
+			// if level is "running" update player and map to keep game logic for the
+			// platformer level going
+			case RUNNING:
+				if (weapons.check == true) {
+					player2.update();
+					map.update(player2);
+//				Timer.isTimeUp();
 
+					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
+						float movementSpeed;
+						float fireballX;
+						if (player2.getFacingDirection() == Direction.RIGHT) {
+							movementSpeed = 1.5f;
+							fireballX = Math.round(player2.getX()) + 50;
+						} else {
+							movementSpeed = -1.5f;
+							fireballX = Math.round(player2.getX());
+						}
+//				  int fireballY = (int) (player2.getY2() - player2.getY1());
+						int fireballY = Math.round(player2.getY()) + 18;
+						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
 
-			break;
-		// if level has been completed, bring up level cleared screen
-		case LEVEL_COMPLETED:
-			winScreen.update();
-			break;
+						//				 add fireball enemy to the map for it to offically spawn in the level
+						map.addEnemy(bullet);
+						Zombie zombie = new Zombie(TestMap.location, Direction.RIGHT);
+						zombie.removeZombie(bullet);
+						Timer.setWaitTime(500);
+					}
+
+				} else {
+
+					player.update();
+					map.update(player);
+				}
+
+				break;
+			// if level has been completed, bring up level cleared screen
+			case LEVEL_COMPLETED:
+				winScreen.update();
+				break;
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
@@ -147,14 +190,19 @@ public class PlayLevelScreen extends Screen {
 	public void draw(GraphicsHandler graphicsHandler) {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
-		case RUNNING:
-			map.draw(player, graphicsHandler);
+			case RUNNING:
+				if (weapons.check == true) {
+					map.draw(player2, graphicsHandler);
 
+				} else {
+					map.draw(player, graphicsHandler);
 
-			break;
-		case LEVEL_COMPLETED:
-			winScreen.draw(graphicsHandler);
-			break;
+				}
+
+				break;
+			case LEVEL_COMPLETED:
+				winScreen.draw(graphicsHandler);
+				break;
 		}
 		instructions.draw(graphicsHandler);
 		moneyDisplay.draw(graphicsHandler);
@@ -178,5 +226,4 @@ public class PlayLevelScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
-
 }

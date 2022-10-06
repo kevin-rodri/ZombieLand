@@ -24,7 +24,6 @@ public class Zombie extends Enemy {
 	private Direction startFacingDirection;
 	private Direction facingDirection;
 	public static boolean check = true;
-
 	public Zombie(Point location, Direction facingDirection) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
 		this.startFacingDirection = facingDirection;
