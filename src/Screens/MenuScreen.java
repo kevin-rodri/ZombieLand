@@ -17,6 +17,7 @@ public class MenuScreen extends Screen {
     protected int menuItemSelected = -1;
     protected SpriteFont playGame;
     protected SpriteFont credits;
+    protected SpriteFont coopOption;
     protected Map background;
     protected Stopwatch keyTimer = new Stopwatch();
     protected int pointerLocationX, pointerLocationY;
@@ -31,9 +32,12 @@ public class MenuScreen extends Screen {
         playGame = new SpriteFont("PLAY GAME", 200, 150, "z", 30, new Color(49, 207, 240));
         playGame.setOutlineColor(Color.black);
         playGame.setOutlineThickness(5);
-        credits = new SpriteFont("CREDITS", 200, 250, "z", 30, new Color(49, 207, 240));
+        credits = new SpriteFont("CREDITS", 200, 350, "z", 30, new Color(49, 207, 240));
         credits.setOutlineColor(Color.black);
         credits.setOutlineThickness(5);
+        coopOption = new SpriteFont("COOP", 200, 250, "z", 30, Color.white);
+        coopOption.setOutlineColor(Color.black);
+        coopOption.setOutlineThickness(5);
         background = new TitleScreenMap();
         background.setAdjustCamera(false);
         keyTimer.setWaitTime(200);
@@ -55,23 +59,34 @@ public class MenuScreen extends Screen {
         }
 
         // if down is pressed on last menu item or up is pressed on first menu item, "loop" the selection back around to the beginning/end
-        if (currentMenuItemHovered > 1) {
+        if (currentMenuItemHovered > 2) 
+        {
             currentMenuItemHovered = 0;
-        } else if (currentMenuItemHovered < 0) {
-            currentMenuItemHovered = 1;
+        } 
+        else if (currentMenuItemHovered < 0) 
+        {
+            currentMenuItemHovered = 2;
         }
 
         // sets location for blue square in front of text (pointerLocation) and also sets color of spritefont text based on which menu item is being hovered
         if (currentMenuItemHovered == 0) {
-            playGame.setColor(Color.RED);
-            credits.setColor(Color.WHITE);
+        	coopOption.setColor(Color.WHITE);
+        	credits.setColor(Color.WHITE);
+            playGame.setColor(Color.RED);          
             pointerLocationX = 170;
             pointerLocationY = 130;
         } else if (currentMenuItemHovered == 1) {
             playGame.setColor(Color.WHITE);
-            credits.setColor(Color.RED);
+            credits.setColor(Color.white);
+            coopOption.setColor(Color.RED);
             pointerLocationX = 170;
             pointerLocationY = 230;
+        } else if (currentMenuItemHovered == 2){
+        	  coopOption.setColor(Color.WHITE);
+        	  playGame.setColor(Color.white);
+        	  credits.setColor(Color.RED);
+              pointerLocationX = 170;
+              pointerLocationY = 330;
         }
 
         // if space is pressed on menu item, change to appropriate screen based on which menu item was chosen
@@ -80,9 +95,16 @@ public class MenuScreen extends Screen {
         }
         if (!keyLocker.isKeyLocked(Key.SPACE) && Keyboard.isKeyDown(Key.SPACE)) {
             menuItemSelected = currentMenuItemHovered;
-            if (menuItemSelected == 0) {
+            if (menuItemSelected == 0) 
+            {
                 screenCoordinator.setGameState(GameState.LEVEL);
-            } else if (menuItemSelected == 1) {
+            } 
+            else if(menuItemSelected == 1)
+            {
+            	screenCoordinator.setGameState(GameState.LEVEL);
+            	System.out.println("COOP");
+            }
+            else if (menuItemSelected == 2) {
                 screenCoordinator.setGameState(GameState.CREDITS);
             }
         }
@@ -91,6 +113,7 @@ public class MenuScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler) {
         background.draw(graphicsHandler);
         playGame.draw(graphicsHandler);
+        coopOption.draw(graphicsHandler);
         credits.draw(graphicsHandler);
         graphicsHandler.drawFilledRectangleWithBorder(pointerLocationX, pointerLocationY, 20, 20, new Color(49, 207, 240), Color.black, 2);
     }
