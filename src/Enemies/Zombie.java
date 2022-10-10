@@ -7,10 +7,13 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
+import Level.MapEntityStatus;
 import Level.Player;
 import Level.PlayerState;
 import Utils.Direction;
 import Utils.Point;
+import Utils.Stopwatch;
+
 import java.util.HashMap;
 
 /*
@@ -18,11 +21,11 @@ import java.util.HashMap;
  * Code is from the SER-225 platformer game 
  */
 public class Zombie extends Enemy {
-	
-	public static boolean disappear;
-	private float zombieSpeed = 1.5f;
+
+	private float zombieSpeed = 0.6f;
 	private Direction startFacingDirection;
 	private Direction facingDirection;
+	public static boolean disappear;
 	public static boolean check = true;
 	public Zombie(Point location, Direction facingDirection) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
@@ -41,49 +44,91 @@ public class Zombie extends Enemy {
 		}
 	}
 
-	// Update player's state
-	public void update(Player player) {
+	public void removeZombie(Shooting bullet) {
 		// this conditional will be temporary as I added it to test if the walk method
 		// works
-		if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING) {
-			walk(facingDirection, zombieSpeed);
+//		while(bullet.check != false) {
+//			System.out.println("true");
+//		}
+		
+		if ((bullet.overlaps(this))) {
+			disappear = true;
+			System.out.print("true");
+			update();
 		}
-		if(disappear == true) {
-			this.setIsHidden(true);
-		}
+
 		super.update();
 	}
 
-	public void removeZombie(Shooting shooting) {
-		// this conditional will be temporary as I added it to test if the walk method
-		// works
-		if (shooting.overlaps(this)) {
-			disappear = true;
-			System.out.println(true);
-			update();
+	// Update player's state
+	public void update(Player player) {
+		// will be used to update direction of enemy
+		Direction targetDirection;
+		// Will get player's key movements in order to move zombie to the direction
+		// player is heading towards
+		float xPosition = player.getX() - x;
+		float yPosition = player.getY() - y;
+
+		if (xPosition > zombieSpeed) {
+			targetDirection = Direction.RIGHT;
+			walktoPlayer(targetDirection, zombieSpeed, player);
+		} else {
+			targetDirection = Direction.LEFT;
+			walktoPlayer(targetDirection, zombieSpeed, player);
 		}
+
+		if (yPosition < zombieSpeed) {
+			targetDirection = Direction.UP;
+			walktoPlayer(targetDirection, zombieSpeed, player);
+		} else {
+			targetDirection = Direction.DOWN;
+			walktoPlayer(targetDirection, zombieSpeed, player);
+		}
+
+		// added this to avoid the glicthy collision
+		if (player.intersects(this)) {
+			this.setIsHidden(true);
+		}
+		if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING) {
+			this.setIsHidden(true);
+		}
+		if (disappear == true) {
+			this.setIsHidden(true);
+		}
+//		disappear = false;
 		super.update();
 	}
 
 	@Override
-	public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
-		// hopefully will do after my issue with magenta
-		return new HashMap<String, Frame[]>() {
-			{
-				put("WALK_RIGHT", new Frame[] { new FrameBuilder(spriteSheet.getSprite(1, 0), 150).withScale(3).build(),
+	 public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
+	        // hopefully will do after my issue with magenta
+	        return new HashMap<String, Frame[]>() {{
+	           put("WALK_RIGHT", new Frame[] {
+	                   new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
+	                           .withScale(3)
+	                           .withBounds(10, 10, 20, 20)
+	                           .build(), 
 
-						new FrameBuilder(spriteSheet.getSprite(1, 1), 150).withScale(3).build()
+	                    new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
+	                    .withScale(3)
+	                    .withBounds(10, 10, 20, 20)
+	                    .build()
+	            
+	           });
+	            put("WALK_LEFT", new Frame[] {
+	                new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
+	                .withScale(3)
+	                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+	                .withBounds(10, 10, 20, 20)
+	                .build(), 
 
-				});
-				put("WALK_LEFT",
-						new Frame[] {
-								new FrameBuilder(spriteSheet.getSprite(1, 0), 150).withScale(3)
-										.withImageEffect(ImageEffect.FLIP_HORIZONTAL).build(),
-
-								new FrameBuilder(spriteSheet.getSprite(1, 1), 150).withScale(3)
-										.withImageEffect(ImageEffect.FLIP_HORIZONTAL).build() });
-			}
-		};
+	         new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
+	         .withScale(3)
+	         .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+	         .withBounds(10, 10, 20, 20)
+	         .build()
+	            });
+	        }};
 	}
 
 	@Override

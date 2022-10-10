@@ -76,6 +76,20 @@ public class MapCollisionHandler {
                 }
             }
         }
+        for (Enemy enemy : map.getActiveEnemies()) {
+            if (!gameObject.equals(enemy) && hasCollidedWithMapEntity(gameObject, enemy, direction)) {
+                entityCollidedWith = enemy;
+                if (direction == Direction.RIGHT) {
+                    float boundsDifference = gameObject.getX2() - gameObject.getBoundsX2();
+                    float adjustedPosition = enemy.getBoundsX1() - gameObject.getWidth() + boundsDifference;
+                    return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
+                } else if (direction == Direction.LEFT) {
+                    float boundsDifference = gameObject.getBoundsX1() - gameObject.getX();
+                    float adjustedPosition = enemy.getBoundsX2() - boundsDifference;
+                    return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
+                }
+            }
+        }
 
         if (gameObject.isAffectedByTriggers()) {
             for (Trigger trigger : map.getActiveTriggers()) {
