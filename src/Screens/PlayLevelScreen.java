@@ -25,7 +25,6 @@ import Maps.TestMap;
 import Players.AlexWithAPistol;
 import SpriteFont.SpriteFont;
 import Players.Alex;
-import Players.AlexWithAPistol;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -33,8 +32,6 @@ import Engine.KeyLocker;
 import Engine.Keyboard;
 import java.util.HashMap;
 import Screens.PlayLevelScreen;
-import NPCs.Lives;
-import Utils.Point;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -66,7 +63,7 @@ public class PlayLevelScreen extends Screen {
 				waveCounter.setText("WAVE " + counter + "/10");
 				money.setText("$" + m);
 
-				m = m * 25;
+				m = m * 2;
 				counter++;
 			}
 		});
