@@ -8,6 +8,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.MapEntityStatus;
+import Health.HealthSystem;
 import Level.Player;
 import Level.PlayerState;
 import Utils.Direction;
@@ -94,6 +95,8 @@ public class Zombie extends Enemy {
 		}
 		if (disappear == true) {
 			this.setIsHidden(true);
+			HealthSystem.zombieTouchPlayer();
+
 		}
 //		disappear = false;
 		super.update();

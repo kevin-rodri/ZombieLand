@@ -3,6 +3,10 @@ package SpriteFont;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
+import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
+
 
 // This class represents a sprite font, which is graphic text (text drawn to the screen as if it were an image)
 public class SpriteFont {
@@ -13,14 +17,39 @@ public class SpriteFont {
 	protected Color color;
 	protected Color outlineColor;
 	protected float outlineThickness = 1f;
+	Font zombiefont;
+
 
 	public SpriteFont(String text, float x, float y, String fontName, int fontSize, Color color) {
+		
+		
 		this.text = text;
-		font = new Font(fontName, Font.PLAIN, fontSize);
+		
+		if(fontName.equalsIgnoreCase("z")){
+			fontLoader();
+			font = zombiefont;
+		} else {
+			font = new Font(fontName, Font.PLAIN, fontSize);
+		 }
 		this.x = x;
 		this.y = y;
 		this.color = color;
+		
 	}
+
+	public void fontLoader(){
+		try {
+			zombiefont = Font.createFont(Font.TRUETYPE_FONT, new File("Resources/Font/ZombieMessage-9Y3Wy.ttf")).deriveFont(40f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT,new File("Resources/Font/ZombieMessage-9Y3Wy.ttf")));
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+
+	}
+		
 
 	public void setColor(Color color) {
 		this.color = color;
@@ -36,6 +65,10 @@ public class SpriteFont {
 
 	public void setFontName(String fontName) {
 		this.font = new Font(fontName, this.font.getStyle(), this.font.getSize());
+		
+	}
+
+	public void setFont(Font f){
 	}
 
 	public void setFontStyle(int fontStyle) {
