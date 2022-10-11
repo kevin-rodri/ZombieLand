@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-	private float zombieSpeed = 0.0f;
+	private float zombieSpeed = 0.5f;
 	private Direction startFacingDirection;
 	private Direction facingDirection;
 	public static boolean disappear;
