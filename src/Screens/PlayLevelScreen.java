@@ -31,6 +31,7 @@ import Utils.Point;
 import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+import Health.HealthSystem;
 import java.util.HashMap;
 import Screens.PlayLevelScreen;
 import Utils.Point;
@@ -43,11 +44,12 @@ public class PlayLevelScreen extends Screen {
 	protected Player player;
 	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
-	protected SpriteFont waveCounter, money, healthBar;
+	protected SpriteFont waveCounter, money, healthAct;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
 	protected Key shootingKey = Key.S;
+	//protected Health.HealthSystem healthAct;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 
@@ -66,6 +68,8 @@ public class PlayLevelScreen extends Screen {
 
 				waveCounter.setText("WAVE " + counter + "/10");
 				money.setText("$" + m);
+				healthAct.setText("" + HealthSystem.healthCount);
+
 
 				m = m * 2;
 				counter++;
@@ -86,11 +90,14 @@ public class PlayLevelScreen extends Screen {
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + counter, 10, 50, "z", 20, Color.WHITE);
+		healthAct = new SpriteFont("" + HealthSystem.healthCount, 700, 50, "z", 20, Color.white);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
-		;
+		healthAct.setOutlineThickness(5);
+		healthAct.setOutlineColor(Color.black);
+
 		Point HealthHUD = new Point(650,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
@@ -223,6 +230,7 @@ public class PlayLevelScreen extends Screen {
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
+		healthAct.draw(graphicsHandler);
 
 	}
 
