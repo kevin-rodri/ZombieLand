@@ -66,26 +66,28 @@ public class Zombie extends Enemy {
 	
     // Update player's state
    public void update(Player player){
-    
+    // will be used to update direction of enemy
+    Direction targetDirection;
+    // Will get player's key movements in order to move zombie to the direction player is heading towards
     float xPosition = player.getX() - x;
     float yPosition = player.getY() - y;
     
     if (xPosition > zombieSpeed){
-         facingDirection = Direction.RIGHT;
-         walktoPlayer(facingDirection, zombieSpeed, player);
+         targetDirection = Direction.RIGHT;
+         walktoPlayer(targetDirection, zombieSpeed, player);
     } else {
-       facingDirection = Direction.LEFT;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+       targetDirection = Direction.LEFT;
+        walktoPlayer(targetDirection, zombieSpeed, player);
     }
 
     if (yPosition < zombieSpeed){
-        facingDirection = Direction.UP;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+        targetDirection = Direction.UP;
+        walktoPlayer(targetDirection, zombieSpeed, player);
     } else {
-        facingDirection = Direction.DOWN;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+        targetDirection = Direction.DOWN;
+        walktoPlayer(targetDirection, zombieSpeed, player);
     }
-    
+
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             this.setIsHidden(true);
@@ -94,11 +96,6 @@ public class Zombie extends Enemy {
         this.setIsHidden(true);
     }
      super.update();
-    }
-
-    // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
-    public Direction getZombieDirection(){
-        return facingDirection;
     }
 
 //method to see if enemies collide with one another
