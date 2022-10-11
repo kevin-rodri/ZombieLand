@@ -9,11 +9,13 @@ import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.MapCollisionCheckResult;
 import Level.MapEntity;
+import Level.MapEntityStatus;
 import Level.Player;
 import Level.PlayerState;
 import Utils.Direction;
 import Utils.Point;
 import java.util.ArrayList;
+import Utils.Stopwatch;
 import java.util.HashMap;
 
 /*
@@ -22,10 +24,9 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-
-	private float zombieSpeed = 0.5f;
-    private Direction startFacingDirection;
-    private Direction facingDirection;
+	private float zombieSpeed = 0.6f;
+	private Direction startFacingDirection;
+	private Direction facingDirection;
 	public static boolean disappear;
 	public static boolean check = true;
 
@@ -46,21 +47,23 @@ public class Zombie extends Enemy {
 		}
 	}
 
-
-
-
-	public void removeZombie(Shooting shooting) {
+	public void removeZombie(Shooting bullet) {
 		// this conditional will be temporary as I added it to test if the walk method
 		// works
-		if (shooting.overlaps(this)) {
+//		while(bullet.check != false) {
+//			System.out.println("true");
+//		}
+		
+		if ((bullet.overlaps(this))) {
 			disappear = true;
-			System.out.println(true);
+			System.out.print("true");
 			update();
 		}
+
 		super.update();
 	}
 
-
+	
     // Update player's state
    public void update(Player player){
     // will be used to update direction of enemy
@@ -194,8 +197,6 @@ public class Zombie extends Enemy {
             });
         }};
     }
-
-
 
 	@Override
 	public void draw(GraphicsHandler graphicsHandler) {

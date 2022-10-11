@@ -25,11 +25,8 @@ public class CommonTileset extends Tileset {
 		Frame grassFrame = new FrameBuilder(getSubImage(0, 0))
 				.withScale(tileScale)
 				.build();
-
-		MapTileBuilder grassTile = new MapTileBuilder(grassFrame);
-
-		mapTiles.add(grassTile);
-
+				MapTileBuilder grassTile = new MapTileBuilder(grassFrame);
+				mapTiles.add(grassTile);
 		// sign
 		Frame signFrame = new FrameBuilder(getSubImage(3, 0))
 				.withScale(tileScale)
@@ -336,7 +333,86 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.PASSABLE);
 
 				mapTiles.add(horizontalRoadTile);
+		// road with vertical yellow dashed line
+				Frame emptyRoad = new FrameBuilder(getSubImage(0, 6))
+						.withScale(tileScale)
+						.build();
 
+				MapTileBuilder emptyRoadTile = new MapTileBuilder(emptyRoad)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(emptyRoadTile); 	
+		// road for a corner piece facing up to the left
+				Frame cornerRoad2 = new FrameBuilder(getSubImage(2, 5))
+						.withImageEffect(ImageEffect.FLIP_VERTICAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder cornerRoadTile2 = new MapTileBuilder(cornerRoad2)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(cornerRoadTile2); 
+		// road for a corner piece facing down to the right
+				Frame cornerRoad4 = new FrameBuilder(getSubImage(2, 5))
+						.withImageEffect(ImageEffect.FLIP_H_AND_V)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder cornerRoadTile4 = new MapTileBuilder(cornerRoad4)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(cornerRoadTile4);
+		// road for a corner piece facing down from the right
+				Frame cornerRoad3 = new FrameBuilder(getSubImage(2, 5))
+						.withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder cornerRoadTile3 = new MapTileBuilder(cornerRoad3)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(cornerRoadTile3);
+// road for a corner piece facing down to the left
+				Frame cornerRoad = new FrameBuilder(getSubImage(2, 5))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder cornerRoadTile = new MapTileBuilder(cornerRoad)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(cornerRoadTile); 
+		// sidewalk
+				Frame sideWalk = new FrameBuilder(getSubImage(4, 5))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder sideWalkTile = new MapTileBuilder(sideWalk)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(sideWalkTile);
+		// sidewalk with Stop Sign
+				Frame sideWalkStopSign = new FrameBuilder(getSubImage(5, 5))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder sideWalkStopSignTile = new MapTileBuilder(sideWalkStopSign)
+						.withTileType(TileType.NOT_PASSABLE);
+
+				mapTiles.add(sideWalkStopSignTile);
+		// animated grass
+				Frame[] grassFrames = new Frame[] {
+						new FrameBuilder(getSubImage(1, 6), 4000)
+						.withScale(tileScale)
+						.build(),
+						new FrameBuilder(getSubImage(2, 6), 4000)
+						.withScale(tileScale)
+						.build()
+				};
+
+				MapTileBuilder grassFramesTile = new MapTileBuilder(grassFrames)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(grassFramesTile);
 		return mapTiles;
 	}
 }

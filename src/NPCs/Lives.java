@@ -21,7 +21,7 @@ public class Lives extends NPC  {
 	 public void update(Player player) {
 	        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	            this.setIsHidden(true);
-
+ 
 	        }
 	        super.update(player);
 	 }
