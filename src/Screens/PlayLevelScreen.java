@@ -152,8 +152,8 @@ public class PlayLevelScreen extends Screen {
 					// Timer.isTimeUp();
 
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
-						float movementSpeed;
 						float fireballX;
+						float movementSpeed;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
 							movementSpeed = 1.5f;
 							fireballX = Math.round(player2.getX()) + 50;
@@ -163,7 +163,8 @@ public class PlayLevelScreen extends Screen {
 						}
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(player2.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
+
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
