@@ -63,7 +63,11 @@ public class Zombie extends Enemy {
 		super.update();
 	}
 
-	
+	 // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
+     public Direction getZombieDirection(){
+        return facingDirection;
+    }
+    
     // Update player's state
    public void update(Player player){
     // will be used to update direction of enemy
