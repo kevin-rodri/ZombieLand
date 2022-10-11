@@ -98,9 +98,6 @@ public class TestMap extends Map {
  int randomX  = 1 + random.nextInt(10);
  // generate a number from 1 - 11
  int randomY  = 1 + random.nextInt(10);
- // get a reference of the player(s) in the game
- // since there is one player, we're only going to make reference to that one player
- //Direction playerDirection = player.getFacingDirection();
  Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
  enemy.add(zombieOne);
          
