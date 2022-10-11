@@ -16,7 +16,7 @@ public class AlexWithAPistol extends Player {
 
     public AlexWithAPistol(float x, float y) {
         super(new SpriteSheet(ImageLoader.load("AlexWithAPistol.png"), 24, 24), x, y, "STAND_RIGHT");
-        walkSpeed = 5f;
+        walkSpeed = 4.0f;
     }
     
 
