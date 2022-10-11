@@ -19,55 +19,55 @@ public class Lives extends EnhancedMapTile {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Heart.png"), 13, 13), TileType.NOT_PASSABLE);
 	}
 
-	@Override
-	public void update(Player player) {
-		super.update(player);
-		if (player.getCurrentWalkingXDirection() == Direction.LEFT) 
-		{
-			moveXHandleCollision(player.getBoundsX2() - getBoundsX1());
-		} 
-		else if (player.getCurrentWalkingXDirection() == Direction.RIGHT) 
-		{
-			moveXHandleCollision(player.getBoundsX1() - getBoundsX2());
-		}
-		if (player.getCurrentWalkingYDirection() == Direction.UP) 
-		{
-			moveYHandleCollision(player.getBoundsY1() - getBoundsY2());
-		} 
-		else if (player.getCurrentWalkingYDirection() == Direction.DOWN) 
-		{
-			moveYHandleCollision(player.getBoundsY2() - getBoundsY1());
-		}
-	}
+	// @Override
+	// public void update(Player player) {
+	// 	super.update(player);
+	// 	if (player.getCurrentWalkingXDirection() == Direction.LEFT) 
+	// 	{
+	// 		moveXHandleCollision(player.getBoundsX2() - getBoundsX1());
+	// 	} 
+	// 	else if (player.getCurrentWalkingXDirection() == Direction.RIGHT) 
+	// 	{
+	// 		moveXHandleCollision(player.getBoundsX1() - getBoundsX2());
+	// 	}
+	// 	if (player.getCurrentWalkingYDirection() == Direction.UP) 
+	// 	{
+	// 		moveYHandleCollision(player.getBoundsY1() - getBoundsY2());
+	// 	} 
+	// 	else if (player.getCurrentWalkingYDirection() == Direction.DOWN) 
+	// 	{
+	// 		moveYHandleCollision(player.getBoundsY2() - getBoundsY1());
+	// 	}
+	// }
 
 
-	private boolean canMoveLeft(Player player) {
-		return player.getBoundsX1() <= getBoundsX2() && player.getBoundsX2() > getBoundsX2() && canMoveX(player);
-	}
+	// private boolean canMoveLeft(Player player) {
+	// 	return player.getBoundsX1() <= getBoundsX2() && player.getBoundsX2() > getBoundsX2() && canMoveX(player);
+	// }
 
-	private boolean canMoveRight(Player player) {
-		return player.getBoundsX2() >= getBoundsX1() && player.getBoundsX1() < getBoundsX1() && canMoveX(player);
-	}
+	// private boolean canMoveRight(Player player) {
+	// 	return player.getBoundsX2() >= getBoundsX1() && player.getBoundsX1() < getBoundsX1() && canMoveX(player);
+	// }
 
-	private boolean canMoveX(Player player) {
-		return (player.getBoundsY1() < getBoundsY2() && player.getBoundsY2() >= getBoundsY2())
-				|| (player.getBoundsY2() > getBoundsY1() && player.getBoundsY1() <= getBoundsY1())
-				|| (player.getBoundsY2() < getBoundsY2() && player.getBoundsY1() > getBoundsY1());
-	}
+	// private boolean canMoveX(Player player) {
+	// 	return (player.getBoundsY1() < getBoundsY2() && player.getBoundsY2() >= getBoundsY2())
+	// 			|| (player.getBoundsY2() > getBoundsY1() && player.getBoundsY1() <= getBoundsY1())
+	// 			|| (player.getBoundsY2() < getBoundsY2() && player.getBoundsY1() > getBoundsY1());
+	// }
 
-	private boolean canMoveUp(Player player) {
-		return player.getBoundsY1() <= getBoundsY2() && player.getBoundsY2() > getBoundsY2() && canMoveY(player);
-	}
+	// private boolean canMoveUp(Player player) {
+	// 	return player.getBoundsY1() <= getBoundsY2() && player.getBoundsY2() > getBoundsY2() && canMoveY(player);
+	// }
 
-	private boolean canMoveDown(Player player) {
-		return player.getBoundsY2() >= getBoundsY1() && player.getBoundsY1() < getBoundsY1() && canMoveY(player);
-	}
+	// private boolean canMoveDown(Player player) {
+	// 	return player.getBoundsY2() >= getBoundsY1() && player.getBoundsY1() < getBoundsY1() && canMoveY(player);
+	// }
 
-	private boolean canMoveY(Player player) {
-		return (player.getBoundsX1() < getBoundsX2() && player.getBoundsX2() >= getBoundsX2())
-				|| (player.getBoundsX2() > getBoundsX1() && player.getBoundsX1() <= getBoundsX1())
-				|| (player.getBoundsX2() < getBoundsX2() && player.getBoundsX1() > getBoundsX1());
-	}
+	// private boolean canMoveY(Player player) {
+	// 	return (player.getBoundsX1() < getBoundsX2() && player.getBoundsX2() >= getBoundsX2())
+	// 			|| (player.getBoundsX2() > getBoundsX1() && player.getBoundsX1() <= getBoundsX1())
+	// 			|| (player.getBoundsX2() < getBoundsX2() && player.getBoundsX1() > getBoundsX1());
+	// }
 
 	@Override
 	protected GameObject loadBottomLayer(SpriteSheet spriteSheet) {
