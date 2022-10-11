@@ -8,6 +8,7 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
+import Health.HealthSystem;
 import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
@@ -21,6 +22,7 @@ public class ExtraLife extends NPC implements SoundController {
     public void update(Player player) {
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
+            HealthSystem.setMaxHealth();
             playSE(4);
 
         }

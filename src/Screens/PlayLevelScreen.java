@@ -2,6 +2,7 @@ package Screens;
 
 import java.awt.Color;
 
+import MoneySystem.MoneyBase;
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -55,6 +56,7 @@ public class PlayLevelScreen extends Screen {
 
 	protected int counter = 0;
 	int m = 1;
+	int tmpHealth = 50;
 	Timer t;
 
 	private void time() {
@@ -67,10 +69,10 @@ public class PlayLevelScreen extends Screen {
 				}
 
 				waveCounter.setText("WAVE " + counter + "/10");
-				money.setText("$" + m);
-				healthAct.setText("" + HealthSystem.healthCount);
+				//money.setText("$" + m);
+				//healthAct.setText("" + tmpHealth);
 
-
+				tmpHealth = HealthSystem.healthCount;
 				m = m * 2;
 				counter++;
 			}
@@ -163,6 +165,8 @@ public class PlayLevelScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
+				money.setText("$" + MoneyBase.moneyCount);
+				healthAct.setText("" + tmpHealth);
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
@@ -197,6 +201,7 @@ public class PlayLevelScreen extends Screen {
 				}
 
 				break;
+
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				winScreen.update();
