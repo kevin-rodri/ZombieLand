@@ -22,6 +22,7 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
+import NPCs.Lives;
 import Players.AlexWithAPistol;
 import SpriteFont.SpriteFont;
 import Players.Alex;
@@ -32,6 +33,8 @@ import Engine.KeyLocker;
 import Engine.Keyboard;
 import java.util.HashMap;
 import Screens.PlayLevelScreen;
+import Utils.Point;
+
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -40,9 +43,10 @@ public class PlayLevelScreen extends Screen {
 	protected Player player;
 	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
-	protected SpriteFont waveCounter, money;
+	protected SpriteFont waveCounter, money, healthBar;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
+	protected Lives health;
 	protected Key shootingKey = Key.S;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
@@ -87,6 +91,12 @@ public class PlayLevelScreen extends Screen {
 		money.setOutlineThickness(5);
 		time();
 		;
+		Point HealthHUD = new Point(650,10);
+		health = new Lives(2, HealthHUD);
+		health.setHeight(50);
+		health.setWidth(50);
+		//health.setLocation(300, 300);
+		
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
 		flagManager.addFlag("hasTalkedToDinosaur", false);
@@ -212,6 +222,7 @@ public class PlayLevelScreen extends Screen {
 		}
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
+		health.draw(graphicsHandler);
 
 	}
 
