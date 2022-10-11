@@ -99,7 +99,6 @@ public class TestMap extends Map {
  int randomY  = 1 + random.nextInt(10);
  Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
  enemy.add(zombieOne);
-         
  //add more eneimies per wave (rough guess as to how many seconds have gone by per wave)
 zombieTImer = new Timer();
 zombieTImer.schedule(new TimerTask() {
