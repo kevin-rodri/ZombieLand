@@ -20,12 +20,12 @@ public class TitleScreenMap extends Map {
         alex = new Sprite(ImageLoader.loadSubImage("Alex.png", Colors.MAGENTA, 0, 0, 24, 24));
         alex.setScale(3);
         alex.setImageEffect(ImageEffect.FLIP_HORIZONTAL);
-        alex.setLocation(alexLocation.x, alexLocation.y);
+        alex.setLocation(50, 50);
         
         alex2 = new Sprite(ImageLoader.loadSubImage("Alex2.png", Colors.MAGENTA, 0, 0, 24, 24));
         alex2.setScale(3);
     //    alex2.setImageEffect(ImageEffect.FLIP_HORIZONTAL);
-        alex2.setLocation(alexLocation.x+70, alexLocation.y);
+        alex2.setLocation(100, 50);
     }
 
     @Override

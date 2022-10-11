@@ -333,8 +333,8 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.PASSABLE);
 
 				mapTiles.add(horizontalRoadTile);
-		// road with vertical yellow dashed line
-				Frame emptyRoad = new FrameBuilder(getSubImage(0, 6))
+		// blank road 
+				Frame emptyRoad = new FrameBuilder(getSubImage(3, 5))
 						.withScale(tileScale)
 						.build();
 
@@ -372,7 +372,7 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.PASSABLE);
 
 				mapTiles.add(cornerRoadTile3);
-// road for a corner piece facing down to the left
+		// road for a corner piece facing down to the left
 				Frame cornerRoad = new FrameBuilder(getSubImage(2, 5))
 						.withScale(tileScale)
 						.build();
@@ -380,16 +380,46 @@ public class CommonTileset extends Tileset {
 				MapTileBuilder cornerRoadTile = new MapTileBuilder(cornerRoad)
 						.withTileType(TileType.PASSABLE);
 
-				mapTiles.add(cornerRoadTile); 
-		// sidewalk
-				Frame sideWalk = new FrameBuilder(getSubImage(4, 5))
+				mapTiles.add(cornerRoadTile);  			
+		// sidewalk with left and top border
+				Frame leftSideWalk = new FrameBuilder(getSubImage(2, 6))
 						.withScale(tileScale)
 						.build();
 
-				MapTileBuilder sideWalkTile = new MapTileBuilder(sideWalk)
+				MapTileBuilder leftSideWalkTile = new MapTileBuilder(leftSideWalk)
 						.withTileType(TileType.PASSABLE);
 
-				mapTiles.add(sideWalkTile);
+				mapTiles.add(leftSideWalkTile);
+		// sidewalk with right and top border
+				Frame rightSideWalk = new FrameBuilder(getSubImage(2, 6))
+						.withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder rightSideWalkTile = new MapTileBuilder(rightSideWalk)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(rightSideWalkTile);
+		// sidewalk with right and bototm border
+				Frame rightAndBottomSideWalk = new FrameBuilder(getSubImage(2, 6))
+						.withImageEffect(ImageEffect.FLIP_H_AND_V)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder rightAndBottomSideWalkTile = new MapTileBuilder(rightAndBottomSideWalk)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(rightAndBottomSideWalkTile);	
+		// sidewalk with right and bototm border
+				Frame leftAndBottomSideWalk = new FrameBuilder(getSubImage(2, 6))
+						.withImageEffect(ImageEffect.FLIP_VERTICAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder leftAndBottomSideWalkTile = new MapTileBuilder(leftAndBottomSideWalk)
+						.withTileType(TileType.PASSABLE);
+
+				mapTiles.add(leftAndBottomSideWalkTile);		
 		// sidewalk with Stop Sign
 				Frame sideWalkStopSign = new FrameBuilder(getSubImage(5, 5))
 						.withScale(tileScale)
@@ -399,12 +429,56 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.NOT_PASSABLE);
 
 				mapTiles.add(sideWalkStopSignTile);
+		// sidewalk with left border 
+				Frame leftSideSideWalk = new FrameBuilder(getSubImage(3, 6))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder leftSideSideWalkTile = new MapTileBuilder(leftSideSideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(leftSideSideWalkTile);
+		// sidewalk with right border 
+				Frame rightSideSideWalk = new FrameBuilder(getSubImage(3, 6))
+						.withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+						
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder rightSideSideWalkTile = new MapTileBuilder(rightSideSideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(rightSideSideWalkTile);		
+		// sidewalk with top border 
+				Frame topSideWalk = new FrameBuilder(getSubImage(4, 6))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder topSideWalkTile = new MapTileBuilder(topSideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(topSideWalkTile);		
+		// sidewalk with bottom border 
+				Frame bottomSideWalk = new FrameBuilder(getSubImage(4, 6))
+						.withImageEffect(ImageEffect.FLIP_VERTICAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder bottomSideWalkTile = new MapTileBuilder(bottomSideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(bottomSideWalkTile);	
+		// sidewalk with bottom border 
+				Frame SideWalk = new FrameBuilder(getSubImage(5, 6))
+						.withImageEffect(ImageEffect.FLIP_VERTICAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder SideWalkTile = new MapTileBuilder(SideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(SideWalkTile);
 		// animated grass
 				Frame[] grassFrames = new Frame[] {
-						new FrameBuilder(getSubImage(1, 6), 4000)
+						new FrameBuilder(getSubImage(0, 6), 4000)
 						.withScale(tileScale)
 						.build(),
-						new FrameBuilder(getSubImage(2, 6), 4000)
+						new FrameBuilder(getSubImage(1, 6), 4000)
 						.withScale(tileScale)
 						.build()
 				};
@@ -413,6 +487,7 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.PASSABLE);
 
 				mapTiles.add(grassFramesTile);
+				
 		return mapTiles;
 	}
 }

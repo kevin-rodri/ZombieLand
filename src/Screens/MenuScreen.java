@@ -29,13 +29,13 @@ public class MenuScreen extends Screen {
 
     @Override
     public void initialize() {
-        playGame = new SpriteFont("PLAY GAME", 200, 150, "z", 30, new Color(49, 207, 240));
+        playGame = new SpriteFont("SINGLE PLAYER", 200, 150, "z", 30, new Color(49, 207, 240));
         playGame.setOutlineColor(Color.black);
         playGame.setOutlineThickness(5);
         credits = new SpriteFont("CREDITS", 200, 350, "z", 30, new Color(49, 207, 240));
         credits.setOutlineColor(Color.black);
         credits.setOutlineThickness(5);
-        coopOption = new SpriteFont("COOP", 200, 250, "z", 30, Color.white);
+        coopOption = new SpriteFont("CO-OP", 200, 250, "z", 30, Color.white);
         coopOption.setOutlineColor(Color.black);
         coopOption.setOutlineThickness(5);
         background = new TitleScreenMap();
