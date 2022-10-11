@@ -13,7 +13,7 @@ public class MapCollisionHandler {
         float edgeBoundX = direction == Direction.LEFT ? gameObject.getBounds().getX1() : gameObject.getBounds().getX2();   
         Point tileIndex = map.getTileIndexByPosition(edgeBoundX, gameObject.getBounds().getY1());
         MapEntity entityCollidedWith = null;
-// checks for right side map collision 
+    // checks for right side map collision 
         if( map.getMapTile(Math.round(tileIndex.x)+1, Math.round(tileIndex.y))==null)
         {	  
         	MapTile mapTile = map.getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y));
@@ -22,7 +22,7 @@ public class MapCollisionHandler {
         		return new MapCollisionCheckResult((float)mapTile.getX1()-18 ,  mapTile);
         	}
         }
-// checks left side map collision        
+         // checks left side map collision        
         if(edgeBoundX<=0)
         {	
         	MapTile mapTile = map.getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y));
@@ -76,21 +76,7 @@ public class MapCollisionHandler {
                 }
             }
         }
-        for (Enemy enemy : map.getActiveEnemies()) {
-            if (!gameObject.equals(enemy) && hasCollidedWithMapEntity(gameObject, enemy, direction)) {
-                entityCollidedWith = enemy;
-                if (direction == Direction.RIGHT) {
-                    float boundsDifference = gameObject.getX2() - gameObject.getBoundsX2();
-                    float adjustedPosition = enemy.getBoundsX1() - gameObject.getWidth() + boundsDifference;
-                    return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
-                } else if (direction == Direction.LEFT) {
-                    float boundsDifference = gameObject.getBoundsX1() - gameObject.getX();
-                    float adjustedPosition = enemy.getBoundsX2() - boundsDifference;
-                    return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
-                }
-            }
-        }
-
+        
         if (gameObject.isAffectedByTriggers()) {
             for (Trigger trigger : map.getActiveTriggers()) {
                 if (!gameObject.equals(trigger) && trigger.exists() && hasCollidedWithMapEntity(gameObject, trigger, direction)) {
@@ -111,7 +97,7 @@ public class MapCollisionHandler {
         // no collision occurred
         return new MapCollisionCheckResult(null, null);
     }
-
+ 
     public static MapCollisionCheckResult getAdjustedPositionAfterCollisionCheckY(GameObject gameObject, Map map, Direction direction) {
         int numberOfTilesToCheck = Math.max(gameObject.getBounds().getWidth() / map.getTileset().getScaledSpriteWidth(), 1);
         float edgeBoundY = direction == Direction.UP ? gameObject.getBounds().getY() : gameObject.getBounds().getY2();
