@@ -165,10 +165,10 @@ public class PlayLevelScreen extends Screen {
 						float fireballX;
 						float movementSpeed;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 1.5f;
+							movementSpeed = 4.0f;
 							fireballX = Math.round(player2.getX()) + 50;
 						} else {
-							movementSpeed = -1.5f;
+							movementSpeed = -4.0f;
 							fireballX = Math.round(player2.getX());
 						}
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
