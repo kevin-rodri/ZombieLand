@@ -7,10 +7,13 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
+import Level.MapCollisionCheckResult;
+import Level.MapEntity;
 import Level.Player;
 import Level.PlayerState;
 import Utils.Direction;
 import Utils.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
@@ -28,7 +31,7 @@ public class Zombie extends Enemy {
 
 	public Zombie(Point location, Direction facingDirection) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
-		this.startFacingDirection = facingDirection;
+        this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
 
@@ -92,11 +95,69 @@ public class Zombie extends Enemy {
      super.update();
     }
 
+//method to see if enemies collide with one another
+// Really useful for current enemies in the game
+// Code for this was taken from here: https://stackoverflow.com/questions/16250790/stopping-sprites-from-overlapping-going-through-each-other
+    // also applies for the  onEndCollisionCheckY method
+    @Override
+    public void onEndCollisionCheckX(boolean hasCollided, Direction direction, MapEntity entityCollidedWith) {
+        ArrayList<Enemy> enemy = map.getEnemies();
+        for (int i= 0;i < enemy.size(); i++){
+            // get reference of one enemy 
+            Enemy get = enemy.get(i);
+        for (int enemies = i + 1; enemies < enemy.size(); enemies++){
+            //  Get a reference of a another enemy 
+                 Enemy getCurrentEnemy = enemy.get(enemies);
+                 // check to see if they collide with one another
+                hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
+                  // if an enemy collides with another one, separate them 
+                  if (hasCollided){
+                    entityCollidedWith = getCurrentEnemy; 
+                    // check which one has a bigger x position
+                    // if so, update their position
+                     if (get.getX() >= getCurrentEnemy.getX()){
+                          get.setX( get.getX() + 5);
+                          getCurrentEnemy.setX(getCurrentEnemy.getX() - 5);
+                      } else {
+                        get.setX(get.getX() - 5);
+                        getCurrentEnemy.setX(getCurrentEnemy.getX() + 5); 
+                      }
+                  }
+            }
+        }
+    }
+
+// method to see if enemies collide with one another
+// Really useful for current enemies in the game
+    @Override
+    public void onEndCollisionCheckY(boolean hasCollided, Direction direction, MapEntity entityCollidedWith) {
+        ArrayList<Enemy> enemy = map.getEnemies();
+        for (int i= 0;i < enemy.size(); i++){
+                      // get reference of one enemy 
+            Enemy get = enemy.get(i);
+        for (int enemies = i + 1; enemies < enemy.size(); enemies++){
+              //  Get a reference of a another enemy 
+            Enemy getCurrentEnemy = enemy.get(enemies);
+            hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
+               if (hasCollided){
+                entityCollidedWith = getCurrentEnemy;
+                 // check which one has a bigger y position
+                    // if so, update their position
+              if (get.getY() >= getCurrentEnemy.getY()){
+                       get.setY(get.getY() + 5);      
+                       getCurrentEnemy.setY(getCurrentEnemy.getY() - 5);
+                 } else {
+                       getCurrentEnemy.setY(getCurrentEnemy.getY() + 5);
+                       get.setY(get.getY() - 5);     
+                   }
+               }
+            }
+        }
+    }
+    
     public void remove(Shooting shooting, Player player2 ) {
     	 if (shooting.intersects(this)) {
              this.setIsHidden(true);
-             
-          
              //this.setInteractScript(DoublePointsScript);
          }
     	 super.update();
