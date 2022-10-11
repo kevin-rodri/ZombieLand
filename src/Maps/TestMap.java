@@ -49,7 +49,7 @@ public class TestMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
         enhancedMapTiles.add(new Rock(getMapTile(2, 7).getLocation()));
-        enhancedMapTiles.add(new EnhancedMapTiles.Lives(getMapTile(18, 21).getLocation()));
+//        enhancedMapTiles.add(new EnhancedMapTiles.Lives(getMapTile(18, 21).getLocation()));
         return enhancedMapTiles;
     }
     
