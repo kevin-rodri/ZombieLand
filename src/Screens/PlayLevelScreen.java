@@ -2,6 +2,8 @@ package Screens;
 
 import java.awt.Color;
 
+import Health.HealthSystem;
+import MoneySystem.MoneyBase;
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -69,7 +71,9 @@ public class PlayLevelScreen extends Screen {
 				}
 
 				waveCounter.setText("WAVE " + counter + "/10");
-				money.setText("$" + m);
+				//money.setText("$" + m);
+				MoneyBase.addMoneyOT();
+
 
 				m = m * 2;
 				counter++;
@@ -92,11 +96,14 @@ public class PlayLevelScreen extends Screen {
 		waveCounter = new SpriteFont("WAVE " + counter + "/10", 300, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
-		money = new SpriteFont("$" + counter, 10, 50, "z", 20, Color.WHITE);
+		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
+		healthBar = new SpriteFont("" + HealthSystem.healthCount, 700, 50, "z", 20, Color.WHITE);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
+		healthBar.setOutlineColor(Color.black);
+		healthBar.setOutlineThickness(5);
 		;
 		Point HealthHUD = new Point(650,10);
 		health = new Lives(2, HealthHUD);
@@ -163,6 +170,8 @@ public class PlayLevelScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
+				healthBar.setText("" + HealthSystem.healthCount);
+				money.setText("$" + MoneyBase.moneyCount);
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
@@ -194,6 +203,7 @@ public class PlayLevelScreen extends Screen {
 
 					player.update();
 					map.update(player);
+
 				}
 
 				break;
@@ -246,6 +256,7 @@ public class PlayLevelScreen extends Screen {
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
+		healthBar.draw(graphicsHandler);
 
 	}
 
