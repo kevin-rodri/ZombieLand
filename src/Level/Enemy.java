@@ -4,6 +4,8 @@ import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Engine.GraphicsHandler;
 import Utils.Direction;
+import Utils.Point;
+
 import java.util.HashMap;
 
 import Enemies.Shooting;
@@ -76,7 +78,7 @@ public class Enemy extends MapEntity {
     }
 }
 // method that will be used to ensure any enemy walks to the player
-public void walktoPlayer(Direction direction, float speed, Player player) {
+public void walktoPlayer(Direction direction, float speed, Point location) {
     walk(direction, speed);
 }
 

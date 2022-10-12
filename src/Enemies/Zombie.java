@@ -25,7 +25,7 @@ import java.util.HashMap;
  */
 public class Zombie extends Enemy {
 
-	private float zombieSpeed = 0.5f;
+	private float zombieSpeed = 1.5f;
 	private Direction startFacingDirection;
 	private Direction facingDirection;
 	public static boolean disappear;
@@ -78,18 +78,18 @@ public class Zombie extends Enemy {
     
     if (xPosition > zombieSpeed){
          facingDirection = Direction.RIGHT;
-         walktoPlayer(facingDirection, zombieSpeed, player);
+         walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
     } else {
        facingDirection = Direction.LEFT;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
     }
 
     if (yPosition < zombieSpeed){
         facingDirection = Direction.UP;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+        walktoPlayer(facingDirection, zombieSpeed , player.getLocation());
     } else {
         facingDirection = Direction.DOWN;
-        walktoPlayer(facingDirection, zombieSpeed, player);
+        walktoPlayer(facingDirection, zombieSpeed , player.getLocation());
     }
 
     // added this to avoid the glicthy collision
