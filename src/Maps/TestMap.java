@@ -46,7 +46,7 @@ public class TestMap extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
         enhancedMapTiles.add(new Rock(getMapTile(2, 7).getLocation()));
-        enhancedMapTiles.add(new EnhancedMapTiles.Lives(getMapTile(18, 21).getLocation()));
+//        enhancedMapTiles.add(new EnhancedMapTiles.Lives(getMapTile(18, 21).getLocation()));
         return enhancedMapTiles;
     }
     
@@ -96,7 +96,6 @@ public class TestMap extends Map {
  int randomY  = 1 + random.nextInt(10);
  Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
  enemy.add(zombieOne);
-         
  //add more eneimies per wave (rough guess as to how many seconds have gone by per wave)
 zombieTImer = new Timer();
 zombieTImer.schedule(new TimerTask() {
@@ -108,7 +107,7 @@ zombieTImer.schedule(new TimerTask() {
               int randomX  = 1 + random.nextInt(10);
               // generate a number from 1 - 11
               int randomY  = 1 + random.nextInt(10);
-                Enemy zombieWaveOne  = new Zombie(getMapTile(randomX, randomY).getLocation(), Direction.DOWN);
+                Enemy zombieWaveOne  = new Zombie(getMapTile(randomX, randomY).getLocation(), zombieOne.getZombieDirection());
                 enemy.add(zombieWaveOne); 
               }
            } 
@@ -123,7 +122,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                int randomY  = 1 + random.nextInt(10);
-                 Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                 Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                  enemy.add(zombieWaveOne); 
                 }
             } 
@@ -138,7 +137,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                 }
              } 
@@ -153,7 +152,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                 }
              } 
@@ -168,7 +167,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                  }
              } 
@@ -183,7 +182,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                 }
              } 
@@ -198,7 +197,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                 }
          }
@@ -213,7 +212,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne); 
                 }
              }
@@ -228,7 +227,7 @@ zombieTImer.schedule(new TimerTask() {
                 int randomX  = 1 + random.nextInt(10);
                 // generate a number from 1 - 11
                 int randomY  = 1 + random.nextInt(10);
-                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), Direction.DOWN);
+                  Enemy zombieWaveOne  = new Zombie(getMapTile(randomX,randomY).getLocation(), zombieOne.getZombieDirection());
                   enemy.add(zombieWaveOne);
                 }
              } 

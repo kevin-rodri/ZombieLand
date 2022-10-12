@@ -2,7 +2,6 @@ package Screens;
 
 import java.awt.Color;
 
-import MoneySystem.MoneyBase;
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -19,6 +18,7 @@ import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
 import Engine.Screen;
+import Engine.ScreenManager;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -32,7 +32,6 @@ import Utils.Point;
 import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
-import Health.HealthSystem;
 import java.util.HashMap;
 import Screens.PlayLevelScreen;
 import Utils.Point;
@@ -45,18 +44,19 @@ public class PlayLevelScreen extends Screen {
 	protected Player player;
 	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
-	protected SpriteFont waveCounter, money, healthAct;
+	protected SpriteFont waveCounter, money, healthBar;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
+	private SpriteFont pauseLabel;
 	protected Key shootingKey = Key.S;
-	//protected Health.HealthSystem healthAct;
+	private final Key pauseKey = Key.P;
+	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 
 	protected int counter = 0;
 	int m = 1;
-	int tmpHealth = 50;
 	Timer t;
 
 	private void time() {
@@ -69,10 +69,8 @@ public class PlayLevelScreen extends Screen {
 				}
 
 				waveCounter.setText("WAVE " + counter + "/10");
-				//money.setText("$" + m);
-				//healthAct.setText("" + tmpHealth);
+				money.setText("$" + m);
 
-				tmpHealth = HealthSystem.healthCount;
 				m = m * 2;
 				counter++;
 			}
@@ -82,6 +80,9 @@ public class PlayLevelScreen extends Screen {
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
+		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
+		pauseLabel.setOutlineColor(Color.black);
+		pauseLabel.setOutlineThickness(2.0f);
 	}
 
 	public void initialize() {
@@ -92,14 +93,11 @@ public class PlayLevelScreen extends Screen {
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + counter, 10, 50, "z", 20, Color.WHITE);
-		healthAct = new SpriteFont("" + HealthSystem.healthCount, 700, 50, "z", 20, Color.white);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
-		healthAct.setOutlineThickness(5);
-		healthAct.setOutlineColor(Color.black);
-
+		;
 		Point HealthHUD = new Point(650,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
@@ -165,8 +163,6 @@ public class PlayLevelScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
-				money.setText("$" + MoneyBase.moneyCount);
-				healthAct.setText("" + tmpHealth);
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
@@ -201,7 +197,6 @@ public class PlayLevelScreen extends Screen {
 				}
 
 				break;
-
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				winScreen.update();
@@ -226,16 +221,31 @@ public class PlayLevelScreen extends Screen {
 					map.draw(player, graphicsHandler);
 
 				}
-
+				// pasue game logic was moved to here
+				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+					isGamePaused = !isGamePaused;
+					keyLocker.lockKey(pauseKey);
+				}
+				
+				if (Keyboard.isKeyUp(pauseKey)) {
+					keyLocker.unlockKey(pauseKey);
+				}
+				pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+				// if game is paused, draw pause gfx over Screen gfx
+				if (isGamePaused) {
+					pauseLabel.draw(graphicsHandler);
+					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+				}
+		
 				break;
 			case LEVEL_COMPLETED:
 				winScreen.draw(graphicsHandler);
 				break;
 		}
+	
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
-		healthAct.draw(graphicsHandler);
 
 	}
 
