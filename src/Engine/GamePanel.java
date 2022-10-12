@@ -78,10 +78,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-		if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-			isGamePaused = !isGamePaused;
-			keyLocker.lockKey(pauseKey);
-		}
+		// if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+		// 	isGamePaused = !isGamePaused;
+		// 	keyLocker.lockKey(pauseKey);
+		// }
 		
 		if (Keyboard.isKeyUp(pauseKey)) {
 			keyLocker.unlockKey(pauseKey);
@@ -94,12 +94,12 @@ public class GamePanel extends JPanel {
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
-		pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
-		// if game is paused, draw pause gfx over Screen gfx
-		if (isGamePaused) {
-			pauseLabel.draw(graphicsHandler);
-			graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
-		}
+		// pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+		// // if game is paused, draw pause gfx over Screen gfx
+		// if (isGamePaused) {
+		// 	pauseLabel.draw(graphicsHandler);
+		// 	graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+		// }
 	}
 
 	@Override

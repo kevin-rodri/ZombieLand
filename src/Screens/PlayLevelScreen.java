@@ -18,6 +18,7 @@ import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
 import Engine.Screen;
+import Engine.ScreenManager;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -47,7 +48,10 @@ public class PlayLevelScreen extends Screen {
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
+	private SpriteFont pauseLabel;
 	protected Key shootingKey = Key.S;
+	private final Key pauseKey = Key.P;
+	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 
@@ -76,6 +80,9 @@ public class PlayLevelScreen extends Screen {
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
+		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
+		pauseLabel.setOutlineColor(Color.black);
+		pauseLabel.setOutlineThickness(2.0f);
 	}
 
 	public void initialize() {
@@ -214,12 +221,28 @@ public class PlayLevelScreen extends Screen {
 					map.draw(player, graphicsHandler);
 
 				}
-
+				// pasue game logic was moved to here
+				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+					isGamePaused = !isGamePaused;
+					keyLocker.lockKey(pauseKey);
+				}
+				
+				if (Keyboard.isKeyUp(pauseKey)) {
+					keyLocker.unlockKey(pauseKey);
+				}
+				pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+				// if game is paused, draw pause gfx over Screen gfx
+				if (isGamePaused) {
+					pauseLabel.draw(graphicsHandler);
+					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+				}
+		
 				break;
 			case LEVEL_COMPLETED:
 				winScreen.draw(graphicsHandler);
 				break;
 		}
+	
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
