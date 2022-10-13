@@ -7,11 +7,11 @@ import Level.ScriptState;
 public class LostBallScript extends Script {
     @Override
     protected void setup() {
-        lockPlayer();
-        showTextbox();
-        addTextToTextboxQueue("Where did my ball go!?");
-        addTextToTextboxQueue("I left it right here before I took my 22 hour cat nap.");
-        addTextToTextboxQueue("Maybe Walrus has seen it.");
+        //lockPlayer();
+        //showTextbox();
+        //addTextToTextboxQueue("Where did my ball go!?");
+        //addTextToTextboxQueue("I left it right here before I took my 22 hour cat nap.");
+        //addTextToTextboxQueue("Maybe Walrus has seen it.");
     }
 
     @Override
