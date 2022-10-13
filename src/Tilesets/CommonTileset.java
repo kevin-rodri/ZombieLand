@@ -487,6 +487,15 @@ public class CommonTileset extends Tileset {
 						.withTileType(TileType.PASSABLE);
 
 				mapTiles.add(grassFramesTile);
+		//upsideDownSideWalk
+				Frame upsideDownSideWalk = new FrameBuilder(getSubImage(5, 6))
+						.withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder upsideDownSideWalkTile = new MapTileBuilder(upsideDownSideWalk)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(upsideDownSideWalkTile);
 				
 		return mapTiles;
 	}
