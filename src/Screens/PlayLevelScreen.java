@@ -46,7 +46,7 @@ public class PlayLevelScreen extends Screen {
 	protected Player player;
 	public Player player2;
 	protected PlayLevelScreenState playLevelScreenState;
-	protected SpriteFont waveCounter, money, healthBar;
+	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
@@ -58,6 +58,7 @@ public class PlayLevelScreen extends Screen {
 	private Stopwatch Timer = new Stopwatch();
 
 	protected int counter = 0;
+
 	int m = 1;
 	Timer t;
 
@@ -110,11 +111,17 @@ public class PlayLevelScreen extends Screen {
 		health.setHeight(50);
 		health.setWidth(50);
 		//health.setLocation(300, 300);
+
+		ammoCount = new SpriteFont("30/120" , 20, 550, "z", 20, Color.red);
+		ammoCount.setOutlineColor(Color.black);
+		ammoCount.setOutlineThickness(5);
 		
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
 		flagManager.addFlag("hasTalkedToDinosaur", false);
 		flagManager.addFlag("hasFoundBall", false);
+		flagManager.addFlag("hasTalkedToAmmoNPC", false);
+		flagManager.addFlag("hasTalkedToGunsmith", false);
 
 		// define/setup map
 		this.map = new TestMap();
@@ -257,6 +264,7 @@ public class PlayLevelScreen extends Screen {
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
 		healthBar.draw(graphicsHandler);
+		ammoCount.draw(graphicsHandler);
 
 	}
 
