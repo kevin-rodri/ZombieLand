@@ -1,5 +1,4 @@
 package Players;
-
 import Builders.FrameBuilder;
 
 import Engine.GraphicsHandler;
@@ -14,9 +13,9 @@ import java.util.HashMap;
 
 // This is the class for the Cat player character
 // basically just sets some values for physics and then defines animations
-public class AlexWithAPistol extends Player {
+public class SecondPlayer extends Player2 {
 
-    public AlexWithAPistol(float x, float y) {
+    public SecondPlayer(float x, float y) {
         super(new SpriteSheet(ImageLoader.load("AlexWithAPistol.png"), 24, 24), x, y, "STAND_RIGHT");
         walkSpeed = 4.0f;
     }
