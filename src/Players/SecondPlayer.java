@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class SecondPlayer extends Player2 {
 
     public SecondPlayer(float x, float y) {
-        super(new SpriteSheet(ImageLoader.load("AlexWithAPistol.png"), 24, 24), x, y, "STAND_RIGHT");
+        super(new SpriteSheet(ImageLoader.load("Alex2.png"), 24, 24), x, y, "STAND_RIGHT");
         walkSpeed = 4.0f;
     }
     

@@ -197,13 +197,14 @@ public class CommonTileset extends Tileset {
 
 		mapTiles.add(greyRockTile);
 
-		// bush
+		// flame
 		Frame bushFrame = new FrameBuilder(getSubImage(3, 3))
 				.withScale(tileScale)
 				.build();
 
-		MapTileBuilder bushTile = new MapTileBuilder(bushFrame)
-				.withTileType(TileType.NOT_PASSABLE);
+		MapTileBuilder bushTile = new MapTileBuilder(grassFrame)
+				.withTopLayer(bushFrame)
+				.withTileType(TileType.PASSABLE);
 
 		mapTiles.add(bushTile);
 
@@ -296,12 +297,6 @@ public class CommonTileset extends Tileset {
 				.withScale(tileScale)
 				.build(),
 				new FrameBuilder(getSubImage(5, 0), 500)
-				.withScale(tileScale)
-				.build(),
-				new FrameBuilder(getSubImage(5, 3), 500)
-				.withScale(tileScale)
-				.build(),
-				new FrameBuilder(getSubImage(5, 4), 500)
 				.withScale(tileScale)
 				.build(),
 				new FrameBuilder(getSubImage(5, 3), 500)
@@ -495,8 +490,199 @@ public class CommonTileset extends Tileset {
 
 				MapTileBuilder upsideDownSideWalkTile = new MapTileBuilder(upsideDownSideWalk)
 						.withTileType(TileType.PASSABLE);		
-				mapTiles.add(upsideDownSideWalkTile);
-				
+				mapTiles.add(upsideDownSideWalkTile);	
+			//store 1
+				Frame store1 = new FrameBuilder(getSubImage(0 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store1Tile = new MapTileBuilder(store1)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store1Tile);
+				//store 2
+				Frame store2 = new FrameBuilder(getSubImage(0 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store2Tile = new MapTileBuilder(store2)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store2Tile);
+				//store 3
+				Frame store3 = new FrameBuilder(getSubImage(0 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store3Tile = new MapTileBuilder(store3)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store3Tile);	
+				//store 4
+				Frame store4 = new FrameBuilder(getSubImage(0 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store4Tile = new MapTileBuilder(store4)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store4Tile);
+				//store 5 - second row
+				Frame store5 = new FrameBuilder(getSubImage(1 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store5Tile = new MapTileBuilder(store5)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store5Tile);
+				//store 6
+				Frame store6 = new FrameBuilder(getSubImage(1 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store6Tile = new MapTileBuilder(store6)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store6Tile);
+				//store 7
+				Frame store7 = new FrameBuilder(getSubImage(1 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store7Tile = new MapTileBuilder(store7)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store7Tile);	
+				//store 8
+				Frame store8 = new FrameBuilder(getSubImage(1 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store8Tile = new MapTileBuilder(store8)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store8Tile);
+				//store 9 - third row
+				Frame store9 = new FrameBuilder(getSubImage(2 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store9Tile = new MapTileBuilder(store9)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store9Tile);
+				//store 10
+				Frame store10 = new FrameBuilder(getSubImage(2 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store10Tile = new MapTileBuilder(store10)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store10Tile);
+				//store 11
+				Frame store11 = new FrameBuilder(getSubImage(2 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store11Tile = new MapTileBuilder(store11)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store11Tile);	
+				//store 12
+				Frame store12 = new FrameBuilder(getSubImage(2 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store12Tile = new MapTileBuilder(store12)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store12Tile);	
+				//store 13 - 4th row
+				Frame store13 = new FrameBuilder(getSubImage(3 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store13Tile = new MapTileBuilder(store13)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store13Tile);
+				//store 14
+				Frame store14 = new FrameBuilder(getSubImage(3 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store14Tile = new MapTileBuilder(store14)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store14Tile);
+				//store 15
+				Frame store15= new FrameBuilder(getSubImage(3 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store15Tile = new MapTileBuilder(store15)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store15Tile);	
+				//store 16
+				Frame store16 = new FrameBuilder(getSubImage(3 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store16Tile = new MapTileBuilder(store16)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store16Tile);
+				//store 17 - 5th row
+				Frame store17 = new FrameBuilder(getSubImage(4 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store17Tile = new MapTileBuilder(store17)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store17Tile);
+				//store 18
+				Frame store18 = new FrameBuilder(getSubImage(4 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store18Tile = new MapTileBuilder(store18)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store18Tile);
+				//store 19
+				Frame store19 = new FrameBuilder(getSubImage(4 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store19Tile = new MapTileBuilder(store19)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store19Tile);	
+				//store 20
+				Frame store20 = new FrameBuilder(getSubImage(4 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store20Tile = new MapTileBuilder(store20)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store20Tile);
+				//store 21 - 6th row
+				Frame store21 = new FrameBuilder(getSubImage(5 ,7))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store21Tile = new MapTileBuilder(store21)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store21Tile);
+				//store 22
+				Frame store22 = new FrameBuilder(getSubImage(5 ,8))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store22Tile = new MapTileBuilder(store22)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store22Tile);
+				//store 23
+				Frame store23 = new FrameBuilder(getSubImage(5 ,9))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store23Tile = new MapTileBuilder(store23)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store23Tile);	
+				//store 24
+				Frame store24 = new FrameBuilder(getSubImage(5 ,10))
+						.withScale(tileScale)
+						.build();
+
+				MapTileBuilder store24Tile = new MapTileBuilder(store24)
+						.withTileType(TileType.PASSABLE);		
+				mapTiles.add(store24Tile);		
 		return mapTiles;
 	}
 }
