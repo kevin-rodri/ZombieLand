@@ -54,11 +54,11 @@ public class Zombie extends Enemy {
 //		while(bullet.check != false) {
 //			System.out.println("true");
 //		}
-		
+		System.out.println("true2");
 		if ((bullet.overlaps(this))) {
-			disappear = true;
 			System.out.print("true");
-			update();
+//			disappear = true;
+//			update();
 		}
 
 		super.update();

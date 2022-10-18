@@ -4,6 +4,7 @@ import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
+import Level.Player2;
 import Maps.TitleScreenMap;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
@@ -22,6 +23,8 @@ public class MenuScreen extends Screen {
     protected Stopwatch keyTimer = new Stopwatch();
     protected int pointerLocationX, pointerLocationY;
     protected KeyLocker keyLocker = new KeyLocker();
+	protected Player2 coOp;
+
 
     public MenuScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -47,7 +50,7 @@ public class MenuScreen extends Screen {
 
     public void update() {
         // update background map (to play tile animations)
-        background.update(null);
+        background.update(coOp);
 
         // if down or up is pressed, change menu item "hovered" over (blue square in front of text will move along with currentMenuItemHovered changing)
         if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {

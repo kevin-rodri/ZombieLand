@@ -50,6 +50,8 @@ public class Shooting extends Enemy {
 		if (hasCollided) {
 			this.mapEntityStatus = MapEntityStatus.REMOVED;
 		}
+		Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
+		zombie.removeZombie(this);
 	}
 	@Override
 	public void touchedPlayer(Player player) {
