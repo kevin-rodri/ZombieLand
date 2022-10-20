@@ -110,7 +110,7 @@ public abstract class Map {
         for (Enemy enemy: this.enemies) {
             enemy.setMap(this);
         }
-        
+
         this.triggers = loadTriggers();
         for (Trigger trigger: this.triggers) {
             trigger.setMap(this);
@@ -374,7 +374,7 @@ public abstract class Map {
         enemy.setMap(this);
         this.enemies.add(enemy);
     }
-
+ 
     // add a trigger to the map's list of triggers
     public void addTrigger(Trigger trigger) {
         trigger.setMap(this);

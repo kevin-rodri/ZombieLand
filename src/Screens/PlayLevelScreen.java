@@ -202,7 +202,6 @@ public class PlayLevelScreen extends Screen {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-						zombie.removeZombie(bullet);
 						Timer.setWaitTime(500);
 					}
 
