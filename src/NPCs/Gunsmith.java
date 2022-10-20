@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class Gunsmith extends NPC {
 
     public Gunsmith(int id, Point location) {
-        super(id, location.x,location.y, new SpriteSheet(ImageLoader.load("Walrus.png"), 24, 24), "STAND_LEFT");
+        super(id, location.x,location.y, new SpriteSheet(ImageLoader.load("gunsm.png"), 32, 45), "STAND_LEFT");
     }
 
     public void update(Player player) {
@@ -28,14 +28,14 @@ public class Gunsmith extends NPC {
         return new HashMap<String, Frame[]>() {{
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(3)
+                            .withScale(1.5f)
                             .withBounds(7, 13, 11, 7)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
-                            .withScale(3)
+                            .withScale(1.5f)
                             .withBounds(7, 13, 11, 7)
                             .build()
             });
