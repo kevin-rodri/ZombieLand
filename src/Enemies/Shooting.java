@@ -1,6 +1,8 @@
 package Enemies;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Ammo.LightAmmo;
 import Screens.PlayLevelScreen;
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -38,6 +40,7 @@ public class Shooting extends Enemy {
 		// map
 		if (existenceTimer.isTimeUp()) {
 			this.mapEntityStatus = MapEntityStatus.REMOVED;
+
 
 		} else {
 			// move fireball forward

@@ -79,10 +79,15 @@ public class Zombie extends Enemy {
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             this.setIsHidden(true);
+            HealthSystem.zombieTouchPlayer();
+            if(HealthSystem.healthCount <= 0){
+                System.out.println("Game Over!");
+                HealthSystem.setMaxHealth();
+            }
      }   
      if(disappear == true) {
         this.setIsHidden(true);
-        HealthSystem.zombieTouchPlayer();
+
     }
      super.update();
     }

@@ -2,6 +2,7 @@ package Screens;
 
 import java.awt.Color;
 
+import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
 import PowerUp.weapons;
@@ -113,7 +114,7 @@ public class PlayLevelScreen extends Screen {
 		health.setWidth(50);
 		//health.setLocation(300, 300);
 
-		ammoCount = new SpriteFont("30/120" , 20, 550, "z", 20, Color.red);
+		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 550, "z", 20, Color.red);
 		ammoCount.setOutlineColor(Color.black);
 		ammoCount.setOutlineThickness(5);
 		
@@ -184,6 +185,7 @@ public class PlayLevelScreen extends Screen {
 			case RUNNING:
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
+				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
@@ -194,6 +196,7 @@ public class PlayLevelScreen extends Screen {
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 						float fireballX;
 						float movementSpeed;
+						LightAmmo.ammoCount -=1;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
 							movementSpeed = 4.0f;
 							fireballX = Math.round(player2.getX()) + 50;
