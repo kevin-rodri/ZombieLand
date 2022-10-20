@@ -34,7 +34,7 @@ public class CreditsScreen extends Screen {
     }
 
     public void update() {
-        background.update(null);
+//        background.update(null);
 
         if (Keyboard.isKeyUp(Key.SPACE)) {
             keyLocker.unlockKey(Key.SPACE);

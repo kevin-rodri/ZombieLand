@@ -48,22 +48,6 @@ public class Zombie extends Enemy {
 		}
 	}
 
-	public void removeZombie(Shooting bullet) {
-		// this conditional will be temporary as I added it to test if the walk method
-		// works
-//		while(bullet.check != false) {
-//			System.out.println("true");
-//		}
-		
-		if ((bullet.overlaps(this))) {
-			disappear = true;
-			System.out.print("true");
-			update();
-		}
-
-		super.update();
-	}
-
 	 // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
      public Direction getZombieDirection(){
         return facingDirection;
@@ -81,7 +65,7 @@ public class Zombie extends Enemy {
          walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
     } else {
        facingDirection = Direction.LEFT;
-        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+       walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
     }
 
     if (yPosition < zombieSpeed){
@@ -115,7 +99,7 @@ public class Zombie extends Enemy {
             Enemy get = enemy.get(i);
         for (int enemies = i + 1; enemies < enemy.size(); enemies++){
             //  Get a reference of a another enemy 
-                 Enemy getCurrentEnemy = enemy.get(enemies);
+            Enemy getCurrentEnemy = enemy.get(enemies);
                  // check to see if they collide with one another
                 hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
                   // if an enemy collides with another one, separate them 

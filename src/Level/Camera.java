@@ -27,7 +27,7 @@ public class Camera extends Rectangle {
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
     private ArrayList<Trigger> activeTriggers = new ArrayList<>();
     private ArrayList<Enemy> activeEnemies = new ArrayList<>();
-
+   
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
 
@@ -49,6 +49,12 @@ public class Camera extends Rectangle {
     }
 
     public void update(Player player) {
+        updateMapTiles();
+        updateMapEntities(player);
+        updateScripts();
+    }
+    
+    public void update(Player2 player) {
         updateMapTiles();
         updateMapEntities(player);
         updateScripts();
@@ -77,6 +83,23 @@ public class Camera extends Rectangle {
         }
         for (Enemy enemy : activeEnemies) {
             enemy.update(player);
+        }
+    }
+    
+    public void updateMapEntities(Player2 player) {
+        activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
+        activeNPCs = loadActiveNPCs();
+        activeEnemies = loadActiveEnemies();
+
+        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
+            enhancedMapTile.update(player);
+        }
+
+        for (NPC npc : activeNPCs) {
+//            npc.update(player);
+        }
+        for (Enemy enemy : activeEnemies) {
+//            enemy.update(player);
         }
     }
 
@@ -188,16 +211,68 @@ public class Camera extends Rectangle {
         return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && !mapEntity.isHidden() && mapEntity.exists() && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
     }
 
-    public void draw(GraphicsHandler graphicsHandler) {
-        drawMapTilesBottomLayer(graphicsHandler);
-        drawMapTilesTopLayer(graphicsHandler);
-    }
+  
 
-    public void draw(Player player, GraphicsHandler graphicsHandler) {
+    private void drawMapEntities(Player2 coOp, GraphicsHandler graphicsHandler) {
+		// TODO Auto-generated method stub
+       ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
+        
+        for (Enemy enemy : activeEnemies) {
+            if (containsDraw(enemy)) {
+                enemy.draw(graphicsHandler);
+            }
+        }
+
+        // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
+        // if drawn here, npc will later be "overlapped" by player
+        // if drawn later, npc will "cover" player
+        for (NPC npc : activeNPCs) {
+            if (containsDraw(npc)) {
+                if (npc.getBounds().getY() < coOp.getBounds().getY1()  + (coOp.getBounds().getHeight() / 2f)) {
+                    npc.draw(graphicsHandler);
+                }
+                else {
+                    drawNpcsAfterPlayer.add(npc);
+                }
+            }
+        }
+
+        // player is drawn to screen
+        coOp.draw(graphicsHandler);
+
+        // npcs determined to be drawn after player from the above step are drawn here
+        for (NPC npc : drawNpcsAfterPlayer) {
+            npc.draw(graphicsHandler);
+        }
+
+        // Uncomment this to see triggers drawn on screen
+        // helps for placing them in the correct spot/debugging
+        /*
+         * for (Trigger trigger : activeTriggers) {
+            if (containsDraw(trigger)) {
+                trigger.draw(graphicsHandler);
+            }
+        }
+         */
+	}
+
+	public void draw(Player player, GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
+	
+	  public void draw(Player2 coOp, GraphicsHandler graphicsHandler) {
+	    	drawMapTilesBottomLayer(graphicsHandler);
+	        drawMapEntities(coOp, graphicsHandler);
+	        drawMapTilesTopLayer(graphicsHandler);
+	  }
+	  public void draw(Player2 coOp, Player player, GraphicsHandler graphicsHandler) {
+	    	drawMapTilesBottomLayer(graphicsHandler);
+	        drawMapEntities(coOp, graphicsHandler);
+	        drawMapEntities(player, graphicsHandler);
+	        drawMapTilesTopLayer(graphicsHandler);
+	  }
 
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen

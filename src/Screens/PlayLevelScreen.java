@@ -27,6 +27,7 @@ import Level.*;
 import Maps.TestMap;
 import NPCs.Lives;
 import Players.AlexWithAPistol;
+import Players.SecondPlayer;
 import SpriteFont.SpriteFont;
 import Players.Alex;
 import Utils.Direction;
@@ -45,13 +46,14 @@ public class PlayLevelScreen extends Screen {
 	protected Map map;
 	protected Player player;
 	public Player player2;
+	protected Player2 coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
 	private SpriteFont pauseLabel;
-	protected Key shootingKey = Key.S;
+	protected Key shootingKey = Key.F;
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
@@ -105,7 +107,6 @@ public class PlayLevelScreen extends Screen {
 		time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
-		;
 		Point HealthHUD = new Point(650,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
@@ -136,11 +137,15 @@ public class PlayLevelScreen extends Screen {
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
+		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.coOp.setMap(map);
+		this.coOp.setLocation(670, 120);
+		this.coOp.setFacingDirection(player.getFacingDirection());
 		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player2.setMap(map);
 		this.player2.setLocation(670, 120);
 		this.player2.setFacingDirection(player.getFacingDirection());
-		// let pieces of map know which button to listen for as the "interact" button
+//		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
 
 		// setup map scripts to have references to the map and player
@@ -182,7 +187,9 @@ public class PlayLevelScreen extends Screen {
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
-					// Timer.isTimeUp();
+					coOp.update();
+					map.update(coOp);
+					Timer.isTimeUp();
 
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 						float fireballX;
@@ -202,14 +209,15 @@ public class PlayLevelScreen extends Screen {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-						zombie.removeZombie(bullet);
 						Timer.setWaitTime(500);
 					}
 
 				} else {
-
+					coOp.update();
 					player.update();
+					map.update(coOp);
 					map.update(player);
+
 
 				}
 
@@ -232,10 +240,17 @@ public class PlayLevelScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 				if (weapons.check == true) {
-					map.draw(player2, graphicsHandler);
+//					map.draw(player2, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
+					map.draw(coOp, player2, graphicsHandler);
+
+
 
 				} else {
-					map.draw(player, graphicsHandler);
+
+//					map.draw(player, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
+					map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here
