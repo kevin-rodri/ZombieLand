@@ -1,5 +1,8 @@
 package Enemies;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import Ammo.LightAmmo;
 import Screens.PlayLevelScreen;
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -38,6 +41,7 @@ public class Shooting extends Enemy {
 		if (existenceTimer.isTimeUp()) {
 			this.mapEntityStatus = MapEntityStatus.REMOVED;
 
+
 		} else {
 			// move fireball forward
 			moveXHandleCollision(movementSpeed);
@@ -50,14 +54,27 @@ public class Shooting extends Enemy {
 		if (hasCollided) {
 			this.mapEntityStatus = MapEntityStatus.REMOVED;
 		}
-		Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-		zombie.removeZombie(this);
+		
+		// if fireball collides with anything solid on the x axis, it is removed
+		ArrayList<Enemy> enemy = map.getEnemies();
+        for (int i= 0;i < enemy.size(); i++){
+            // get reference of one enemy 
+            Enemy get = enemy.get(i);
+        for (int enemies = i + 1; enemies < enemy.size(); enemies++){
+            //  Get a reference of a another enemy 
+                 Enemy getCurrentEnemy = enemy.get(enemies);
+                 // check to see if they collide with one another
+                hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
+                  // if an enemy collides with another one, separate them 
+                  if (hasCollided){
+                    entityCollidedWith = get; 
+                    // check which one has a bigger x position
+                    // if so, update their position
+                     enemy.remove(entityCollidedWith);
+					 this.mapEntityStatus = MapEntityStatus.REMOVED;
+                  }
+		}
 	}
-	@Override
-	public void touchedPlayer(Player player) {
-		// if fireball touches player, it disappears
-		super.touchedPlayer(player);
-		this.mapEntityStatus = MapEntityStatus.REMOVED;
 	}
 	
 	@Override

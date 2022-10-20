@@ -80,6 +80,13 @@ public class TestMap extends Map {
         lifeup.setInteractScript(new WalrusScript());
         npcs.add(lifeup);
 
+        AmmoNPC ammonpc = new AmmoNPC(7, getMapTile(15, 28).getLocation().subtractY(40));
+        ammonpc.setInteractScript(new AmmoScript());
+        npcs.add(ammonpc);
+
+        Gunsmith gunsmith = new Gunsmith(7, getMapTile(20, 28).getLocation().subtractY(40));
+        gunsmith.setInteractScript(new GunsmithScript());
+        npcs.add(gunsmith);
 
 
         return npcs;

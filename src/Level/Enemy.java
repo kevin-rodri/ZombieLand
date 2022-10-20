@@ -8,7 +8,6 @@ import Utils.Point;
 
 import java.util.HashMap;
 
-import Enemies.Shooting;
 
 // This class is a base class for all enemies in the game -- all enemies should extend from it
 // taken from SER-225 platformer game
@@ -45,8 +44,8 @@ public class Enemy extends MapEntity {
             touchedPlayer(player);
         }
     }
-    
 
+ 
    // allows enemy freedom to walk around the map (from the npc class)
    // Note: changed move methods to check for collision
    public void walk(Direction direction, float speed) {
@@ -86,7 +85,7 @@ public void walktoPlayer(Direction direction, float speed, Point location) {
 	public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
-	
+
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
