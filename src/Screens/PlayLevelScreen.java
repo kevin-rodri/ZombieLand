@@ -117,6 +117,8 @@ public class PlayLevelScreen extends Screen {
 		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 550, "z", 20, Color.red);
 		ammoCount.setOutlineColor(Color.black);
 		ammoCount.setOutlineThickness(5);
+
+
 		
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
@@ -179,13 +181,25 @@ public class PlayLevelScreen extends Screen {
 
 	public void update() {
 		// based on screen state, perform specific actions
+
 		switch (playLevelScreenState) {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
+				if (LightAmmo.ammoCount <= 0){
+					LightAmmo.ammoClip -=30;
+					LightAmmo.ammoCount += 30;
+				}
+				if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
+					//For now setting it back to max but should be set to 0 and say no AMMO
+					LightAmmo.ammoCount = 30;
+					LightAmmo.ammoClip = 120;
+					//ammoCount.setText("NO AMMO");
+				}
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
