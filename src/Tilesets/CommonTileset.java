@@ -204,7 +204,7 @@ public class CommonTileset extends Tileset {
 
 		MapTileBuilder bushTile = new MapTileBuilder(grassFrame)
 				.withTopLayer(bushFrame)
-				.withTileType(TileType.PASSABLE);
+				.withTileType(TileType.NOT_PASSABLE);
 
 		mapTiles.add(bushTile);
 

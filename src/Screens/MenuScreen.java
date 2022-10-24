@@ -104,8 +104,7 @@ public class MenuScreen extends Screen {
             } 
             else if(menuItemSelected == 1)
             {
-            	screenCoordinator.setGameState(GameState.LEVEL);
-            	System.out.println("COOP");
+            	screenCoordinator.setGameState(GameState.COOP);
             }
             else if (menuItemSelected == 2) {
                 screenCoordinator.setGameState(GameState.CREDITS);
