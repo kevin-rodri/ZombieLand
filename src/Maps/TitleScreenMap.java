@@ -16,16 +16,15 @@ public class TitleScreenMap extends Map {
     private Sprite alex2;
     public TitleScreenMap() {
         super("title_screen_map.txt", new CommonTileset());
-        Point alexLocation = getMapTile(5, 6).getLocation().subtractX(6).subtractY(7);
         alex = new Sprite(ImageLoader.loadSubImage("Alex.png", Colors.MAGENTA, 0, 0, 24, 24));
-        alex.setScale(3);
+        alex.setScale(10);
         alex.setImageEffect(ImageEffect.FLIP_HORIZONTAL);
-        alex.setLocation(50, 50);
+        alex.setLocation(100, 500);
         
         alex2 = new Sprite(ImageLoader.loadSubImage("Alex2.png", Colors.MAGENTA, 0, 0, 24, 24));
-        alex2.setScale(3);
+        alex2.setScale(10);
     //    alex2.setImageEffect(ImageEffect.FLIP_HORIZONTAL);
-        alex2.setLocation(100, 50);
+        alex2.setLocation(250, 500);
     }
 
     @Override

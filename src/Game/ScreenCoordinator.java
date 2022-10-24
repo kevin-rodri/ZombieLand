@@ -3,6 +3,7 @@ package Game;
 import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
 import Engine.Screen;
+import Screens.CoopScreen;
 import Screens.CreditsScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
@@ -49,6 +50,9 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
+						break;
+					case COOP:
+						currentScreen = new CoopScreen(this);
 						break;
 				}
 				currentScreen.initialize();
