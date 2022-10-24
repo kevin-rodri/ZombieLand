@@ -1,7 +1,10 @@
 package Screens;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
 
+import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
 import PowerUp.weapons;
@@ -16,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
@@ -35,9 +39,6 @@ import Utils.Point;
 import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
-import java.util.HashMap;
-import Screens.PlayLevelScreen;
-import Utils.Point;
 
 
 // This class is for when the platformer game is actually being played
@@ -48,7 +49,7 @@ public class CoopScreen extends Screen {
 	public Player player2;
 	protected Player2 coOp;
 	protected PlayLevelScreenState playLevelScreenState;
-	protected SpriteFont waveCounter, money, healthBar;
+	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
@@ -58,8 +59,10 @@ public class CoopScreen extends Screen {
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
+	private GameWindow window;
 
 	protected int counter = 0;
+
 	int m = 1;
 	Timer t;
 
@@ -92,7 +95,7 @@ public class CoopScreen extends Screen {
 	}
 
 	public void initialize() {
-		
+
 		// setup state
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter + "/10", 300, 50, "z", 20, Color.WHITE);
@@ -111,11 +114,19 @@ public class CoopScreen extends Screen {
 		health.setHeight(50);
 		health.setWidth(50);
 		//health.setLocation(300, 300);
+
+		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 550, "z", 20, Color.red);
+		ammoCount.setOutlineColor(Color.black);
+		ammoCount.setOutlineThickness(5);
+
+
 		
 		flagManager.addFlag("hasLostBall", false);
 		flagManager.addFlag("hasTalkedToWalrus", false);
 		flagManager.addFlag("hasTalkedToDinosaur", false);
 		flagManager.addFlag("hasFoundBall", false);
+		flagManager.addFlag("hasTalkedToAmmoNPC", false);
+		flagManager.addFlag("hasTalkedToGunsmith", false);
 
 		// define/setup map
 		this.map = new TestMap();
@@ -166,7 +177,6 @@ public class CoopScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
-
 	}
 
 	public void update() {
@@ -175,8 +185,20 @@ public class CoopScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
+				if (LightAmmo.ammoCount <= 0){
+					LightAmmo.ammoClip -=30;
+					LightAmmo.ammoCount += 30;
+				}
+				if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
+					//For now setting it back to max but should be set to 0 and say no AMMO
+					LightAmmo.ammoCount = 30;
+					LightAmmo.ammoClip = 120;
+					//ammoCount.setText("NO AMMO");
+				}
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
+				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
@@ -187,6 +209,7 @@ public class CoopScreen extends Screen {
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 						float fireballX;
 						float movementSpeed;
+						LightAmmo.ammoCount -=1;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
 							movementSpeed = 4.0f;
 							fireballX = Math.round(player2.getX()) + 50;
@@ -202,7 +225,6 @@ public class CoopScreen extends Screen {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-//						zombie.removeZombie(bullet);
 						Timer.setWaitTime(500);
 					}
 
@@ -273,7 +295,7 @@ public class CoopScreen extends Screen {
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
 		healthBar.draw(graphicsHandler);
-
+		ammoCount.draw(graphicsHandler);
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {
@@ -292,5 +314,19 @@ public class CoopScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
+    public void setWindow(GameWindow thisWindow)
+    {
+    	window=thisWindow;
+    	updateLayout();
+    }
+    public GameWindow getWindow(GameWindow thisWindow)
+    {
+    	return window;
+    }
+    public void updateLayout()
+    {
+    	window.setGridLayout();
+
+    }
 
 }
