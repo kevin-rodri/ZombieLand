@@ -84,11 +84,12 @@ public class SmallZombie extends Enemy {
     
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
-           // this.setIsHidden(true);
+            this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
             if(HealthSystem.healthCount <= 0){
-                System.out.println("Game Over!");
-                HealthSystem.setMaxHealth();
+
+                //System.out.println("Game Over!");
+                //HealthSystem.setMaxHealth();
             }
      }   
      if(disappear == true) {

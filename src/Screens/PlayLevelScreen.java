@@ -124,24 +124,24 @@ public class PlayLevelScreen extends Screen {
 
 		// setup state
 		flagManager = new FlagManager();
-		waveCounter = new SpriteFont("WAVE " + counter + "/10", 700, 50, "z", 20, Color.WHITE);
+		waveCounter = new SpriteFont("WAVE " + counter + "/10", 600, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
-		healthBar = new SpriteFont("" + HealthSystem.healthCount, 1450, 50, "z", 20, Color.WHITE);
+		healthBar = new SpriteFont("" + HealthSystem.healthCount, 1350, 50, "z", 20, Color.WHITE);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
-		Point HealthHUD = new Point(1400,10);
+		Point HealthHUD = new Point(1300,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
 		health.setWidth(50);
 		//health.setLocation(300, 300);
 
-		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 800, "z", 20, Color.red);
+		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 600, "z", 20, Color.red);
 		ammoCount.setOutlineColor(Color.black);
 		ammoCount.setOutlineThickness(5);
 
