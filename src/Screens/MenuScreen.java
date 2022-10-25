@@ -85,11 +85,11 @@ public class MenuScreen extends Screen {
             pointerLocationX = 170;
             pointerLocationY = 230;
         } else if (currentMenuItemHovered == 2){
-        	  coopOption.setColor(Color.WHITE);
-        	  playGame.setColor(Color.white);
-        	  credits.setColor(Color.RED);
-              pointerLocationX = 170;
-              pointerLocationY = 330;
+        	 coopOption.setColor(Color.WHITE);
+        	 playGame.setColor(Color.white);
+        	 credits.setColor(Color.RED);
+             pointerLocationX = 170;
+             pointerLocationY = 330;
         }
 
         // if space is pressed on menu item, change to appropriate screen based on which menu item was chosen
@@ -104,8 +104,7 @@ public class MenuScreen extends Screen {
             } 
             else if(menuItemSelected == 1)
             {
-            	screenCoordinator.setGameState(GameState.LEVEL);
-            	System.out.println("COOP");
+            	screenCoordinator.setGameState(GameState.COOP);
             }
             else if (menuItemSelected == 2) {
                 screenCoordinator.setGameState(GameState.CREDITS);
