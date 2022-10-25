@@ -7,7 +7,12 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Health.HealthSystem;
-import Level.*;
+import Level.Enemy;
+import Level.MapCollisionCheckResult;
+import Level.MapEntity;
+import Level.MapEntityStatus;
+import Level.Player;
+import Level.PlayerState;
 import Utils.Direction;
 import Utils.Point;
 import java.util.ArrayList;
@@ -18,7 +23,7 @@ import java.util.HashMap;
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
  * Code is from the SER-225 platformer game 
  */
-public class Zombie extends Enemy{
+public class SmallZombie extends Enemy {
 
 	private float zombieSpeed = 1.5f;
 	private Direction startFacingDirection;
@@ -26,8 +31,8 @@ public class Zombie extends Enemy{
 	public static boolean disappear;
 	public static boolean check = true;
 
-	public Zombie(Point location, Direction facingDirection) {
-		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
+	public SmallZombie(Point location, Direction facingDirection) {
+		super(location.x, location.y, new SpriteSheet(ImageLoader.load("SmallZombie.png"), 23, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
@@ -41,6 +46,7 @@ public class Zombie extends Enemy{
 		} else if (facingDirection == Direction.LEFT) {
 			currentAnimationName = "WALK_LEFT";
 		}
+      //  walk(facingDirection, zombieSpeed);
 	}
 
 	 // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
@@ -56,27 +62,34 @@ public class Zombie extends Enemy{
     // Will get player's key movements in order to move zombie to the direction player is heading towards
     float xPosition = player.getX() - x;
     float yPosition = player.getY() - y;
+
     if (xPosition > zombieSpeed){
          facingDirection = Direction.RIGHT;
          walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+         
     } else {
        facingDirection = Direction.LEFT;
-       walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+       walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
     }
 
     if (yPosition < zombieSpeed){
         facingDirection = Direction.UP;
-        walktoPlayer(facingDirection, zombieSpeed , player.getLocation());
+        walktoPlayer(facingDirection,  zombieSpeed , player.getLocation());
+
     } else {
         facingDirection = Direction.DOWN;
-        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
     }
 
+    
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
-            this.setIsHidden(true);
+           // this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
-
+            if(HealthSystem.healthCount <= 0){
+                System.out.println("Game Over!");
+                HealthSystem.setMaxHealth();
+            }
      }   
      if(disappear == true) {
         this.setIsHidden(true);
@@ -96,7 +109,6 @@ public class Zombie extends Enemy{
             // get reference of one enemy 
             Enemy get = enemy.get(i);
         for (int enemies = i + 1; enemies < enemy.size(); enemies++){
-            //  Get a reference of a another enemy 
             Enemy getCurrentEnemy = enemy.get(enemies);
                  // check to see if they collide with one another
                 hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());

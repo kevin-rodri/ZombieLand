@@ -619,7 +619,6 @@ public abstract class Map {
             textbox.update();
         }
     }
-    
     public void update(Player2 player) {
         if (adjustCamera) {
             adjustMovementY(player);

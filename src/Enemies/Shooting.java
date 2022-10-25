@@ -67,12 +67,11 @@ public class Shooting extends Enemy {
             //  Get a reference of a another enemy 
                  Enemy getCurrentEnemy = enemy.get(enemies);
                  // check to see if they collide with one another
-                hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
-                  // if an enemy collides with another one, separate them 
+                hasCollided = get.getBounds().intersects(getCurrentEnemy.getBounds());
+                  // if an enemy collides with another one, get rid of both 
                   if (hasCollided){
                     entityCollidedWith = get; 
-                    // check which one has a bigger x position
-                    // if so, update their position
+                    // get rid of both enemies
                      enemy.remove(entityCollidedWith);
 					 this.mapEntityStatus = MapEntityStatus.REMOVED;
                   }

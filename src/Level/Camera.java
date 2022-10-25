@@ -217,12 +217,11 @@ public class Camera extends Rectangle {
 		// TODO Auto-generated method stub
        ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
         
-        for (Enemy enemy : activeEnemies) {
-            if (containsDraw(enemy)) {
-                enemy.draw(graphicsHandler);
-            }
+       for (Enemy enemy : activeEnemies) {
+        if (containsDraw(enemy)) {
+            enemy.draw(graphicsHandler);
         }
-
+    }
         // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
         // if drawn here, npc will later be "overlapped" by player
         // if drawn later, npc will "cover" player

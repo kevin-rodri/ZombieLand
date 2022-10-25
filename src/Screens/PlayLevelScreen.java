@@ -10,8 +10,11 @@ import PowerUp.weapons;
 import javax.swing.Timer;
 
 import Enemies.Shooting;
+import Enemies.SmallZombie;
 import Enemies.Zombie;
 import GameObject.*;
+import Level.EnhancedMapTile;
+import Level.Map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +39,12 @@ import Utils.Point;
 import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.TimerTask;
+
 import Screens.PlayLevelScreen;
 import Utils.Point;
 
@@ -60,7 +68,6 @@ public class PlayLevelScreen extends Screen {
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
-
 	protected int counter = 0;
 
 	int m = 1;
@@ -80,7 +87,26 @@ public class PlayLevelScreen extends Screen {
 				MoneyBase.addMoneyOT();
 
 
-				m = m * 2;
+				
+							// hopefully the random zombie spawning works here.. 
+							// weird place to put zombie spawn logic, but the glitchy zombie movement is gone :)
+							Random random = new Random();
+							// generate a number from 1 - 11
+		 int randomX  = 1 + random.nextInt(10);
+		 // generate a number from 1 - 11
+		 int randomY  = 1 + random.nextInt(10);
+
+				for (int i = 0; i < 3; i++){
+					SmallZombie zombieWaveOne  = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);   
+				   zombieWaveOne.update();
+				  }
+				  for (int i = 0; i < 3; i++){
+					Zombie zombieWaveOne  = new Zombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);   
+					 zombieWaveOne.update();
+				  }
+				  m = m * 2;
 				counter++;
 			}
 		});
@@ -188,6 +214,8 @@ public class PlayLevelScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
+			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
+			
 				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip>=0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
@@ -214,7 +242,7 @@ public class PlayLevelScreen extends Screen {
 
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
-
+				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
 
 				if (weapons.check == true) {
@@ -222,6 +250,10 @@ public class PlayLevelScreen extends Screen {
 					map.update(player2);
 					coOp.update();
 					map.update(coOp);
+					zombie.update();
+		
+				
+  
 					Timer.isTimeUp();
 
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
@@ -229,20 +261,19 @@ public class PlayLevelScreen extends Screen {
 						float movementSpeed;
 						LightAmmo.ammoCount -=1;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 4.0f;
+							movementSpeed = 10.0f;
 							fireballX = Math.round(player2.getX()) + 50;
 						} else {
-							movementSpeed = -4.0f;
+							movementSpeed = -10.0f;
 							fireballX = Math.round(player2.getX());
 						}
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(player2.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
+						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
 
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
-						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
 						Timer.setWaitTime(500);
 					}
 
@@ -251,7 +282,7 @@ public class PlayLevelScreen extends Screen {
 					player.update();
 					map.update(coOp);
 					map.update(player);
-
+					zombie.update();
 
 				}
 
