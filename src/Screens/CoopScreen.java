@@ -1,6 +1,8 @@
 package Screens;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
 
 import Ammo.LightAmmo;
 import Health.HealthSystem;
@@ -10,16 +12,14 @@ import PowerUp.weapons;
 import javax.swing.Timer;
 
 import Enemies.Shooting;
-import Enemies.SmallZombie;
 import Enemies.Zombie;
 import GameObject.*;
-import Level.EnhancedMapTile;
-import Level.Map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
@@ -40,17 +40,9 @@ import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.TimerTask;
-
-import Screens.PlayLevelScreen;
-import Utils.Point;
-
 
 // This class is for when the platformer game is actually being played
-public class PlayLevelScreen extends Screen {
+public class CoopScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
@@ -62,12 +54,13 @@ public class PlayLevelScreen extends Screen {
 	protected FlagManager flagManager;
 	protected Lives health;
 	private SpriteFont pauseLabel;
-	private SpriteFont gameOver;
 	protected Key shootingKey = Key.F;
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
+	private GameWindow window;
+
 	protected int counter = 0;
 
 	int m = 1;
@@ -87,33 +80,14 @@ public class PlayLevelScreen extends Screen {
 				MoneyBase.addMoneyOT();
 
 
-				
-							// hopefully the random zombie spawning works here.. 
-							// weird place to put zombie spawn logic, but the glitchy zombie movement is gone :)
-							Random random = new Random();
-							// generate a number from 1 - 11
-		 int randomX  = 1 + random.nextInt(10);
-		 // generate a number from 1 - 11
-		 int randomY  = 1 + random.nextInt(10);
-
-				for (int i = 0; i < 3; i++){
-					SmallZombie zombieWaveOne  = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);   
-				   zombieWaveOne.update();
-				  }
-				  for (int i = 0; i < 3; i++){
-					Zombie zombieWaveOne  = new Zombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);   
-					 zombieWaveOne.update();
-				  }
-				  m = m * 2;
+				m = m * 2;
 				counter++;
 			}
 		});
 		t.start();
 	}
 
-	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
+	public CoopScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
 		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
@@ -124,24 +98,24 @@ public class PlayLevelScreen extends Screen {
 
 		// setup state
 		flagManager = new FlagManager();
-		waveCounter = new SpriteFont("WAVE " + counter + "/10", 900, 50, "z", 20, Color.WHITE);
+		waveCounter = new SpriteFont("WAVE " + counter + "/10", 300, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
-		healthBar = new SpriteFont("" + HealthSystem.healthCount, 1850, 50, "z", 20, Color.WHITE);
+		healthBar = new SpriteFont("" + HealthSystem.healthCount, 700, 50, "z", 20, Color.WHITE);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
-		Point HealthHUD = new Point(1800,10);
+		Point HealthHUD = new Point(650,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
 		health.setWidth(50);
 		//health.setLocation(300, 300);
 
-		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 1000, "z", 20, Color.red);
+		ammoCount = new SpriteFont(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip ,20, 550, "z", 20, Color.red);
 		ammoCount.setOutlineColor(Color.black);
 		ammoCount.setOutlineThickness(5);
 
@@ -153,7 +127,6 @@ public class PlayLevelScreen extends Screen {
 		flagManager.addFlag("hasFoundBall", false);
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
 		flagManager.addFlag("hasTalkedToGunsmith", false);
-		flagManager.addFlag("hasDied", false);
 
 		// define/setup map
 		this.map = new TestMap();
@@ -204,55 +177,33 @@ public class PlayLevelScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
-
 	}
 
 	public void update() {
 		// based on screen state, perform specific actions
-
 		switch (playLevelScreenState) {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
-			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
 				if (LightAmmo.ammoCount <= 0){
-				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip>=0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
 				}
-				else{
-					if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
-						//For now setting it back to max but should be set to 0 and say no AMMO
-						//LightAmmo.ammoCount = 30;
-						//LightAmmo.ammoClip = 120;
-						ammoCount.setText("NO AMMO");
-						//ammoCount.update();
-					}
-					else{
-						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
-					}
+				if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
+					//For now setting it back to max but should be set to 0 and say no AMMO
+					LightAmmo.ammoCount = 30;
+					LightAmmo.ammoClip = 120;
+					//ammoCount.setText("NO AMMO");
 				}
-
-				if(HealthSystem.healthCount <= 0){
-
-					flagManager.setFlag("hasDied");
-					HealthSystem.setMaxHealth();
-				}
-
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
-
 
 				if (weapons.check == true) {
 					player2.update();
 					map.update(player2);
 					coOp.update();
 					map.update(coOp);
-					zombie.update();
-		
-				
-  
 					Timer.isTimeUp();
 
 					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
@@ -260,19 +211,20 @@ public class PlayLevelScreen extends Screen {
 						float movementSpeed;
 						LightAmmo.ammoCount -=1;
 						if (player2.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 10.0f;
+							movementSpeed = 4.0f;
 							fireballX = Math.round(player2.getX()) + 50;
 						} else {
-							movementSpeed = -10.0f;
+							movementSpeed = -4.0f;
 							fireballX = Math.round(player2.getX());
 						}
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(player2.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
 
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
+						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
 						Timer.setWaitTime(500);
 					}
 
@@ -281,19 +233,19 @@ public class PlayLevelScreen extends Screen {
 					player.update();
 					map.update(coOp);
 					map.update(player);
-					zombie.update();
+
 
 				}
 
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
-				winScreen.update();
+				//winScreen.update();
 				break;
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
-		if (map.getFlagManager().isFlagSet("hasDied")) {
+		if (map.getFlagManager().isFlagSet("hasFoundBall")) {
 			playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
 		}
 
@@ -335,17 +287,7 @@ public class PlayLevelScreen extends Screen {
 		
 				break;
 			case LEVEL_COMPLETED:
-				health.setIsHidden(true);
-				gameOver = new SpriteFont("Game Over", 1000, 280, "Comic Sans", 24, Color.red);
-				gameOver.setOutlineThickness(3);
-				gameOver.setOutlineColor(Color.red);
-				waveCounter.setText("");
-				money.setText("");
-				healthBar.setText("");
-				ammoCount.setText("");
-				//shealth.isHidden();
-				gameOver.draw(graphicsHandler);
-
+				winScreen.draw(graphicsHandler);
 				break;
 		}
 	
@@ -354,7 +296,6 @@ public class PlayLevelScreen extends Screen {
 		health.draw(graphicsHandler);
 		healthBar.draw(graphicsHandler);
 		ammoCount.draw(graphicsHandler);
-
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {
@@ -373,5 +314,19 @@ public class PlayLevelScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
+    public void setWindow(GameWindow thisWindow)
+    {
+    	window=thisWindow;
+    	updateLayout();
+    }
+    public GameWindow getWindow(GameWindow thisWindow)
+    {
+    	return window;
+    }
+    public void updateLayout()
+    {
+    	window.setGridLayout();
+
+    }
 
 }

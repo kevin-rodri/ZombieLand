@@ -1,8 +1,10 @@
 package Game;
 
 import Engine.DefaultScreen;
+import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.Screen;
+import Screens.CoopScreen;
 import Screens.CreditsScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
@@ -14,10 +16,12 @@ import Screens.PlayLevelScreen;
 public class ScreenCoordinator extends Screen {
 	// currently shown Screen
 	protected Screen currentScreen = new DefaultScreen();
-
+	
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
 	protected GameState gameState;
 	protected GameState previousGameState;
+	private CoopScreen coopScreen = new CoopScreen(this);
+	private GameWindow window;
 
 	public GameState getGameState() {
 		return gameState;
@@ -50,6 +54,10 @@ public class ScreenCoordinator extends Screen {
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
 						break;
+					case COOP:
+						currentScreen = coopScreen;
+						coopScreen.setWindow(window);
+						break;
 				}
 				currentScreen.initialize();
 			}
@@ -65,4 +73,12 @@ public class ScreenCoordinator extends Screen {
 		// call the draw method for the currentScreen
 		currentScreen.draw(graphicsHandler);
 	}
+    public void setWindow(GameWindow thisWindow)
+    {
+    	window=thisWindow;
+    }
+    public GameWindow getWindow(GameWindow thisWindow)
+    {
+    	return window;
+    }
 }
