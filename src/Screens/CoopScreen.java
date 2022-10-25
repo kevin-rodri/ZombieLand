@@ -240,7 +240,7 @@ public class CoopScreen extends Screen {
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
-				winScreen.update();
+				//winScreen.update();
 				break;
 		}
 
