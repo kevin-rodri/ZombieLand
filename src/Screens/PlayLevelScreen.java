@@ -54,6 +54,7 @@ public class PlayLevelScreen extends Screen {
 	protected FlagManager flagManager;
 	protected Lives health;
 	private SpriteFont pauseLabel;
+	private SpriteFont gameOver;
 	protected Key shootingKey = Key.F;
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
@@ -126,6 +127,7 @@ public class PlayLevelScreen extends Screen {
 		flagManager.addFlag("hasFoundBall", false);
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
 		flagManager.addFlag("hasTalkedToGunsmith", false);
+		flagManager.addFlag("hasDied", false);
 
 		// define/setup map
 		this.map = new TestMap();
@@ -186,19 +188,33 @@ public class PlayLevelScreen extends Screen {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
-				if (LightAmmo.ammoCount <= 0){
+				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip>=0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
 				}
-				if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
-					//For now setting it back to max but should be set to 0 and say no AMMO
-					LightAmmo.ammoCount = 30;
-					LightAmmo.ammoClip = 120;
-					//ammoCount.setText("NO AMMO");
+				else{
+					if(LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <=0){
+						//For now setting it back to max but should be set to 0 and say no AMMO
+						//LightAmmo.ammoCount = 30;
+						//LightAmmo.ammoClip = 120;
+						ammoCount.setText("NO AMMO");
+						//ammoCount.update();
+					}
+					else{
+						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+					}
 				}
+
+				if(HealthSystem.healthCount <= 0){
+
+					flagManager.setFlag("hasDied");
+					HealthSystem.setMaxHealth();
+				}
+
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
-				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+
+
 
 				if (weapons.check == true) {
 					player2.update();
@@ -246,7 +262,7 @@ public class PlayLevelScreen extends Screen {
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
-		if (map.getFlagManager().isFlagSet("hasFoundBall")) {
+		if (map.getFlagManager().isFlagSet("hasDied")) {
 			playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
 		}
 
@@ -288,7 +304,17 @@ public class PlayLevelScreen extends Screen {
 		
 				break;
 			case LEVEL_COMPLETED:
-				winScreen.draw(graphicsHandler);
+				health.setIsHidden(true);
+				gameOver = new SpriteFont("Game Over", 1000, 280, "Comic Sans", 24, Color.red);
+				gameOver.setOutlineThickness(3);
+				gameOver.setOutlineColor(Color.red);
+				waveCounter.setText("");
+				money.setText("");
+				healthBar.setText("");
+				ammoCount.setText("");
+				//shealth.isHidden();
+				gameOver.draw(graphicsHandler);
+
 				break;
 		}
 	
