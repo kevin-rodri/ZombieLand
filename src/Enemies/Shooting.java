@@ -47,6 +47,9 @@ public class Shooting extends Enemy {
 			moveXHandleCollision(movementSpeed);
 			super.update(player);
 		}
+		if (LightAmmo.ammoCount ==0 && LightAmmo.ammoClip == 0){
+			this.mapEntityStatus = MapEntityStatus.REMOVED;
+		}
 	}
 	@Override
 	public void onEndCollisionCheckX(boolean hasCollided, Direction direction, MapEntity entityCollidedWith) {
