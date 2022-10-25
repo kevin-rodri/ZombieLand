@@ -215,7 +215,7 @@ public class PlayLevelScreen extends Screen {
 			// platformer level going
 			case RUNNING:
 			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-				if (LightAmmo.ammoCount <= 0){
+			
 				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip>=0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
