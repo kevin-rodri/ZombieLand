@@ -32,7 +32,7 @@ public class SmallZombie extends Enemy {
 	public static boolean check = true;
 
 	public SmallZombie(Point location, Direction facingDirection) {
-		super(location.x, location.y, new SpriteSheet(ImageLoader.load("SmallZombie.png"), 23, 24), "WALK_RIGHT");
+		super(location.x, location.y, new SpriteSheet(ImageLoader.load("SmallZombie.png"), 24, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
