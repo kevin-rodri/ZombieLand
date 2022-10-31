@@ -40,6 +40,9 @@ public class Rectangle implements IntersectableRectangle {
 		this.borderThickness = 0;
 	}
 
+    public Rectangle(int i, int height2) {
+    }
+
     public float getX() {
         return x;
     }

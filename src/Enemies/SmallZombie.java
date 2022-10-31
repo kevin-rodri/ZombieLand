@@ -53,6 +53,16 @@ public class SmallZombie extends Enemy {
      public Direction getZombieDirection(){
         return facingDirection;
     }
+
+    public void setSmallZombieDirection(Direction direction){
+        if (direction == Direction.RIGHT) {
+            this.currentAnimationName = "WALK_RIGHT";
+            this.setCurrentAnimationName(currentAnimationName);
+        } else if (direction == Direction.LEFT) {
+            this.currentAnimationName = "WALK_LEFT";
+        this.setCurrentAnimationName(currentAnimationName);
+        }
+    }
     public float getSpeed(){
         return zombieSpeed;
     }
@@ -60,26 +70,43 @@ public class SmallZombie extends Enemy {
     // Update player's state
    public void update(Player player){
     // Will get player's key movements in order to move zombie to the direction player is heading towards
-    float xPosition = player.getX() - x;
-    float yPosition = player.getY() - y;
+    float xPosition = player.getX();
+    float yPosition = player.getY();
 
-    if (xPosition > zombieSpeed){
-         facingDirection = Direction.RIGHT;
-         walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+    float diffX = xPosition - x;
+    float diffY = yPosition - y;
+
+    float angle = (float)Math.atan2(diffY, diffX);
+
+    x += zombieSpeed * Math.cos(angle);
+    y += zombieSpeed * Math.sin(angle);
+
+if(player.getX() > this.getX()){
+    setSmallZombieDirection(Direction.RIGHT);
+}
+else if(player.getX() < this.getX()){
+    setSmallZombieDirection(Direction.LEFT);
+}
+    // float xPosition = player.getX() - x;
+    // float yPosition = player.getY() - y;
+
+    // if (xPosition > zombieSpeed){
+    //      facingDirection = Direction.RIGHT;
+    //      walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
          
-    } else {
-       facingDirection = Direction.LEFT;
-       walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
-    }
+    // } else {
+    //    facingDirection = Direction.LEFT;
+    //    walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
+    // }
 
-    if (yPosition < zombieSpeed){
-        facingDirection = Direction.UP;
-        walktoPlayer(facingDirection,  zombieSpeed , player.getLocation());
+    // if (yPosition < zombieSpeed){
+    //     facingDirection = Direction.UP;
+    //     walktoPlayer(facingDirection,  zombieSpeed , player.getLocation());
 
-    } else {
-        facingDirection = Direction.DOWN;
-        walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
-    }
+    // } else {
+    //     facingDirection = Direction.DOWN;
+    //     walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
+    // }
 
     
     // added this to avoid the glicthy collision

@@ -117,9 +117,9 @@ public abstract class Map {
         }
 
         this.loadScripts();
-
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
+       
     }
 
     // reads in a map file to create the map's tilemap
@@ -740,9 +740,11 @@ public abstract class Map {
 
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
+
     }
 
     public void draw(Player player, GraphicsHandler graphicsHandler) {
+       
         camera.draw(player, graphicsHandler);
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);

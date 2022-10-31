@@ -1,5 +1,6 @@
 package Engine;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -21,8 +22,9 @@ public class GameWindow {
 	//	gamePanel2 = new GamePanel();
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();
+		//gamePanel.setSize(300, 300);
 		gameWindow.setContentPane(gamePanel);
-		gameWindow.setResizable(false);
+		gameWindow.setResizable(true);
 		gameWindow.setSize(Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT);
 		//gameWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gameWindow.setLocationRelativeTo(null);
@@ -55,7 +57,7 @@ public class GameWindow {
 		gameWindow.add(button,0);
 		gamePanel.setFocusable(true);
 		gameWindow.setResizable(false);
-		gameWindow.setSize(Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT);
+		gameWindow.setSize(gamePanel.getWidth()/2, gamePanel.getHeight());
 		gameWindow.setLocationRelativeTo(null);
 		gameWindow.setVisible(true);
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // it'd be nice if this actually worked more than 1/3rd of the time

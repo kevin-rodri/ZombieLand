@@ -5,6 +5,9 @@ import SpriteFont.SpriteFont;
 import Utils.Colors;
 
 import javax.swing.*;
+
+import org.w3c.dom.css.RGBColor;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +46,7 @@ public class GamePanel extends JPanel {
 
 		screenManager = new ScreenManager();
 		
-		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
+		pauseLabel = new SpriteFont("PAUSE", 365, 280, "z", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
 		pauseLabel.setOutlineThickness(2.0f);
 
@@ -62,7 +65,7 @@ public class GamePanel extends JPanel {
 	// this is called later after instantiation, and will initialize screenManager
 	// this had to be done outside of the constructor because it needed to know the JPanel's width and height, which aren't available in the constructor
 	public void setupGame() {
-		setBackground(Colors.CORNFLOWER_BLUE);
+		setBackground(new Color(40,40,40));
 		screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
 		doPaint = true;
 	}
@@ -89,6 +92,9 @@ public class GamePanel extends JPanel {
 		if (!isGamePaused) {
 			screenManager.update();
 		}
+	}
+	public void setGameSize(int x, int y){
+		this.setSize(x, y);
 	}
 
 	public void draw() {

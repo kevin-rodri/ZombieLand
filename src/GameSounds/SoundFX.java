@@ -27,6 +27,9 @@ public class SoundFX {
         soundeffects[2]= ".//Resources//sounds/225GameSoundtrack.wav";
         soundeffects[3]= ".//Resources//sounds/Footstep.wav";
         soundeffects[4]= ".//Resources//sounds/HealthPack.wav";
+        soundeffects[5]= ".//Resources//sounds/PistolSoundFX.wav";
+        soundeffects[6]= ".//Resources//sounds/ReloadSoundFX.wav";
+        soundeffects[7]= ".//Resources//sounds/ZombieSoundFX.wav";
 
     }
 
