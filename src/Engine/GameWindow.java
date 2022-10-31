@@ -52,7 +52,7 @@ public class GameWindow {
 	{		
 		JButton button = new JButton();
 		gameWindow.setLayout(new GridLayout(0,2));
-		gameWindow.add(button,0);
+//		gameWindow.add(button,0);
 		gamePanel.setFocusable(true);
 		gameWindow.setResizable(false);
 		gameWindow.setSize(Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT);

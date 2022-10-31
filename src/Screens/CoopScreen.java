@@ -230,9 +230,9 @@ public class CoopScreen extends Screen {
 
 				} else {
 					coOp.update();
-					player.update();
+//					player.update();
 					map.update(coOp);
-					map.update(player);
+//					map.update(player);
 
 
 				}
@@ -256,17 +256,17 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 				if (weapons.check == true) {
-//					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player2, graphicsHandler);
+					map.draw(player2, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player2, graphicsHandler);
 
 
 
 				} else {
 
 //					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here
