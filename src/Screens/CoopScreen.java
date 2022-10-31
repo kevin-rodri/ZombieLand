@@ -314,19 +314,5 @@ public class CoopScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
-    public void setWindow(GameWindow thisWindow)
-    {
-    	window=thisWindow;
-    	updateLayout();
-    }
-    public GameWindow getWindow(GameWindow thisWindow)
-    {
-    	return window;
-    }
-    public void updateLayout()
-    {
-    	window.setGridLayout();
-
-    }
 
 }
