@@ -54,7 +54,7 @@ public class PlayLevelScreen extends Screen {
 	protected Map map;
 	protected Player player;
 	public Player player2;
-	protected Player2 coOp;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar, ammoCount;
 	protected WinScreen winScreen;
@@ -295,9 +295,9 @@ public class PlayLevelScreen extends Screen {
 		switch (playLevelScreenState) {
 		case RUNNING:
 			if (weapons.check == true) {
-//					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-				map.draw(coOp, player2, graphicsHandler);
+					map.draw(player2, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//				map.draw(coOp, player2, graphicsHandler);
 
 			} else {
 

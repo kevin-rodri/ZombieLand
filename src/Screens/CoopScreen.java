@@ -1,6 +1,7 @@
 package Screens;
 
 import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 
@@ -47,7 +48,7 @@ public class CoopScreen extends Screen {
 	protected Map map;
 	protected Player player;
 	public Player player2;
-	protected Player2 coOp;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -121,7 +122,7 @@ public class CoopScreen extends Screen {
 
 		
 		flagManager.addFlag("hasLostBall", false);
-		flagManager.addFlag("hasTalkedToWalrus", false);
+		flagManager.addFlag("hasTalkedToWalrus", false);   
 		flagManager.addFlag("hasTalkedToDinosaur", false);
 		flagManager.addFlag("hasFoundBall", false);
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
@@ -199,7 +200,7 @@ public class CoopScreen extends Screen {
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
 				if (weapons.check == true) {
-					player2.update();
+					player.update();
 					map.update(player2);
 					coOp.update();
 					map.update(coOp);
@@ -229,7 +230,6 @@ public class CoopScreen extends Screen {
 
 				} else {
 					coOp.update();
-					
 					map.update(coOp);
 					map.update(player);
 					player.update();
@@ -257,13 +257,13 @@ public class CoopScreen extends Screen {
 				if (weapons.check == true) {
 					map.draw(player2, graphicsHandler);
 					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
 
 
 				} else {
-					map.draw(player, graphicsHandler);
-					map.draw(coOp, graphicsHandler);
+//					map.draw(player, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
 					map.draw(coOp, player, graphicsHandler);
 
 				}

@@ -305,7 +305,7 @@ public class GameObject extends AnimatedSprite {
 		if (map != null) {
 			graphicsHandler.drawImage(
 					currentFrame.getImage(),
-					Math.round(getCalibratedXLocation()),
+					Math.round(getCalibratedXLocation()) + 150,
 					Math.round(getCalibratedYLocation()),
 					currentFrame.getWidth(),
 					currentFrame.getHeight(),

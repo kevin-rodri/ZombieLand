@@ -95,7 +95,7 @@ public abstract class Player2 extends GameObject {
     protected void playerStanding() {
         if (!keyLocker.isKeyLocked(INTERACT_KEY) && Keyboard.isKeyDown(INTERACT_KEY)) {
             keyLocker.lockKey(INTERACT_KEY);
-            map.entityInteract(this);
+//            map.entityInteract(this);
         }
 
         // if a walk key is pressed, player enters WALKING state
@@ -108,7 +108,7 @@ public abstract class Player2 extends GameObject {
     protected void playerWalking() {
         if (!keyLocker.isKeyLocked(INTERACT_KEY) && Keyboard.isKeyDown(INTERACT_KEY)) {
             keyLocker.lockKey(INTERACT_KEY);
-            map.entityInteract(this);
+//            map.entityInteract(this);
         }
 
         // if walk left key is pressed, move player to the left
