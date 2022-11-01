@@ -13,20 +13,17 @@ public class GameWindow {
 	private JFrame gameWindow;
 	private GamePanel gamePanel;
 	//private GamePanel gamePanel2;
-	private GridLayout layout;
 
 	public GameWindow() {
 		gameWindow = new JFrame("Game");
 		gamePanel = new GamePanel();
 		gameWindow.setLayout(new GridLayout(0,1));
-	//	gamePanel2 = new GamePanel();
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();
 		//gamePanel.setSize(300, 300);
 		gameWindow.setContentPane(gamePanel);
 		gameWindow.setResizable(true);
 		gameWindow.setSize(Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT);
-		//gameWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gameWindow.setLocationRelativeTo(null);
 		gameWindow.setVisible(true);
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // it'd be nice if this actually worked more than 1/3rd of the time
@@ -41,9 +38,6 @@ public class GameWindow {
 	public ScreenManager getScreenManager() {
 		return gamePanel.getScreenManager();
 	}
-	 /*public ScreenManager getScreenManager2() {
-		return gamePanel2.getScreenManager();
-	 }*/
 // returns the grid layout	
 	public GridLayout getGridLayout()
 	{

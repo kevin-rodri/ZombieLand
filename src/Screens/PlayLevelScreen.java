@@ -57,7 +57,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	protected Map map;
 	protected Player player;
 	public Player player2;
-	protected Player2 coOp;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar, ammoCount;
 	protected WinScreen winScreen;
@@ -92,13 +92,36 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					t.stop();
 				}
 
+
+
+
 				waveCounter.setText("WAVE " + counter);
+
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
 				// hopefully the random zombie spawning works here..
 				// weird place to put zombie spawn logic, but the glitchy zombie movement is
 				// gone :)
+
+				Random random = new Random();
+				// generate a number from 1 - 11
+				int randomX = 1 + random.nextInt(10);
+				// generate a number from 1 - 11
+				int randomY = 1 + random.nextInt(10);
+
+				for (int i = 0; i < 3; i++) {
+					SmallZombie zombieWaveOne = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);
+					zombieWaveOne.update();
+				}
+				for (int i = 0; i < 3; i++) {
+					Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);
+					zombieWaveOne.update();
+				}
+				m = m * 2;
+				counter++;
 
 				// adds more small(sz) and large(z) zombies everyround then calls startWave()
 				// method
@@ -256,84 +279,91 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		// based on screen state, perform specific actions
 
 		switch (playLevelScreenState) {
-			// if level is "running" update player and map to keep game logic for the
-			// platformer level going
-			case RUNNING:
-				Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
 
-				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip >= 0) {
-					LightAmmo.ammoClip -= 30;
-					LightAmmo.ammoCount += 30;
-					playSE(6);
+		// if level is "running" update player and map to keep game logic for the
+		// platformer level going
+		case RUNNING:
+			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
+
+			if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip >= 0) {
+				LightAmmo.ammoClip -= 30;
+				LightAmmo.ammoCount += 30;
+			} else {
+				if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
+					// For now setting it back to max but should be set to 0 and say no AMMO
+					// LightAmmo.ammoCount = 30;
+					// LightAmmo.ammoClip = 120;
+
+					ammoCount.setText("NO AMMO");
+					// ammoCount.update();
 				} else {
-					if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
-						// For now setting it back to max but should be set to 0 and say no AMMO
-						// LightAmmo.ammoCount = 30;
-						// LightAmmo.ammoClip = 120;
+					ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+				}
+			}
 
-						ammoCount.setText("NO AMMO");
-						// ammoCount.update();
+			if (HealthSystem.healthCount <= 0) {
+
+				flagManager.setFlag("hasDied");
+				HealthSystem.setMaxHealth();
+			}
+
+			healthBar.setText("" + HealthSystem.healthCount);
+			money.setText("$" + MoneyBase.moneyCount);
+			ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+
+			if (weapons.check == true) {
+				player2.update();
+				map.update(player2);
+				coOp.update();
+				map.update(coOp);
+				zombie.update();
+
+				Timer.isTimeUp();
+
+				if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
+					float fireballX;
+					float movementSpeed;
+					LightAmmo.ammoCount -= 1;
+					if (player2.getFacingDirection() == Direction.RIGHT) {
+						movementSpeed = 10.0f;
+						fireballX = Math.round(player2.getX()) + 50;
 					} else {
-						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+						movementSpeed = -10.0f;
+						fireballX = Math.round(player2.getX());
+
+			
 					}
+					// int fireballY = (int) (player2.getY2() - player2.getY1());
+					int fireballY = Math.round(player2.getY()) + 18;
+					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+
+					// add fireball enemy to the map for it to offically spawn in the level
+					map.addEnemy(bullet);
+					Timer.setWaitTime(500);
 				}
 
-				if (HealthSystem.healthCount <= 0) {
 
-					flagManager.setFlag("hasDied");
-					HealthSystem.setMaxHealth();
-				}
+			} else {
+				coOp.update();
+				player.update();
+				map.update(coOp);
+				map.update(player);
+				zombie.update();
 
-				healthBar.setText("" + HealthSystem.healthCount);
-				money.setText("$" + MoneyBase.moneyCount);
-				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+			}
 
-				if (weapons.check == true) {
-					player2.update();
-					map.update(player2);
-					coOp.update();
-					map.update(coOp);
-					zombie.update();
-
-					Timer.isTimeUp();
-
-					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
-						float fireballX;
-						float movementSpeed;
-						LightAmmo.ammoCount -= 1;
-						if (player2.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 10.0f;
-							fireballX = Math.round(player2.getX()) + 50;
-							
-						} else {
-							movementSpeed = -10.0f;
-							fireballX = Math.round(player2.getX());
-						}
-
-						// int fireballY = (int) (player2.getY2() - player2.getY1());
-						int fireballY = Math.round(player2.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-
-						// add fireball enemy to the map for it to offically spawn in the level
-						map.addEnemy(bullet);
-						playSE(5);
-						Timer.setWaitTime(500);
-					}
-
-				} else {
-					coOp.update();
-					player.update();
-					map.update(coOp);
-					map.update(player);
-					zombie.update();
-
-				}
+			break;
+		// if level has been completed, bring up level cleared screen
+		case LEVEL_COMPLETED:
+			// winScreen.update();
+			break;
 
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				// winScreen.update();
 				break;
+
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
@@ -347,6 +377,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
+		case RUNNING:
+			if (weapons.check == true) {
+					map.draw(player2, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//				map.draw(coOp, player2, graphicsHandler);
 			case RUNNING:
 				if (weapons.check == true) {
 					// map.draw(player2, graphicsHandler);
@@ -354,8 +389,44 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					map.draw(coOp, player2, graphicsHandler);
 					
 
-				} else {
+			} else {
 
+//					map.draw(player, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
+				map.draw(coOp, player, graphicsHandler);
+
+			}
+			// pasue game logic was moved to here
+			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+				isGamePaused = !isGamePaused;
+				keyLocker.lockKey(pauseKey);
+			}
+
+			if (Keyboard.isKeyUp(pauseKey)) {
+				keyLocker.unlockKey(pauseKey);
+			}
+			pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+			// if game is paused, draw pause gfx over Screen gfx
+			if (isGamePaused) {
+				pauseLabel.draw(graphicsHandler);
+				graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+						ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+			}
+
+			break;
+		case LEVEL_COMPLETED:
+			health.setIsHidden(true);
+			gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
+			gameOver.setOutlineThickness(50);
+			gameOver.setOutlineColor(Color.black);
+			waveCounter.setText("");
+			money.setText("");
+			healthBar.setText("");
+			ammoCount.setText("");
+			// shealth.isHidden();
+			gameOver.draw(graphicsHandler);
+
+			break;
 					// map.draw(player, graphicsHandler);
 					// map.draw(coOp, graphicsHandler);
 					map.draw(coOp, player, graphicsHandler);
