@@ -16,5 +16,6 @@ public class MoneyBase {
     public static void addMoneyOT(){
         moneyCount += 10;
     }
+    public static void addMoneyMini(){ moneyCount += 25;}
 }
 

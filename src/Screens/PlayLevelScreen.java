@@ -69,9 +69,12 @@ public class PlayLevelScreen extends Screen {
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 	protected int counter = 0;
+	private boolean noAmmo=false;
 
 	int m = 1;
 	Timer t;
+	Timer x2end;
+
 
 	private void time() {
 		t = new Timer(5000, new ActionListener() {
@@ -216,20 +219,17 @@ public class PlayLevelScreen extends Screen {
 			case RUNNING:
 			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
 			
-				if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip>=0){
+				if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip>0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
 				}
+				else if (LightAmmo.ammoClip ==0 && LightAmmo.ammoCount ==0){
+					//ammoCount.setText("NO AMMO");
+					noAmmo = true;
+				}
 				else{
-					if(LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0){
-						//For now setting it back to max but should be set to 0 and say no AMMO
-						//LightAmmo.ammoCount = 30;
-						//LightAmmo.ammoClip = 120;
-
-						ammoCount.setText("NO AMMO");
-						//ammoCount.update();
-					}
-					else{
+					if (noAmmo==true) {
+					} else {
 						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 					}
 				}
@@ -256,7 +256,7 @@ public class PlayLevelScreen extends Screen {
   
 					Timer.isTimeUp();
 
-					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
+					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -=1;

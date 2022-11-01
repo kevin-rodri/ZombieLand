@@ -8,12 +8,14 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
+import javax.swing.Timer;
 import Level.PlayerState;
 import Utils.Point;
 import MoneySystem.MoneyBase;
 import com.sun.jdi.event.MonitorWaitedEvent;
 
 import java.util.HashMap;
+
 
 // This class is for DoublePoints
 public class DoublePoints extends NPC implements SoundController {
@@ -23,6 +25,7 @@ public class DoublePoints extends NPC implements SoundController {
     }
 
     public void update(Player player) {
+
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
             MoneyBase.addMoneyX2();

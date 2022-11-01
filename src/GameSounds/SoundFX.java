@@ -50,7 +50,7 @@ public class SoundFX {
     }
 
     public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        //clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void stop() {

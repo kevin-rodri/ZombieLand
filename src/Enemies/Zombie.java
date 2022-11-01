@@ -8,6 +8,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Health.HealthSystem;
 import Level.*;
+import MoneySystem.MoneyBase;
 import Utils.Direction;
 import Utils.Point;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class Zombie extends Enemy{
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
+            MoneyBase.addMoneyZombie();
 
      }   
      if(disappear == true) {

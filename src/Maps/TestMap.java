@@ -32,6 +32,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import Enemies.SmallZombie;
 import Enemies.Zombie;
+import java.util.Random;
 
 
 // Represents a test map to be used in a level
