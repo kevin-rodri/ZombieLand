@@ -40,7 +40,7 @@ import java.util.TimerTask;
 import Screens.PlayLevelScreen;
 import Utils.Point;
 // This class is for when the platformer game is actually being played
-public class PlayLevelScreen extends Screen {
+public class PlayLevelScreen extends Screen implements SoundController {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
@@ -59,42 +59,83 @@ public class PlayLevelScreen extends Screen {
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 	protected int counter = 0;
+	boolean szOutsideOfMap = false;
+	boolean zOutsideOfMap = false;
+	int randomX = 100;
+	int randomY = 100;
+
 	int m = 1;
+	int z = 10;
+	int sz = 10;
+	Random random = new Random();
+
 	Timer t;
 	private void time() {
-		t = new Timer(5000, new ActionListener() {
+		t = new Timer(30000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (counter > 9) {
+				if (HealthSystem.healthCount == 0) {
 					t.stop();
 				}
 				waveCounter.setText("WAVE " + counter + "/10");
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
-				// hopefully the random zombie spawning works here..
-				// weird place to put zombie spawn logic, but the glitchy zombie movement is
-				// gone :)
-				Random random = new Random();
-				// generate a number from 1 - 11
-				int randomX = 1 + random.nextInt(10);
-				// generate a number from 1 - 11
-				int randomY = 1 + random.nextInt(10);
-				for (int i = 0; i < 3; i++) {
-					SmallZombie zombieWaveOne = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);
-					zombieWaveOne.update();
-				}
-				for (int i = 0; i < 3; i++) {
-					Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);
-					zombieWaveOne.update();
-				}
+				z = z + 5;
+				sz = sz + 3;
+
 				m = m * 2;
-				counter++;
+				startWave(z, sz);
+				
 			}
 		});
 		t.start();
+	}
+
+	//Method that handles generating small and regular Zombies 
+	public void startWave(int z, int sz) {
+		counter++;
+		for (int i = 0; i < sz; i++) {
+
+//to randomize zombie spawns outside of the game map
+			while (!szOutsideOfMap) {
+				// generate a number from -500 -> 1000
+				randomX = -200 + random.nextInt(2500);
+				// generate a number from -500 -> 1000
+				randomY = -200 + random.nextInt(2500);
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
+						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+					szOutsideOfMap = true;
+				}
+			}
+
+			SmallZombie zombieWaveOne = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
+			map.addEnemy(zombieWaveOne);
+
+			zombieWaveOne.update();
+			System.out.println(zombieWaveOne.getLocation());
+			szOutsideOfMap = false;
+		}
+
+		for (int i = 0; i < sz; i++) {
+//to randomize zombie spawns outside of the game map
+			while (!zOutsideOfMap) {
+				// generate a number from -500 -> 1000
+				randomX = -200 + random.nextInt(2500);
+				// generate a number from -500 -> 1000
+				randomY = -200 + random.nextInt(2500);
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
+						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+					zOutsideOfMap = true;
+				}
+			}
+
+			Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
+			map.addEnemy(zombieWaveOne);
+			zombieWaveOne.update();
+			System.out.println(zombieWaveOne.getLocation());
+			zOutsideOfMap = false;
+		}
 	}
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
@@ -176,6 +217,7 @@ public class PlayLevelScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
+		startWave(z, sz);
 	}
 	public void update() {
 		// based on screen state, perform specific actions
@@ -187,6 +229,7 @@ public class PlayLevelScreen extends Screen {
 			if (LightAmmo.ammoCount <= 0 && LightAmmo.ammoClip >= 0) {
 				LightAmmo.ammoClip -= 30;
 				LightAmmo.ammoCount += 30;
+				playSE(6);
 			} else {
 				if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
 					// For now setting it back to max but should be set to 0 and say no AMMO
@@ -228,6 +271,7 @@ public class PlayLevelScreen extends Screen {
 					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
 					// add fireball enemy to the map for it to offically spawn in the level
 					map.addEnemy(bullet);
+					playSE(5);
 					Timer.setWaitTime(500);
 				}
 			} else {
