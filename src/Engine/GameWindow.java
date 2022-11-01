@@ -39,21 +39,5 @@ public class GameWindow {
 		return gamePanel.getScreenManager();
 	}
 // returns the grid layout	
-	public GridLayout getGridLayout()
-	{
-		return layout;
-	}
-// sets the grid layout	
-	public void setGridLayout()
-	{		
-		JButton button = new JButton();
-		gameWindow.setLayout(new GridLayout(0,2));
-		gameWindow.add(button,0);
-		gamePanel.setFocusable(true);
-		gameWindow.setResizable(false);
-		gameWindow.setSize(gamePanel.getWidth()/2, gamePanel.getHeight());
-		gameWindow.setLocationRelativeTo(null);
-		gameWindow.setVisible(true);
-		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // it'd be nice if this actually worked more than 1/3rd of the time
-	}
+	
 }
