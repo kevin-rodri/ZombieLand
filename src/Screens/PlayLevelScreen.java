@@ -7,6 +7,7 @@ import Health.HealthSystem;
 import MoneySystem.MoneyBase;
 import PowerUp.weapons;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Enemies.Shooting;
@@ -20,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import Engine.GamePanel;
+import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
@@ -49,7 +52,7 @@ import Screens.PlayLevelScreen;
 import Utils.Point;
 
 // This class is for when the platformer game is actually being played
-public class PlayLevelScreen extends Screen {
+public class PlayLevelScreen extends Screen implements SoundController {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
@@ -62,32 +65,45 @@ public class PlayLevelScreen extends Screen {
 	protected Lives health;
 	private SpriteFont pauseLabel;
 	private SpriteFont gameOver;
+	private GamePanel gamePanel;
 	protected Key shootingKey = Key.F;
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
-	protected int counter = 0;
+	protected int counter = 1;
+	boolean szOutsideOfMap = false;
+	boolean zOutsideOfMap = false;
+	int randomX = 100;
+	int randomY = 100;
 
 	int m = 1;
+	int z = 10;
+	int sz = 10;
 	Timer t;
+	Random random = new Random();
 
 	private void time() {
-		t = new Timer(5000, new ActionListener() {
+		t = new Timer(30000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (counter > 9) {
+				if (counter > 100) {
 					t.stop();
 				}
 
-				waveCounter.setText("WAVE " + counter + "/10");
+
+
+
+				waveCounter.setText("WAVE " + counter);
+
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
 				// hopefully the random zombie spawning works here..
 				// weird place to put zombie spawn logic, but the glitchy zombie movement is
 				// gone :)
+
 				Random random = new Random();
 				// generate a number from 1 - 11
 				int randomX = 1 + random.nextInt(10);
@@ -106,6 +122,15 @@ public class PlayLevelScreen extends Screen {
 				}
 				m = m * 2;
 				counter++;
+
+				// adds more small(sz) and large(z) zombies everyround then calls startWave()
+				// method
+				z = z + 5;
+				sz = sz + 3;
+
+				m = m * 2;
+				startWave(z, sz);
+
 			}
 		});
 		t.start();
@@ -113,16 +138,62 @@ public class PlayLevelScreen extends Screen {
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
-		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
+		pauseLabel = new SpriteFont("PAUSE", 365, 280, "z", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
-		pauseLabel.setOutlineThickness(2.0f);
+		pauseLabel.setOutlineThickness(2.0f);	
+	}
+
+//Method that handles generating small and regular Zombies 
+	public void startWave(int z, int sz) {
+		counter++;
+		for (int i = 0; i < sz; i++) {
+
+//to randomize zombie spawns outside of the game map
+			while (!szOutsideOfMap) {
+				// generate a number from -500 -> 1000
+				randomX = -200 + random.nextInt(2500);
+				// generate a number from -500 -> 1000
+				randomY = -200 + random.nextInt(2500);
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
+						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+					szOutsideOfMap = true;
+				}
+			}
+
+			SmallZombie zombieWaveOne = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
+			map.addEnemy(zombieWaveOne);
+
+			zombieWaveOne.update();
+			System.out.println(zombieWaveOne.getLocation());
+			szOutsideOfMap = false;
+		}
+
+		for (int i = 0; i < sz; i++) {
+//to randomize zombie spawns outside of the game map
+			while (!zOutsideOfMap) {
+				// generate a number from -500 -> 1000
+				randomX = -200 + random.nextInt(2500);
+				// generate a number from -500 -> 1000
+				randomY = -200 + random.nextInt(2500);
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
+						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+					zOutsideOfMap = true;
+				}
+			}
+
+			Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
+			map.addEnemy(zombieWaveOne);
+			zombieWaveOne.update();
+			System.out.println(zombieWaveOne.getLocation());
+			zOutsideOfMap = false;
+		}
 	}
 
 	public void initialize() {
 
 		// setup state
 		flagManager = new FlagManager();
-		waveCounter = new SpriteFont("WAVE " + counter + "/10", 600, 50, "z", 20, Color.WHITE);
+		waveCounter = new SpriteFont("WAVE " + counter, 600, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
@@ -172,7 +243,7 @@ public class PlayLevelScreen extends Screen {
 		this.player2.setMap(map);
 		this.player2.setLocation(670, 120);
 		this.player2.setFacingDirection(player.getFacingDirection());
-//		 let pieces of map know which button to listen for as the "interact" button
+		// let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
 
 		// setup map scripts to have references to the map and player
@@ -200,13 +271,15 @@ public class PlayLevelScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
-
+		startWave(z, sz);
+		
 	}
 
 	public void update() {
 		// based on screen state, perform specific actions
 
 		switch (playLevelScreenState) {
+
 		// if level is "running" update player and map to keep game logic for the
 		// platformer level going
 		case RUNNING:
@@ -257,6 +330,8 @@ public class PlayLevelScreen extends Screen {
 					} else {
 						movementSpeed = -10.0f;
 						fireballX = Math.round(player2.getX());
+
+			
 					}
 					// int fireballY = (int) (player2.getY2() - player2.getY1());
 					int fireballY = Math.round(player2.getY()) + 18;
@@ -266,6 +341,7 @@ public class PlayLevelScreen extends Screen {
 					map.addEnemy(bullet);
 					Timer.setWaitTime(500);
 				}
+
 
 			} else {
 				coOp.update();
@@ -281,6 +357,13 @@ public class PlayLevelScreen extends Screen {
 		case LEVEL_COMPLETED:
 			// winScreen.update();
 			break;
+
+				break;
+			// if level has been completed, bring up level cleared screen
+			case LEVEL_COMPLETED:
+				// winScreen.update();
+				break;
+
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
@@ -291,6 +374,7 @@ public class PlayLevelScreen extends Screen {
 	}
 
 	public void draw(GraphicsHandler graphicsHandler) {
+		
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 		case RUNNING:
@@ -298,6 +382,12 @@ public class PlayLevelScreen extends Screen {
 					map.draw(player2, graphicsHandler);
 					map.draw(coOp, graphicsHandler);
 //				map.draw(coOp, player2, graphicsHandler);
+			case RUNNING:
+				if (weapons.check == true) {
+					// map.draw(player2, graphicsHandler);
+					// map.draw(coOp, graphicsHandler);
+					map.draw(coOp, player2, graphicsHandler);
+					
 
 			} else {
 
@@ -337,6 +427,42 @@ public class PlayLevelScreen extends Screen {
 			gameOver.draw(graphicsHandler);
 
 			break;
+					// map.draw(player, graphicsHandler);
+					// map.draw(coOp, graphicsHandler);
+					map.draw(coOp, player, graphicsHandler);
+
+				}
+				// pasue game logic was moved to here
+				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+					isGamePaused = !isGamePaused;
+					keyLocker.lockKey(pauseKey);
+				}
+
+				if (Keyboard.isKeyUp(pauseKey)) {
+					keyLocker.unlockKey(pauseKey);
+				}
+				pauseLabel = new SpriteFont("HELP", 365, 280, "z", 24, Color.white);
+				// if game is paused, draw pause gfx over Screen gfx
+				if (isGamePaused) {
+					pauseLabel.draw(graphicsHandler);
+					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+							ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+				}
+
+				break;
+			case LEVEL_COMPLETED:
+				health.setIsHidden(true);
+				gameOver = new SpriteFont("Game Over", 400, 400, "z", 500, Color.red);
+				gameOver.setOutlineThickness(50);
+				gameOver.setOutlineColor(Color.black);
+				waveCounter.setText("");
+				money.setText("");
+				healthBar.setText("");
+				ammoCount.setText("");
+				// shealth.isHidden();
+				gameOver.draw(graphicsHandler);
+
+				break;
 		}
 
 		waveCounter.draw(graphicsHandler);
@@ -354,6 +480,7 @@ public class PlayLevelScreen extends Screen {
 	public void resetLevel() {
 		initialize();
 	}
+	
 
 	public void goBackToMenu() {
 		screenCoordinator.setGameState(GameState.MENU);

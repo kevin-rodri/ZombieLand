@@ -276,7 +276,7 @@ public class CoopScreen extends Screen {
 				if (Keyboard.isKeyUp(pauseKey)) {
 					keyLocker.unlockKey(pauseKey);
 				}
-				pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+				pauseLabel = new SpriteFont("HELP", 365, 280, "z", 24, Color.white);
 				// if game is paused, draw pause gfx over Screen gfx
 				if (isGamePaused) {
 					pauseLabel.draw(graphicsHandler);
