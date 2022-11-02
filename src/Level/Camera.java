@@ -96,10 +96,10 @@ public class Camera extends Rectangle {
         }
 
         for (NPC npc : activeNPCs) {
-//            npc.update(player);
+        //  npc.update(player);
         }
-        for (Enemy enemy : activeEnemies) {
-//            enemy.update(player);
+        for (Enemy enemy : activeEnemies) { 
+          //   enemy.update(player);
         }
     }
 

@@ -46,8 +46,8 @@ public class CoopScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	public Player player2;
-	protected Player2 coOp;
+	public Player alexWithAPistol;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -145,10 +145,10 @@ public class CoopScreen extends Screen {
 		this.coOp.setMap(map);
 		this.coOp.setLocation(670, 120);
 		this.coOp.setFacingDirection(player.getFacingDirection());
-		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.player2.setMap(map);
-		this.player2.setLocation(670, 120);
-		this.player2.setFacingDirection(player.getFacingDirection());
+		this.alexWithAPistol= new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.alexWithAPistol.setMap(map);
+		this.alexWithAPistol.setLocation(670, 120);
+		this.alexWithAPistol.setFacingDirection(player.getFacingDirection());
 //		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
 
@@ -200,8 +200,8 @@ public class CoopScreen extends Screen {
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
 				if (weapons.check == true) {
-					player2.update();
-					map.update(player2);
+					alexWithAPistol.update();
+					map.update(alexWithAPistol);
 					coOp.update();
 					map.update(coOp);
 					Timer.isTimeUp();
@@ -210,15 +210,15 @@ public class CoopScreen extends Screen {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -=1;
-						if (player2.getFacingDirection() == Direction.RIGHT) {
+						if (alexWithAPistol.getFacingDirection() == Direction.RIGHT) {
 							movementSpeed = 4.0f;
-							fireballX = Math.round(player2.getX()) + 50;
+							fireballX = Math.round(alexWithAPistol.getX()) + 50;
 						} else {
 							movementSpeed = -4.0f;
-							fireballX = Math.round(player2.getX());
+							fireballX = Math.round(alexWithAPistol.getX());
 						}
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
-						int fireballY = Math.round(player2.getY()) + 18;
+						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
 
 
@@ -256,17 +256,17 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 				if (weapons.check == true) {
-//					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player2, graphicsHandler);
+					map.draw(alexWithAPistol, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+					//map.draw(coOp, player2, graphicsHandler);
 
 
 
 				} else {
 
-//					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+					map.draw(player, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+					///map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here
