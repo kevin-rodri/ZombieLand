@@ -17,12 +17,10 @@ public class GameWindow {
 	public GameWindow() {
 		gameWindow = new JFrame("Game");
 		gamePanel = new GamePanel();
-		gameWindow.setLayout(new GridLayout(0,1));
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();
-		//gamePanel.setSize(300, 300);
 		gameWindow.setContentPane(gamePanel);
-		gameWindow.setResizable(true);
+		gameWindow.setResizable(false);
 		gameWindow.setSize(Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT);
 		gameWindow.setLocationRelativeTo(null);
 		gameWindow.setVisible(true);
@@ -38,6 +36,5 @@ public class GameWindow {
 	public ScreenManager getScreenManager() {
 		return gamePanel.getScreenManager();
 	}
-// returns the grid layout	
 	
 }
