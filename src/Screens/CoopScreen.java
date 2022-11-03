@@ -230,9 +230,9 @@ public class CoopScreen extends Screen {
 
 				} else {
 					coOp.update();
-					map.update(coOp);
-					map.update(player);
+					map.update2(coOp);
 					player.update();
+					map.update(player);
 
 				}
 
@@ -262,9 +262,9 @@ public class CoopScreen extends Screen {
 
 
 				} else {
-//					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+					map.draw(player, graphicsHandler);
+					map.draw2(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here

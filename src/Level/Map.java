@@ -668,8 +668,14 @@ public abstract class Map {
     }
 
     public void draw(Player player, GraphicsHandler graphicsHandler) {
-       
         camera.draw(player, graphicsHandler);
+        if (textbox.isActive()) {
+            textbox.draw(graphicsHandler);
+        }
+    }
+    
+    public void draw2(Player player, GraphicsHandler graphicsHandler) {
+        camera2.draw(player, graphicsHandler);
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
@@ -677,6 +683,8 @@ public abstract class Map {
     
     public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
         camera.draw(player, graphicsHandler);
+        camera2.draw(coOp, graphicsHandler);
+
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
