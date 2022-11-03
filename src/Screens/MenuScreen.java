@@ -4,7 +4,6 @@ import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
-import Level.Player;
 import Level.Player2;
 import Maps.TitleScreenMap;
 import SpriteFont.SpriteFont;
@@ -24,7 +23,7 @@ public class MenuScreen extends Screen {
     protected Stopwatch keyTimer = new Stopwatch();
     protected int pointerLocationX, pointerLocationY;
     protected KeyLocker keyLocker = new KeyLocker();
-	protected Player coOp;
+	protected Player2 coOp;
 
 
     public MenuScreen(ScreenCoordinator screenCoordinator) {

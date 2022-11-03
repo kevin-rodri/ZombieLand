@@ -266,7 +266,7 @@ public class Camera extends Rectangle {
 	        drawMapEntities(coOp, graphicsHandler);
 	        drawMapTilesTopLayer(graphicsHandler);
 	  }
-	  public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
+	  public void draw(Player2 coOp, Player player, GraphicsHandler graphicsHandler) {
 	    	drawMapTilesBottomLayer(graphicsHandler);
 	        drawMapEntities(coOp, graphicsHandler);
 	        drawMapEntities(player, graphicsHandler);

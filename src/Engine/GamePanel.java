@@ -5,13 +5,9 @@ import SpriteFont.SpriteFont;
 import Utils.Colors;
 
 import javax.swing.*;
-
-import org.w3c.dom.css.RGBColor;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 /*
  * This is where the game loop starts
@@ -32,7 +28,6 @@ public class GamePanel extends JPanel {
 	private SpriteFont pauseLabel;
 	private KeyLocker keyLocker = new KeyLocker();
 	private final Key pauseKey = Key.P;
-	private BufferedImage subImage;
 
 	/*
 	 * The JPanel and various important class instances are setup here
@@ -45,12 +40,10 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(Keyboard.getKeyListener());
 
 		graphicsHandler = new GraphicsHandler();
-		subImage = new BufferedImage(100, 500, BufferedImage.TYPE_INT_RGB);
-	//	graphicsHandler.setBufferedImage(subImage);
+
 		screenManager = new ScreenManager();
 		
-		
-		pauseLabel = new SpriteFont("PAUSE", 365, 280, "z", 24, Color.white);
+		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
 		pauseLabel.setOutlineThickness(2.0f);
 
@@ -69,7 +62,7 @@ public class GamePanel extends JPanel {
 	// this is called later after instantiation, and will initialize screenManager
 	// this had to be done outside of the constructor because it needed to know the JPanel's width and height, which aren't available in the constructor
 	public void setupGame() {
-		setBackground(new Color(40,40,40));
+		setBackground(Colors.CORNFLOWER_BLUE);
 		screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
 		doPaint = true;
 	}
@@ -97,9 +90,6 @@ public class GamePanel extends JPanel {
 			screenManager.update();
 		}
 	}
-	public void setGameSize(int x, int y){
-		this.setSize(x, y);
-	}
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
@@ -117,10 +107,7 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		// every repaint call will schedule this method to be called
 		// when called, it will setup the graphics handler and then call this class's draw method
-		Graphics2D g2 = subImage.createGraphics();
 		graphicsHandler.setGraphics((Graphics2D) g);
-	//	graphicsHandler.setGraphics((Graphics2D) g);
-	//	graphicsHandler.setBufferedImage(subImage.createGraphics());
 		if (doPaint) 
 		{
 			draw();

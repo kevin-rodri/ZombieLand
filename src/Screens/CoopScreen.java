@@ -1,7 +1,6 @@
 package Screens;
 
 import java.awt.Color;
-
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 
@@ -48,7 +47,7 @@ public class CoopScreen extends Screen {
 	protected Map map;
 	protected Player player;
 	public Player player2;
-	protected Player coOp;
+	protected Player2 coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -60,6 +59,7 @@ public class CoopScreen extends Screen {
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
+	private GameWindow window;
 
 	protected int counter = 0;
 
@@ -122,7 +122,7 @@ public class CoopScreen extends Screen {
 
 		
 		flagManager.addFlag("hasLostBall", false);
-		flagManager.addFlag("hasTalkedToWalrus", false);   
+		flagManager.addFlag("hasTalkedToWalrus", false);
 		flagManager.addFlag("hasTalkedToDinosaur", false);
 		flagManager.addFlag("hasFoundBall", false);
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
@@ -200,7 +200,7 @@ public class CoopScreen extends Screen {
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
 				if (weapons.check == true) {
-					player.update();
+					player2.update();
 					map.update(player2);
 					coOp.update();
 					map.update(coOp);
@@ -230,9 +230,10 @@ public class CoopScreen extends Screen {
 
 				} else {
 					coOp.update();
+					player.update();
 					map.update(coOp);
 					map.update(player);
-					player.update();
+
 
 				}
 
@@ -255,13 +256,14 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 				if (weapons.check == true) {
-					map.draw(player2, graphicsHandler);
-					map.draw(coOp, graphicsHandler);
-//					map.draw(coOp, player, graphicsHandler);
+//					map.draw(player2, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
+					map.draw(coOp, player2, graphicsHandler);
 
 
 
 				} else {
+
 //					map.draw(player, graphicsHandler);
 //					map.draw(coOp, graphicsHandler);
 					map.draw(coOp, player, graphicsHandler);
@@ -276,7 +278,7 @@ public class CoopScreen extends Screen {
 				if (Keyboard.isKeyUp(pauseKey)) {
 					keyLocker.unlockKey(pauseKey);
 				}
-				pauseLabel = new SpriteFont("HELP", 365, 280, "z", 24, Color.white);
+				pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
 				// if game is paused, draw pause gfx over Screen gfx
 				if (isGamePaused) {
 					pauseLabel.draw(graphicsHandler);
@@ -312,5 +314,19 @@ public class CoopScreen extends Screen {
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED
 	}
+    public void setWindow(GameWindow thisWindow)
+    {
+    	window=thisWindow;
+    	updateLayout();
+    }
+    public GameWindow getWindow(GameWindow thisWindow)
+    {
+    	return window;
+    }
+    public void updateLayout()
+    {
+    	window.setGridLayout();
+
+    }
 
 }

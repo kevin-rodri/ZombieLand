@@ -4,7 +4,6 @@ import Engine.Config;
 
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
-import GameObject.AnimatedSprite;
 import GameObject.Rectangle;
 import Utils.Direction;
 import Utils.Point;
@@ -39,8 +38,6 @@ public abstract class Map {
 
     // camera class that handles the viewable part of the map that is seen by the player of a game during a level
     protected Camera camera;
-    protected Camera2 camera2;
-
 
     // location player should start on when this map is first loaded
     protected Point playerStartPosition;
@@ -120,11 +117,9 @@ public abstract class Map {
         }
 
         this.loadScripts();
-        
-        this.camera2 = new Camera2(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
-       
     }
 
     // reads in a map file to create the map's tilemap
@@ -308,10 +303,6 @@ public abstract class Map {
     public Camera getCamera() {
         return camera;
     }
-    
-    public Camera2 getCamera2() {
-        return camera2;
-    }
 
     public ArrayList<EnhancedMapTile> getEnhancedMapTiles() {
         return enhancedMapTiles;
@@ -416,6 +407,25 @@ public abstract class Map {
     }
     
 
+    public ArrayList<MapEntity> getSurroundingMapEntities(Player2 player) {
+        ArrayList<MapEntity> surroundingMapEntities = new ArrayList<>();
+
+        // gets surrounding tiles
+        Point playerCurrentTile = getTileIndexByPosition((int)player.getBoundsX1(), (int)player.getBoundsY1());
+        for (int i = (int)playerCurrentTile.y - 1; i <= playerCurrentTile.y + 1; i++) {
+            for (int j = (int)playerCurrentTile.x - 1; j <= playerCurrentTile.x + 1; j++) {
+                MapTile mapTile = getMapTile(j, i);
+                if (mapTile != null && mapTile.getInteractScript() != null) {
+                    surroundingMapEntities.add(mapTile);
+                }
+            }
+        }
+        // gets active surrounding npcs
+        surroundingMapEntities.addAll(getActiveNPCs());
+        surroundingMapEntities.addAll(getActiveEnhancedMapTiles());
+        surroundingMapEntities.addAll(getActiveEnemies());
+        return surroundingMapEntities;
+    }
 
     public void entityInteract(Player player) {
         ArrayList<MapEntity> surroundingMapEntities = getSurroundingMapEntities(player);
@@ -451,7 +461,39 @@ public abstract class Map {
         }
     }
     
-
+    public void entityInteract(Player2 player) {
+        ArrayList<MapEntity> surroundingMapEntities = getSurroundingMapEntities(player);
+        ArrayList<MapEntity> playerTouchingMapEntities = new ArrayList<>();
+        for (MapEntity mapEntity : surroundingMapEntities) {
+            if (mapEntity.getInteractScript() != null && mapEntity.intersects(player.getInteractionRange())) {
+                playerTouchingMapEntities.add(mapEntity);
+            }
+        }
+        MapEntity interactedEntity = null;
+        if (playerTouchingMapEntities.size() == 1) {
+            if (isInteractedEntityValid(playerTouchingMapEntities.get(0), player)) {
+                interactedEntity = playerTouchingMapEntities.get(0);
+            }
+        }
+        else if (playerTouchingMapEntities.size() > 1) {
+            MapEntity currentLargestAreaOverlappedEntity = null;
+            float currentLargestAreaOverlapped = 0;
+            for (MapEntity mapEntity : playerTouchingMapEntities) {
+                if (isInteractedEntityValid(mapEntity, player)) {
+                    float areaOverlapped = mapEntity.getAreaOverlapped(player.getInteractionRange());
+                    if (areaOverlapped > currentLargestAreaOverlapped) {
+                        currentLargestAreaOverlappedEntity = mapEntity;
+                        currentLargestAreaOverlapped = areaOverlapped;
+                    }
+                }
+            }
+            interactedEntity = currentLargestAreaOverlappedEntity;
+        }
+        if (interactedEntity != null) {
+            interactedEntity.getInteractScript().setIsActive(true);
+            activeInteractScript = interactedEntity.getInteractScript();
+        }
+    }
 
     private boolean isInteractedEntityValid(MapEntity interactedEntity, Player player) {
         Rectangle playerBounds = player.getBounds();
@@ -510,7 +552,63 @@ public abstract class Map {
         return false;
     }
     
-   
+    private boolean isInteractedEntityValid(MapEntity interactedEntity, Player2 player) {
+        Rectangle playerBounds = player.getBounds();
+        Rectangle entityBounds = interactedEntity.getBounds();
+        boolean xDirValid = true;
+        boolean yDirValid = true;
+        if (player.getLastWalkingXDirection() == Direction.LEFT && playerBounds.getX1() < entityBounds.getX2()) {
+            xDirValid = false;
+        }
+
+        else if (player.getLastWalkingXDirection() == Direction.RIGHT && playerBounds.getX2() > entityBounds.getX1()) {
+            xDirValid = false;
+        }
+
+        else if (player.getLastWalkingXDirection() == Direction.NONE) {
+            xDirValid = false;
+        }
+
+        if (player.getLastWalkingYDirection() == Direction.UP && playerBounds.getY1() < entityBounds.getY2()) {
+            yDirValid = false;
+        }
+
+        else if (player.getLastWalkingYDirection() == Direction.DOWN && playerBounds.getY2() > entityBounds.getY1()) {
+            yDirValid = false;
+        }
+
+        else if (player.getLastWalkingYDirection() == Direction.NONE) {
+            yDirValid = false;
+        }
+
+        if (!xDirValid && !yDirValid) {
+            return false;
+        }
+
+        if (playerBounds.getY1() >= entityBounds.getY2()) {
+            Rectangle playerTopBounds = new Rectangle(playerBounds.getX(), playerBounds.getY() - 1, playerBounds.getWidth(), 1);
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerTopBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getWidth() / 3f), entityBounds.getWidth());
+        }
+        else if (playerBounds.getY2() <= entityBounds.getY1()) {
+            Rectangle playerBottomBounds = new Rectangle(playerBounds.getX(), playerBounds.getY2() + 1, playerBounds.getWidth(), 1);
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerBottomBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getWidth() / 3f), entityBounds.getWidth());
+        }
+        else if (playerBounds.getX1() >= entityBounds.getX2()) {
+            Rectangle playerLeftBounds = new Rectangle(playerBounds.getX() - 1, playerBounds.getY(), 1, playerBounds.getHeight());
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerLeftBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getHeight() / 3f), entityBounds.getHeight());
+        }
+        else if (playerBounds.getX2() <= entityBounds.getX()) {
+            Rectangle playerRightBounds = new Rectangle(playerBounds.getX2() + 1, playerBounds.getY(), 1, playerBounds.getHeight());
+            float areaOverlapped = interactedEntity.getAreaOverlapped(playerRightBounds);
+            return areaOverlapped >= Math.min(Math.round(playerBounds.getHeight() / 3f), entityBounds.getHeight());
+        }
+
+        return false;
+    }
+
     public void update(Player player) {
         if (adjustCamera) {
             adjustMovementY(player);
@@ -521,18 +619,16 @@ public abstract class Map {
             textbox.update();
         }
     }
-    
-    public void update2(Player player) {
+    public void update(Player2 player) {
         if (adjustCamera) {
             adjustMovementY(player);
             adjustMovementX(player);
         }
-        camera2.update(player);
+        camera.update(player);
         if (textbox.isActive()) {
             textbox.update();
         }
     }
-
 
     // based on the player's current X position (which in a level can potentially be updated each frame),
     // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
@@ -541,55 +637,47 @@ public abstract class Map {
         if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
             camera.moveX(-xMidPointDifference);
-            camera2.moveX(-xMidPointDifference);
-
-            
 
             // if camera moved past the right edge of the map as a result from the move above, move camera back and push player forward
             if (camera.getEndBoundX() > endBoundX) {
                 float cameraDifference = camera.getEndBoundX() - endBoundX;
                 camera.moveX(-cameraDifference);
-                camera2.moveX(-cameraDifference);
-
             }
         }
         // if player goes past center screen (on the left side) and there is more map to show on the left side, push player back to center and move camera backwards
         else if (player.getCalibratedXLocation() < xMidPoint && camera.getX() > startBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
             camera.moveX(-xMidPointDifference);
-            camera2.moveX(-xMidPointDifference);
 
             // if camera moved past the left edge of the map as a result from the move above, move camera back and push player backward
             if (camera.getX() < startBoundX) {
                 float cameraDifference = startBoundX - camera.getX();
                 camera.moveX(cameraDifference);
-                camera2.moveX(cameraDifference);
-
             }
         }
     }
     
-    private void adjustMovementX2(Player player) {
+    private void adjustMovementX(Player2 player) {
         // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and move camera forward
-        if (player.getCalibratedXLocation() > xMidPoint && camera2.getEndBoundX() < endBoundX) {
-            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation2();
-            camera2.moveX(-xMidPointDifference);
+        if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
+            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
+            camera.moveX(-xMidPointDifference);
 
             // if camera moved past the right edge of the map as a result from the move above, move camera back and push player forward
-            if (camera2.getEndBoundX() > endBoundX) {
-                float cameraDifference = camera2.getEndBoundX() - endBoundX;
-                camera2.moveX(-cameraDifference);
+            if (camera.getEndBoundX() > endBoundX) {
+                float cameraDifference = camera.getEndBoundX() - endBoundX;
+                camera.moveX(-cameraDifference);
             }
         }
         // if player goes past center screen (on the left side) and there is more map to show on the left side, push player back to center and move camera backwards
-        else if (player.getCalibratedXLocation() < xMidPoint && camera2.getX() > startBoundX) {
-            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation2();
-            camera2.moveX(-xMidPointDifference);
+        else if (player.getCalibratedXLocation() < xMidPoint && camera.getX() > startBoundX) {
+            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
+            camera.moveX(-xMidPointDifference);
 
             // if camera moved past the left edge of the map as a result from the move above, move camera back and push player backward
-            if (camera2.getX() < startBoundX) {
-                float cameraDifference = startBoundX - camera2.getX();
-                camera2.moveX(cameraDifference);
+            if (camera.getX() < startBoundX) {
+                float cameraDifference = startBoundX - camera.getX();
+                camera.moveX(cameraDifference);
             }
         }
     }
@@ -601,59 +689,47 @@ public abstract class Map {
         if (player.getCalibratedYLocation() > yMidPoint && camera.getEndBoundY() < endBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
             camera.moveY(-yMidPointDifference);
-            camera2.moveY(-yMidPointDifference);
-
 
             // if camera moved past the bottom of the map as a result from the move above, move camera upwards and push player downwards
             if (camera.getEndBoundY() > endBoundY) {
                 float cameraDifference = camera.getEndBoundY() - endBoundY;
                 camera.moveY(-cameraDifference);
-                camera2.moveY(-cameraDifference);
-
             }
         }
         // if player goes past center screen (above) and there is more map to show above, push player back to center and move camera upwards
         else if (player.getCalibratedYLocation() < yMidPoint && camera.getY() > startBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
             camera.moveY(-yMidPointDifference);
-            camera2.moveY(-yMidPointDifference);
-
 
             // if camera moved past the top of the map as a result from the move above, move camera downwards and push player upwards
             if (camera.getY() < startBoundY) {
                 float cameraDifference = startBoundY - camera.getY();
                 camera.moveY(cameraDifference);
-                camera2.moveY(cameraDifference);
-
             }
         }
     }
     
-    private void adjustMovementY2(Player player) {
+    private void adjustMovementY(Player2 player) {
         // if player goes past center screen (below) and there is more map to show below, push player back to center and move camera upward
-        if (player.getCalibratedYLocation2() > yMidPoint && camera2.getEndBoundY() < endBoundY) {
-            float yMidPointDifference = yMidPoint - player.getCalibratedYLocation2();
-            camera2.moveY(-yMidPointDifference);
-
+        if (player.getCalibratedYLocation() > yMidPoint && camera.getEndBoundY() < endBoundY) {
+            float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
+            camera.moveY(-yMidPointDifference);
 
             // if camera moved past the bottom of the map as a result from the move above, move camera upwards and push player downwards
-            if (camera2.getEndBoundY() > endBoundY) {
-                float cameraDifference = camera2.getEndBoundY() - endBoundY;
-                camera2.moveY(-cameraDifference);
-
+            if (camera.getEndBoundY() > endBoundY) {
+                float cameraDifference = camera.getEndBoundY() - endBoundY;
+                camera.moveY(-cameraDifference);
             }
         }
         // if player goes past center screen (above) and there is more map to show above, push player back to center and move camera upwards
-        else if (player.getCalibratedYLocation2() < yMidPoint && camera2.getY() > startBoundY) {
-            float yMidPointDifference = yMidPoint - player.getCalibratedYLocation2();
-            camera2.moveY(-yMidPointDifference);
-
+        else if (player.getCalibratedYLocation() < yMidPoint && camera.getY() > startBoundY) {
+            float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
+            camera.moveY(-yMidPointDifference);
 
             // if camera moved past the top of the map as a result from the move above, move camera downwards and push player upwards
-            if (camera2.getY() < startBoundY) {
-                float cameraDifference = startBoundY - camera2.getY();
-                camera2.moveY(cameraDifference);
-
+            if (camera.getY() < startBoundY) {
+                float cameraDifference = startBoundY - camera.getY();
+                camera.moveY(cameraDifference);
             }
         }
     }
@@ -664,19 +740,24 @@ public abstract class Map {
 
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
-
     }
 
     public void draw(Player player, GraphicsHandler graphicsHandler) {
-       
         camera.draw(player, graphicsHandler);
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
     }
     
-    public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
-        camera.draw(player, graphicsHandler);
+    public void draw(Player2 coOp, GraphicsHandler graphicsHandler) {
+        camera.draw(coOp, graphicsHandler);
+        if (textbox.isActive()) {
+            textbox.draw(graphicsHandler);
+        }
+    }
+    
+    public void draw(Player2 coOp, Player player, GraphicsHandler graphicsHandler) {
+        camera.draw(coOp, player, graphicsHandler);
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
@@ -692,6 +773,4 @@ public abstract class Map {
 
     public int getEndBoundX() { return endBoundX; }
     public int getEndBoundY() { return endBoundY; }
-
-	
 }

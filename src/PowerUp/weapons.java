@@ -36,7 +36,7 @@ public class weapons extends NPC implements SoundController{
 				playLevelScreen.initialize();
 				playLevelScreen.update();
 	            try {
-	                playSE(6);
+	                playSE(0);
 	       
 	             } catch(Exception e) {
 	                System.out.println("toString(): " + e.toString());

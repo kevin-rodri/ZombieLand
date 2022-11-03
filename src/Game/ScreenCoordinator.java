@@ -56,6 +56,7 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case COOP:
 						currentScreen = coopScreen;
+						coopScreen.setWindow(window);
 						break;
 				}
 				currentScreen.initialize();
@@ -72,4 +73,12 @@ public class ScreenCoordinator extends Screen {
 		// call the draw method for the currentScreen
 		currentScreen.draw(graphicsHandler);
 	}
+    public void setWindow(GameWindow thisWindow)
+    {
+    	window=thisWindow;
+    }
+    public GameWindow getWindow(GameWindow thisWindow)
+    {
+    	return window;
+    }
 }
