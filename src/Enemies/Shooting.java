@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Ammo.LightAmmo;
+import MoneySystem.MoneyBase;
 import Screens.PlayLevelScreen;
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -19,6 +20,7 @@ import Utils.Stopwatch;
 public class Shooting extends Enemy {
 	private float movementSpeed;
 	private Stopwatch existenceTimer = new Stopwatch();
+	public static int bigDmg  = 0;
 
 	public Shooting(Point location, float movementSpeed, int existenceTime) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("pistolBullet.png"), 7, 7), "DEFAULT");
@@ -70,11 +72,17 @@ public class Shooting extends Enemy {
                 hasCollided = get.getBounds().intersects(getCurrentEnemy.getBounds());
                   // if an enemy collides with another one, get rid of both 
                   if (hasCollided){
-                    entityCollidedWith = get; 
+					  bigDmg+=1;
+					  this.mapEntityStatus = MapEntityStatus.REMOVED;
                     // get rid of both enemies
-                     enemy.remove(entityCollidedWith);
-					 this.mapEntityStatus = MapEntityStatus.REMOVED;
                   }
+				  if(bigDmg ==2){
+					  bigDmg=0;
+					  MoneyBase.addMoneyMini();
+					  entityCollidedWith = get;
+					  enemy.remove(entityCollidedWith);
+
+				  }
 		}
 	}
 	}

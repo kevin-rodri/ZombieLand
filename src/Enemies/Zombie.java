@@ -27,6 +27,7 @@ public class Zombie extends Enemy{
 	public static boolean disappear;
 	public static boolean check = true;
 
+
 	public Zombie(Point location, Direction facingDirection) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
@@ -75,6 +76,7 @@ public class Zombie extends Enemy{
 
     // added this to avoid the glicthy collision
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
+
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
             MoneyBase.addMoneyZombie();
@@ -149,9 +151,12 @@ public class Zombie extends Enemy{
     
     public void remove(Shooting shooting, Player player2 ) {
     	 if (shooting.intersects(this)) {
+             //bigDmg+=1;
+             //System.out.println(bigDmg);
              this.setIsHidden(true);
              //this.setInteractScript(DoublePointsScript);
          }
+
     	 super.update();
     }
 
