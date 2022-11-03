@@ -51,17 +51,18 @@ public class Enemy extends MapEntity {
             this.currentAnimationName = "WALK_RIGHT";
         } else if (direction == Direction.LEFT) {
             this.currentAnimationName = "WALK_LEFT";
-        } else if (direction == Direction.UP) {
-            this.currentAnimationName = this.getCurrentAnimationName();
-        } else if (direction == Direction.DOWN) {
-            this.currentAnimationName = this.getCurrentAnimationName();
-        } else {
-            if (this.currentAnimationName.contains("RIGHT")) {
-                this.currentAnimationName = "WALK_RIGHT";
-            } else {
-                this.currentAnimationName = "WALK_LEFT";
-            }
         }
+        // } else if (direction == Direction.UP) {
+        // this.currentAnimationName = this.getCurrentAnimationName();
+        // } else if (direction == Direction.DOWN) {
+        // this.currentAnimationName = this.getCurrentAnimationName();
+        // } else {
+        // if (this.currentAnimationName.contains("RIGHT")) {
+        // this.currentAnimationName = "WALK_RIGHT";
+        // } else {
+        // this.currentAnimationName = "WALK_LEFT";
+        // }
+
         if (direction == Direction.UP) {
             moveYHandleCollision(-speed);
         } else if (direction == Direction.DOWN) {
@@ -75,7 +76,7 @@ public class Enemy extends MapEntity {
 
     // method that will be used to ensure any enemy walks to the player
     public void walktoPlayer(Direction direction, float speed, Point location) {
-        
+
         walk(direction, speed);
 
     }

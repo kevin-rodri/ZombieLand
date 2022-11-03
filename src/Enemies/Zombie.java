@@ -72,45 +72,50 @@ public class Zombie extends Enemy implements SoundController {
     public void update(Player player) {
         // Will get player's key movements in order to move zombie to the direction
         // player is heading towards
-        // float xPosition = player.getX() - x;
-        // float yPosition = player.getY() - y;
+        float xPosition = player.getX() - x;
+        float yPosition = player.getY() - y;
+       
+        System.out.println("Zombie_xLocation" + this.getX());
+        System.out.println("facingDirection" + facingDirection);
 
-        float xPosition = player.getX();
-        float yPosition = player.getY();
-
-        float diffX = xPosition - x;
-        float diffY = yPosition - y;
-
-        float angle = (float) Math.atan2(diffY, diffX);
-
-        x += zombieSpeed * Math.cos(angle);
-        y += zombieSpeed * Math.sin(angle);
-
-        if (player.getX() > this.getX()) {
-            setZombieDirection(Direction.RIGHT);
-        } else if (player.getX() < this.getX()) {
-            setZombieDirection(Direction.LEFT);
+      
+        if (xPosition > zombieSpeed){
+        facingDirection = Direction.RIGHT;
+        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        } else if (xPosition == zombieSpeed){
+        walktoPlayer(this.getZombieDirection(), zombieSpeed, player.getLocation());
         }
-        // if (xPosition > zombieSpeed){
-        // facingDirection = Direction.RIGHT;
-        // walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
-        // } else if (xPosition == zombieSpeed){
-        // walktoPlayer(this.getZombieDirection(), zombieSpeed, player.getLocation());
-        // }
-        // else {
-        // facingDirection = Direction.LEFT;
-        // walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
-        // }
+        else {
+        facingDirection = Direction.LEFT;
+        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        }
 
-        // if (yPosition < zombieSpeed){
-        // facingDirection = Direction.UP;
-        // walktoPlayer(facingDirection, zombieSpeed , player.getLocation());
-        // }
-        // else if (xPosition == zombieSpeed){
-        // walktoPlayer(this.getZombieDirection(), zombieSpeed, player.getLocation());
-        // } else {
-        // facingDirection = Direction.DOWN;
-        // walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        if (yPosition < zombieSpeed){
+        facingDirection = Direction.UP;
+        walktoPlayer(facingDirection, zombieSpeed , player.getLocation());
+        }
+        else if (xPosition == zombieSpeed){
+        walktoPlayer(this.getZombieDirection(), zombieSpeed, player.getLocation());
+        } else {
+        facingDirection = Direction.DOWN;
+        walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        }
+
+        // float xPosition = player.getX();
+        // float yPosition = player.getY();
+
+        // float diffX = xPosition - x;
+        // float diffY = yPosition - y;
+
+        // float angle = (float) Math.atan2(diffY, diffX);
+
+        // x += zombieSpeed * Math.cos(angle);
+        // y += zombieSpeed * Math.sin(angle);
+
+        // if (player.getX() > this.getX()) {
+        //     setZombieDirection(Direction.RIGHT);
+        // } else if (player.getX() < this.getX()) {
+        //     setZombieDirection(Direction.LEFT);
         // }
 
         // added this to avoid the glicthy collision
