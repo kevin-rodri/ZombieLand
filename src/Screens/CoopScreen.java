@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import Engine.Config;
 import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
@@ -251,6 +252,18 @@ public class CoopScreen extends Screen {
 	}
 
 	public void draw(GraphicsHandler graphicsHandler) {
+		// create buffered image canvas here
+		BufferedImage subImage = new BufferedImage(Config.GAME_WINDOW_WIDTH/2,Config.GAME_WINDOW_HEIGHT,BufferedImage.TYPE_INT_RGB);
+		Graphics2D buffG = subImage.createGraphics();
+		// store old graphics from graphics handler in variable
+		Graphics2D tempG = graphicsHandler.getGraphics();
+		// change graphics handler to point to buffered images graphics
+		graphicsHandler.setGraphics(buffG);
+		// do drawing things
+		
+		// paint entire buffered image at the end
+
+		
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 			case RUNNING:
@@ -261,10 +274,10 @@ public class CoopScreen extends Screen {
 
 
 
-				} else {
-//					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+				} else { 
+					map.draw(player, graphicsHandler);
+//					map.draw2(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here
@@ -288,12 +301,16 @@ public class CoopScreen extends Screen {
 				winScreen.draw(graphicsHandler);
 				break;
 		}
-	
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
 		healthBar.draw(graphicsHandler);
 		ammoCount.draw(graphicsHandler);
+		graphicsHandler.setGraphics(tempG);
+		graphicsHandler.drawImage(subImage,0, 0);	
+		graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH/2, 0, 25, 1000, Color.BLACK, Color.BLACK, 30);
+		graphicsHandler.drawImage(subImage,Config.GAME_WINDOW_WIDTH/2, 0);
+		
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {

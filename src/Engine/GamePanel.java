@@ -32,7 +32,6 @@ public class GamePanel extends JPanel {
 	private SpriteFont pauseLabel;
 	private KeyLocker keyLocker = new KeyLocker();
 	private final Key pauseKey = Key.P;
-	private BufferedImage subImage;
 
 	/*
 	 * The JPanel and various important class instances are setup here
@@ -45,8 +44,6 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(Keyboard.getKeyListener());
 
 		graphicsHandler = new GraphicsHandler();
-		subImage = new BufferedImage(100, 500, BufferedImage.TYPE_INT_RGB);
-	//	graphicsHandler.setBufferedImage(subImage);
 		screenManager = new ScreenManager();
 		
 		
@@ -113,14 +110,11 @@ public class GamePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) 
-	{
+	{		
 		super.paintComponent(g);
 		// every repaint call will schedule this method to be called
 		// when called, it will setup the graphics handler and then call this class's draw method
-		Graphics2D g2 = subImage.createGraphics();
-		graphicsHandler.setGraphics((Graphics2D) g);
-	//	graphicsHandler.setGraphics((Graphics2D) g);
-	//	graphicsHandler.setBufferedImage(subImage.createGraphics());
+		graphicsHandler.setGraphics((Graphics2D)g);
 		if (doPaint) 
 		{
 			draw();
