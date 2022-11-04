@@ -103,14 +103,14 @@ public class CoopScreen extends Screen {
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
-		healthBar = new SpriteFont("" + HealthSystem.healthCount, 700, 50, "z", 20, Color.WHITE);
+		healthBar = new SpriteFont("" + HealthSystem.healthCount, 650, 50, "z", 20, Color.WHITE);
 
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
-		Point HealthHUD = new Point(650,10);
+		Point HealthHUD = new Point(600,10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
 		health.setWidth(50);
@@ -230,8 +230,8 @@ public class CoopScreen extends Screen {
 					}
 
 				} else {
-					coOp.update();
-					map.update(coOp);
+//					coOp.update();
+//					map.update(coOp);
 					map.update(player);
 					player.update();
 
