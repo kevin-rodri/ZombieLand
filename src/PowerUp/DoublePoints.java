@@ -11,20 +11,45 @@ import Level.Player;
 import javax.swing.Timer;
 import Level.PlayerState;
 import Utils.Point;
+import Utils.Stopwatch;
 import MoneySystem.MoneyBase;
+import javax.swing.Timer;
+
+
 import com.sun.jdi.event.MonitorWaitedEvent;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 
 // This class is for DoublePoints
 public class DoublePoints extends NPC implements SoundController {
 
+    protected int counter = 0;
     public DoublePoints(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("doublepoints.png"), 50, 43), "STAND_RIGHT");
-    }
 
+    }
+    /*
+    Timer t;
+    private void time(){
+        t = new Timer(60000, new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                if(counter>9){
+                    t.stop();
+                }
+
+
+            }
+        }
+    }
+*/
     public void update(Player player) {
+
+
 
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
@@ -33,17 +58,23 @@ public class DoublePoints extends NPC implements SoundController {
 
             try {
                 playSE(1);
-       
-             } catch(Exception e) {
+
+            } catch (Exception e) {
                 System.out.println("toString(): " + e.toString());
                 System.out.println("getMessage(): " + e.getMessage());
                 System.out.println("StackTrace: ");
                 e.printStackTrace();
-             }
-         
+            }
+
             //this.setInteractScript(DoublePointsScript);
         }
+
+
+
         super.update(player);
+    }
+    public void endX2(){
+        this.setIsHidden(true);
     }
 
     @Override

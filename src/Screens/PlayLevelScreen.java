@@ -5,6 +5,7 @@ import java.awt.Color;
 import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
+import PowerUp.DoublePoints;
 import PowerUp.Nuke;
 import PowerUp.weapons;
 
@@ -74,7 +75,7 @@ public class PlayLevelScreen extends Screen {
 
 	int m = 1;
 	Timer t;
-	Timer x2end;
+
 
 
 	private void time() {
@@ -82,9 +83,11 @@ public class PlayLevelScreen extends Screen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+
 				if (counter > 9) {
 					t.stop();
 				}
+
 
 				waveCounter.setText("WAVE " + counter + "/10");
 				//money.setText("$" + m);
@@ -230,6 +233,7 @@ public class PlayLevelScreen extends Screen {
 
 				if(Nuke.usedNuke==true){
 					map.getEnemies().removeAll(map.getEnemies());
+					Nuke.usedNuke = false;
 				}
 				else if (LightAmmo.ammoClip ==0 && LightAmmo.ammoCount ==0){
 					//ammoCount.setText("NO AMMO");

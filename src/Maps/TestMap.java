@@ -33,6 +33,7 @@ import java.util.TimerTask;
 import Enemies.SmallZombie;
 import Enemies.Zombie;
 import java.util.Random;
+import java.lang.Math;
 
 
 // Represents a test map to be used in a level
@@ -68,11 +69,11 @@ public class TestMap extends Map {
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
 
-        DoublePoints doublePoints = new DoublePoints(3, getMapTile(14, 5).getLocation().subtractY(40));
+        DoublePoints doublePoints = new DoublePoints(3, getMapTile(18, (int) Math.floor(Math.random()*(30-1+1)+1)).getLocation().subtractY(40));
         doublePoints.setInteractScript(new DoublePointsScript());
         npcs.add(doublePoints);
 
-        Nuke nuke = new Nuke(4, getMapTile(14, 2).getLocation().subtractY(40));
+        Nuke nuke = new Nuke(4, getMapTile(14, (int) Math.floor(Math.random()*(30-1+1)+1)).getLocation().subtractY(40));
         nuke.setInteractScript(new NukeScript());
         npcs.add(nuke);
         
@@ -80,7 +81,7 @@ public class TestMap extends Map {
         nuke.setInteractScript(new WalrusScript());
         npcs.add(pistol);
 
-        ExtraLife lifeup = new ExtraLife(5, getMapTile(20, 1).getLocation().subtractY(40));
+        ExtraLife lifeup = new ExtraLife(5, getMapTile(30, (int) Math.floor(Math.random()*(30-1+1)+1)).getLocation().subtractY(40));
         lifeup.setInteractScript(new WalrusScript());
         npcs.add(lifeup);
 
