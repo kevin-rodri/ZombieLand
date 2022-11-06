@@ -5,6 +5,7 @@ import java.awt.Color;
 import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
+import PowerUp.Nuke;
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -109,6 +110,8 @@ public class PlayLevelScreen extends Screen {
 					map.addEnemy(zombieWaveOne);   
 					 zombieWaveOne.update();
 				  }
+
+
 				  m = m * 2;
 				counter++;
 			}
@@ -157,6 +160,7 @@ public class PlayLevelScreen extends Screen {
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
 		flagManager.addFlag("hasTalkedToGunsmith", false);
 		flagManager.addFlag("hasDied", false);
+		flagManager.addFlag("usedNuke", false);
 
 		// define/setup map
 		this.map = new TestMap();
@@ -218,10 +222,14 @@ public class PlayLevelScreen extends Screen {
 			// platformer level going
 			case RUNNING:
 			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-			
+
 				if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip>0){
 					LightAmmo.ammoClip -=30;
 					LightAmmo.ammoCount += 30;
+				}
+
+				if(Nuke.usedNuke==true){
+					map.getEnemies().removeAll(map.getEnemies());
 				}
 				else if (LightAmmo.ammoClip ==0 && LightAmmo.ammoCount ==0){
 					//ammoCount.setText("NO AMMO");

@@ -7,10 +7,12 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
+import Level.FlagManager;
 import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
 import Scripts.TestMap.DoublePointsScript;
+import Scripts.TestMap.NukeScript;
 import Utils.Point;
 
 import java.util.HashMap;
@@ -21,10 +23,13 @@ public class Nuke extends NPC implements SoundController {
     public Nuke(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("nuke.png"), 50, 43), "STAND_RIGHT");
     }
+    public static boolean usedNuke = false;
 
     public void update(Player player) {
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
+            usedNuke=true;
+
             try {
                 playSE(0);
        

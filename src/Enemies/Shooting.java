@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import Ammo.LightAmmo;
 import MoneySystem.MoneyBase;
+import PowerUp.Nuke;
 import Screens.PlayLevelScreen;
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -81,8 +82,8 @@ public class Shooting extends Enemy {
 					  MoneyBase.addMoneyMini();
 					  entityCollidedWith = get;
 					  enemy.remove(entityCollidedWith);
-
 				  }
+
 		}
 	}
 	}

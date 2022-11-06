@@ -73,7 +73,7 @@ public class TestMap extends Map {
         npcs.add(doublePoints);
 
         Nuke nuke = new Nuke(4, getMapTile(14, 2).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
+        nuke.setInteractScript(new NukeScript());
         npcs.add(nuke);
         
         weapons pistol = new weapons(6, getMapTile(14, 3).getLocation().subtractY(40));
