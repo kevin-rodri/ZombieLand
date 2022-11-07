@@ -269,7 +269,7 @@ public class CoopScreen extends Screen {
 			case RUNNING:
 				if (weapons.check == true) {
 					map.draw(player2, graphicsHandler);
-					map.draw(coOp, graphicsHandler);
+	//				map.draw(coOp, graphicsHandler);
 //					map.draw(coOp, player, graphicsHandler);
 
 
@@ -308,8 +308,65 @@ public class CoopScreen extends Screen {
 		ammoCount.draw(graphicsHandler);
 		graphicsHandler.setGraphics(tempG);
 		graphicsHandler.drawImage(subImage,0, 0);	
-		graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH/2, 0, 25, 1000, Color.BLACK, Color.BLACK, 30);
-		graphicsHandler.drawImage(subImage,Config.GAME_WINDOW_WIDTH/2, 0);
+		graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH/2, 0, 25, 1000, new Color(40,40,40), new Color(40,40,40), 30);
+	//	graphicsHandler.drawImage(subImage,Config.GAME_WINDOW_WIDTH/2, 0);
+// RIGHT SIDE		
+		// create buffered image canvas here
+		BufferedImage subImage2 = new BufferedImage(Config.GAME_WINDOW_WIDTH/2,Config.GAME_WINDOW_HEIGHT,BufferedImage.TYPE_INT_RGB);
+		Graphics2D buffG2 = subImage2.createGraphics();
+		// store old graphics from graphics handler in variable
+		Graphics2D tempG2 = graphicsHandler.getGraphics();
+		// change graphics handler to point to buffered images graphics
+		graphicsHandler.setGraphics(buffG2);
+		// do drawing things
+		
+		// paint entire buffered image at the end
+
+		
+		// based on screen state, draw appropriate graphics
+		switch (playLevelScreenState) {
+			case RUNNING:
+				if (weapons.check == true) {
+	//				map.draw(player2, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
+
+
+
+				} else { 
+//					map.draw(player, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
+
+				}
+				// pasue game logic was moved to here
+				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+					isGamePaused = !isGamePaused;
+					keyLocker.lockKey(pauseKey);
+				}
+				
+				if (Keyboard.isKeyUp(pauseKey)) {
+					keyLocker.unlockKey(pauseKey);
+				}
+				pauseLabel = new SpriteFont("HELP", 365, 280, "z", 24, Color.white);
+				// if game is paused, draw pause gfx over Screen gfx
+				if (isGamePaused) {
+					pauseLabel.draw(graphicsHandler);
+					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+				}
+		
+				break;
+			case LEVEL_COMPLETED:
+				winScreen.draw(graphicsHandler);
+				break;
+		}
+		waveCounter.draw(graphicsHandler);
+		money.draw(graphicsHandler);
+		health.draw(graphicsHandler);
+		healthBar.draw(graphicsHandler);
+		ammoCount.draw(graphicsHandler);
+		graphicsHandler.setGraphics(tempG2);
+		graphicsHandler.drawImage(subImage2,Config.GAME_WINDOW_WIDTH/2, 0);
 		
 	}
 
