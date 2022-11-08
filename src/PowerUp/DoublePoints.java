@@ -14,6 +14,7 @@ import Utils.Point;
 import Utils.Stopwatch;
 import MoneySystem.MoneyBase;
 import javax.swing.Timer;
+import Level.Script;
 
 
 import com.sun.jdi.event.MonitorWaitedEvent;
@@ -21,6 +22,7 @@ import com.sun.jdi.event.MonitorWaitedEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.TimerTask;
 
 
 // This class is for DoublePoints
@@ -68,8 +70,14 @@ public class DoublePoints extends NPC implements SoundController {
 
             //this.setInteractScript(DoublePointsScript);
         }
-
-
+        /*java.util.Timer timer = new java.util.Timer();
+        TimerTask task = new TimerTask() {
+            public void run(){
+                System.out.println("Worked!");
+            }
+        };
+        long delay = 30000L;
+        timer.schedule(task,delay);*/
 
         super.update(player);
     }

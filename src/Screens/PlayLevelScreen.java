@@ -71,6 +71,7 @@ public class PlayLevelScreen extends Screen {
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 	protected int counter = 0;
+	protected int x2counter = 0;
 	private boolean noAmmo=false;
 
 	int m = 1;
@@ -87,6 +88,7 @@ public class PlayLevelScreen extends Screen {
 				if (counter > 9) {
 					t.stop();
 				}
+
 
 
 				waveCounter.setText("WAVE " + counter + "/10");
@@ -164,6 +166,7 @@ public class PlayLevelScreen extends Screen {
 		flagManager.addFlag("hasTalkedToGunsmith", false);
 		flagManager.addFlag("hasDied", false);
 		flagManager.addFlag("usedNuke", false);
+		flagManager.addFlag("x2Exp", false);
 
 		// define/setup map
 		this.map = new TestMap();

@@ -5,6 +5,8 @@ import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
 import MoneySystem.MoneyBase;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DoublePointsScript extends Script<NPC> {
 
@@ -12,9 +14,9 @@ public class DoublePointsScript extends Script<NPC> {
 
     @Override
     protected void setup() {
-        showTextbox();
-        addTextToTextboxQueue("DOUBLEPOINTS!");
-        //MoneyBase.addMoney();
+
+
+        //timer.schedule(task, 2000, 5000);
 
     }
 
