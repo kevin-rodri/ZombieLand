@@ -380,6 +380,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 				player.update();
 				map.update(player);
+				
 			}
 		}	
 				break;
