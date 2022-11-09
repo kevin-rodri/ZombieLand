@@ -205,35 +205,65 @@ public class SmallZombie extends Enemy {
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         // hopefully will do after my issue with magenta
-        return new HashMap<String, Frame[]>() {
-            {
-                put("WALK_RIGHT", new Frame[] {
-                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                                .withScale(3)
-                                .withBounds(10, 10, 20, 20)
-                                .build(),
+        return new HashMap<String, Frame[]>() {{
+            put("STAND_RIGHT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-                                .withScale(3)
-                                .withBounds(10, 10, 20, 20)
-                                .build()
+        put("STAND_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                        .withScale(3)
+                       .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                });
-                put("WALK_LEFT", new Frame[] {
-                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                                .withScale(3)
-                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                                .withBounds(10, 10, 20, 20)
-                                .build(),
+        put("WALK_RIGHT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-                                .withScale(3)
-                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                                .withBounds(10, 10, 20, 20)
-                                .build()
-                });
-            }
-        };
+        put("WALK_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
+    }};
+
     }
 
     @Override

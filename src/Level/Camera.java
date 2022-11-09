@@ -80,6 +80,23 @@ public class Camera extends Rectangle {
         }
     }
     
+    public void updateMapEntities(Player2 player) {
+        activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
+        activeNPCs = loadActiveNPCs();
+        activeEnemies = loadActiveEnemies();
+
+        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
+            enhancedMapTile.update(player);
+        }
+
+        for (NPC npc : activeNPCs) {
+        //  npc.update(player);
+        }
+        for (Enemy enemy : activeEnemies) { 
+          //   enemy.update(player);
+        }
+    }
+
 
     // updates any currently running script
     // only one script should be able to be running (active) at a time
