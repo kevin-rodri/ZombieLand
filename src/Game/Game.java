@@ -24,6 +24,7 @@ public class Game {
        // ScreenManager screenManager2 = gameWindow.getScreenManager2();
         screenManager.setCurrentScreen(sc);
        // screenManager2.setCurrentScreen(sc2);
+       // Temporairly commented this out 
        // sc.setWindow(gameWindow);  
      //   sc2.setWindow(gameWindow);
 
