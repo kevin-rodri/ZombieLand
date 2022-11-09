@@ -8,7 +8,6 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
-import Level.Player2;
 import Level.PlayerState;
 import Players.AlexWithAssaultRifle;
 import Screens.PlayLevelScreen;

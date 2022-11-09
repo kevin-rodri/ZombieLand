@@ -63,7 +63,6 @@ public class CoopScreen extends Screen {
 	protected Player alexTwoWithAssaultRifle;
 	protected Player alexTwoWithMachineGun;
 	public Player player2;
-	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -445,6 +444,7 @@ public class CoopScreen extends Screen {
 					coOp.update();
 					map.update(coOp);
 				}
+			}
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:

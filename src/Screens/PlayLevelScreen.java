@@ -381,67 +381,21 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				player.update();
 				map.update(player);
 			}
-				
+		}	
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				//winScreen.update();
 				break;
 		}
-	
 
-			}
-			if (HealthSystem.healthCount <= 0) {
-				flagManager.setFlag("hasDied");
-				HealthSystem.setMaxHealth();
-			}
-			healthBar.setText("" + HealthSystem.healthCount);
-			money.setText("$" + MoneyBase.moneyCount);
-			ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
-			if (weapons.check == true) {
-				player2.update();
-				map.update(player2);
-//				coOp.update();
-//				map.update(coOp);
-				zombie.update();
-				Timer.isTimeUp();
-				if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
-					float fireballX;
-					float movementSpeed;
-					LightAmmo.ammoCount -= 1;
-					if (player2.getFacingDirection() == Direction.RIGHT) {
-						movementSpeed = 10.0f;
-						fireballX = Math.round(player2.getX()) + 50;
-					} else {
-						movementSpeed = -10.0f;
-						fireballX = Math.round(player2.getX());
-					}
-					// int fireballY = (int) (player2.getY2() - player2.getY1());
-					int fireballY = Math.round(player2.getY()) + 18;
-					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-					// add fireball enemy to the map for it to offically spawn in the level
-					map.addEnemy(bullet);
-					playSE(5);
-					Timer.setWaitTime(500);
-				}
-			} else {
-//				coOp.update();
-				player.update();
-//				map.update(coOp);
-				map.update(player);
-				zombie.update();
-			}
-			break;
-		// if level has been completed, bring up level cleared screen
-		case LEVEL_COMPLETED:
-			// winScreen.update();
-			break;
-		}
 		// if flag is set at any point during gameplay, game is "won"
 		if (map.getFlagManager().isFlagSet("hasDied")) {
 			playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
 		}
 	}
+
+
 	public void draw(GraphicsHandler graphicsHandler) {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
@@ -487,50 +441,7 @@ if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 
 				break;
 			}
-		case RUNNING:
-			if (weapons.check == true) {
-//					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-//				map.draw(coOp, player2, graphicsHandler);
-					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-//				map.draw(coOp, player2, graphicsHandler);
-
-			} else {
-
-					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-//				map.draw(coOp, player, graphicsHandler);
-			}
-			// pasue game logic was moved to here
-			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-				isGamePaused = !isGamePaused;
-				keyLocker.lockKey(pauseKey);
-			}
-			if (Keyboard.isKeyUp(pauseKey)) {
-				keyLocker.unlockKey(pauseKey);
-			}
-			pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
-			// if game is paused, draw pause gfx over Screen gfx
-			if (isGamePaused) {
-				pauseLabel.draw(graphicsHandler);
-				graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-						ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
-			}
-			break;
-		case LEVEL_COMPLETED:
-			health.setIsHidden(true);
-			gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
-			gameOver.setOutlineThickness(50);
-			gameOver.setOutlineColor(Color.black);
-			waveCounter.setText("");
-			money.setText("");
-			healthBar.setText("");
-			ammoCount.setText("");
-			// shealth.isHidden();
-			gameOver.draw(graphicsHandler);
-			break;
-		}
+		
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);

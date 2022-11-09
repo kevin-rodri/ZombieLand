@@ -9,7 +9,7 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
-import Level.Player2;
+
 
 import java.util.HashMap;
 public class AlexWithAssaultRifle extends Player {

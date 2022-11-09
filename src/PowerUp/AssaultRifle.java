@@ -8,7 +8,6 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
-import Level.Player2;
 import Level.PlayerState;
 import Players.AlexWithAssaultRifle;
 import Screens.PlayLevelScreen;
@@ -24,7 +23,6 @@ import Level.NPC;
 public class AssaultRifle extends NPC implements SoundController{
     
 	protected Player player;
-	protected Player2 player2;
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
 	public static boolean checkForPhalex = false;
