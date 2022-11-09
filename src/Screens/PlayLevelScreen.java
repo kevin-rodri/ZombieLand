@@ -251,8 +251,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			if (weapons.check == true) {
 				player2.update();
 				map.update(player2);
-				coOp.update();
-				map.update(coOp);
+//				coOp.update();
+//				map.update(coOp);
 				zombie.update();
 				Timer.isTimeUp();
 				if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
@@ -275,9 +275,9 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					Timer.setWaitTime(500);
 				}
 			} else {
-				coOp.update();
+//				coOp.update();
 				player.update();
-				map.update(coOp);
+//				map.update(coOp);
 				map.update(player);
 				zombie.update();
 			}
@@ -299,16 +299,16 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			if (weapons.check == true) {
 //					map.draw(player2, graphicsHandler);
 //					map.draw(coOp, graphicsHandler);
-				map.draw(coOp, player2, graphicsHandler);
+//				map.draw(coOp, player2, graphicsHandler);
 					map.draw(player2, graphicsHandler);
-					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, graphicsHandler);
 //				map.draw(coOp, player2, graphicsHandler);
 
 			} else {
 
-//					map.draw(player, graphicsHandler);
+					map.draw(player, graphicsHandler);
 //					map.draw(coOp, graphicsHandler);
-				map.draw(coOp, player, graphicsHandler);
+//				map.draw(coOp, player, graphicsHandler);
 			}
 			// pasue game logic was moved to here
 			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {

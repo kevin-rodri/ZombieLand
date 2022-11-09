@@ -39,7 +39,7 @@ public abstract class Map {
 
     // camera class that handles the viewable part of the map that is seen by the player of a game during a level
     protected Camera camera;
-    protected Camera2 camera2;
+    protected Camera camera2;
 
 
     // location player should start on when this map is first loaded
@@ -86,7 +86,7 @@ public abstract class Map {
         this.startBoundY = 0;
         this.endBoundX = width * tileset.getScaledSpriteWidth();
         this.endBoundY = height * tileset.getScaledSpriteHeight();
-        this.xMidPoint = ScreenManager.getScreenWidth() / 2;
+        this.xMidPoint = (ScreenManager.getScreenWidth() / 2) - 370;
         this.yMidPoint = (ScreenManager.getScreenHeight() / 2);
         this.playerStartPosition = new Point(0, 0);
     }
@@ -121,7 +121,7 @@ public abstract class Map {
 
         this.loadScripts();
         
-        this.camera2 = new Camera2(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+        this.camera2 = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
        
@@ -309,7 +309,7 @@ public abstract class Map {
         return camera;
     }
     
-    public Camera2 getCamera2() {
+    public Camera getCamera2() {
         return camera2;
     }
 
@@ -524,8 +524,8 @@ public abstract class Map {
     
     public void update2(Player player) {
         if (adjustCamera) {
-            adjustMovementY(player);
-            adjustMovementX(player);
+            adjustMovementY2(player);
+            adjustMovementX2(player);
         }
         camera2.update(player);
         if (textbox.isActive()) {
@@ -541,7 +541,7 @@ public abstract class Map {
         if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
             camera.moveX(-xMidPointDifference);
-            camera2.moveX(-xMidPointDifference);
+//            camera2.moveX(-xMidPointDifference);
 
             
 
@@ -549,7 +549,7 @@ public abstract class Map {
             if (camera.getEndBoundX() > endBoundX) {
                 float cameraDifference = camera.getEndBoundX() - endBoundX;
                 camera.moveX(-cameraDifference);
-                camera2.moveX(-cameraDifference);
+//                camera2.moveX(-cameraDifference);
 
             }
         }
@@ -557,13 +557,13 @@ public abstract class Map {
         else if (player.getCalibratedXLocation() < xMidPoint && camera.getX() > startBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
             camera.moveX(-xMidPointDifference);
-            camera2.moveX(-xMidPointDifference);
+//            camera2.moveX(-xMidPointDifference);
 
             // if camera moved past the left edge of the map as a result from the move above, move camera back and push player backward
             if (camera.getX() < startBoundX) {
                 float cameraDifference = startBoundX - camera.getX();
                 camera.moveX(cameraDifference);
-                camera2.moveX(cameraDifference);
+//                camera2.moveX(cameraDifference);
 
             }
         }
@@ -601,14 +601,14 @@ public abstract class Map {
         if (player.getCalibratedYLocation() > yMidPoint && camera.getEndBoundY() < endBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
             camera.moveY(-yMidPointDifference);
-            camera2.moveY(-yMidPointDifference);
+//            camera2.moveY(-yMidPointDifference);
 
 
             // if camera moved past the bottom of the map as a result from the move above, move camera upwards and push player downwards
             if (camera.getEndBoundY() > endBoundY) {
                 float cameraDifference = camera.getEndBoundY() - endBoundY;
                 camera.moveY(-cameraDifference);
-                camera2.moveY(-cameraDifference);
+//                camera2.moveY(-cameraDifference);
 
             }
         }
@@ -616,14 +616,14 @@ public abstract class Map {
         else if (player.getCalibratedYLocation() < yMidPoint && camera.getY() > startBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
             camera.moveY(-yMidPointDifference);
-            camera2.moveY(-yMidPointDifference);
+//            camera2.moveY(-yMidPointDifference);
 
 
             // if camera moved past the top of the map as a result from the move above, move camera downwards and push player upwards
             if (camera.getY() < startBoundY) {
                 float cameraDifference = startBoundY - camera.getY();
                 camera.moveY(cameraDifference);
-                camera2.moveY(cameraDifference);
+//                camera2.moveY(cameraDifference);
 
             }
         }

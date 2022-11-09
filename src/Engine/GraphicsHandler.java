@@ -15,18 +15,11 @@ public class GraphicsHandler {
     private BufferedImage subImage;
 
     public void setGraphics(Graphics2D g) {  	 	
-    	
-    	BufferedImage subImage = new BufferedImage(200,200, BufferedImage.TYPE_INT_RGB);
-    	Graphics2D g2 = subImage.createGraphics();
     	this.g=g;
-    	g2.setColor(Color.red);
-    	g2.draw(new Rectangle(0,0));	
-    	drawImage(subImage,200,200);
     }
     public void setBufferedImage(BufferedImage subImage)
     {
     	this.subImage=subImage;
-    //	
     }
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
@@ -111,5 +104,8 @@ public class GraphicsHandler {
         g.setColor(originalColor);
         g.setStroke(originalStroke);
         g.setRenderingHints(originalHints);
+    }
+    public Graphics2D getGraphics() {  	 	
+    	return g;
     }
 }
