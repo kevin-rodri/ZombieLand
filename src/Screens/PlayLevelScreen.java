@@ -73,9 +73,13 @@ public class PlayLevelScreen extends Screen {
 	protected int counter = 0;
 	protected int x2counter = 0;
 	private boolean noAmmo=false;
+	public static boolean x2End = false;
+
+	//public boolean x2End = false;
 
 	int m = 1;
 	Timer t;
+	Timer xp;
 
 
 
@@ -123,6 +127,23 @@ public class PlayLevelScreen extends Screen {
 		});
 		t.start();
 	}
+	public void x2time() {
+		xp = new Timer(5000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				if (x2counter>9) {
+					xp.stop();
+					flagManager.setFlag("x2Exp");
+					x2End = true;
+				}
+
+				x2counter++;
+			}
+		});
+		xp.start();
+	}
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
@@ -144,6 +165,7 @@ public class PlayLevelScreen extends Screen {
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
+		x2time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
 		Point HealthHUD = new Point(1300,10);

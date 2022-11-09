@@ -10,6 +10,7 @@ import Level.NPC;
 import Level.Player;
 import javax.swing.Timer;
 import Level.PlayerState;
+import Screens.PlayLevelScreen;
 import Utils.Point;
 import Utils.Stopwatch;
 import MoneySystem.MoneyBase;
@@ -78,6 +79,10 @@ public class DoublePoints extends NPC implements SoundController {
         };
         long delay = 30000L;
         timer.schedule(task,delay);*/
+        if(PlayLevelScreen.x2End == true){
+            this.setIsHidden(true);
+
+        }
 
         super.update(player);
     }
