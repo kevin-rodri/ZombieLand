@@ -61,13 +61,10 @@ public class PlayLevelScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	public Player alexWithAPistol; // alex with pistol
+	protected Player alexWithAPistol; // alex with pistol
 	protected Player alexWithARifle;
 	protected Player alexWithAMachineGun;
 	protected Player coOp;
-	protected Player alexTwoWithPistol;
-	protected Player alexTwoWithAssaultRifle;
-	protected Player alexTwoWithMachineGun;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -189,6 +186,7 @@ public class PlayLevelScreen extends Screen {
 		this.coOp.setMap(map);
 		this.coOp.setLocation(670, 120);
 		this.coOp.setFacingDirection(Direction.LEFT);
+	
 
 		this.alexWithAPistol = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexWithAPistol.setMap(map);
@@ -205,21 +203,6 @@ public class PlayLevelScreen extends Screen {
 		this.alexWithAMachineGun.setLocation(1104, 824);
 		this.alexWithAMachineGun.setFacingDirection(player.getFacingDirection());
 
-		this.alexTwoWithPistol =  new Alex2WithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithPistol.setMap(map);
-		this.alexTwoWithPistol.setLocation(670, 120);
-		this.alexTwoWithPistol.setFacingDirection(player.getFacingDirection());
-		
-
-		this.alexTwoWithAssaultRifle = new Alex2WithAssaultRifle(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithAssaultRifle.setMap(map);
-		this.alexTwoWithAssaultRifle.setLocation(672, 296);
-		this.alexTwoWithAssaultRifle.setFacingDirection(player.getFacingDirection());
-
-		this.alexTwoWithMachineGun = new Alex2WithMachineGun(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithMachineGun.setMap(map);
-		this.alexTwoWithMachineGun.setLocation(1104, 824);
-		this.alexTwoWithMachineGun.setFacingDirection(player.getFacingDirection());
 
 //		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
@@ -295,9 +278,7 @@ public class PlayLevelScreen extends Screen {
 				if (weapons.check){
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
-
 					TimerPlayerOnePistol.isTimeUp();
-
 					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
 						float fireballX;
 						float movementSpeed;
@@ -323,7 +304,6 @@ public class PlayLevelScreen extends Screen {
 					} else if(AssaultRifle.check){
 						alexWithARifle.update();
 						map.update(alexWithARifle);
-
 					TimerPlayerOneAssaultRifle.isTimeUp();
 						if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
 							float fireballX;
@@ -351,7 +331,6 @@ public class PlayLevelScreen extends Screen {
 				} else if (MachineGun.check){
 					alexWithAMachineGun.update();
 					map.update(alexWithAMachineGun);
-
 					TimerPlayerOneMachineGun.isTimeUp();
 						if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
 							float fireballX;
@@ -375,10 +354,11 @@ public class PlayLevelScreen extends Screen {
 							TimerPlayerOneMachineGun.setWaitTime(500);
 					}
 			
-			} else {
-					player.update();
-					map.update(player);
-				}
+			} 
+			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
+				player.update();
+				map.update(player);
+			}
 				
 				break;
 			// if level has been completed, bring up level cleared screen
@@ -401,11 +381,12 @@ public class PlayLevelScreen extends Screen {
 			case RUNNING:
 if (weapons.check){
 	map.draw(alexWithAPistol,  graphicsHandler);
-} else if (MachineGun.check){
+}  else if (MachineGun.check){
 	map.draw(alexWithAMachineGun,  graphicsHandler);
 }  else if (AssaultRifle.check) {
    map.draw(alexWithARifle,graphicsHandler);
-} else {
+} 
+if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 	map.draw(player, graphicsHandler);
 }
 				// pasue game logic was moved to here
