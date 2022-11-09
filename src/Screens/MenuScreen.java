@@ -10,6 +10,7 @@ import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
 import java.awt.*;
+import java.io.IOException;
 
 // This is the class for the main menu screen
 public class MenuScreen extends Screen {
@@ -19,6 +20,7 @@ public class MenuScreen extends Screen {
     protected SpriteFont playGame;
     protected SpriteFont credits;
     protected SpriteFont coopOption;
+    protected SpriteFont recordTime;
     protected Map background;
     protected Stopwatch keyTimer = new Stopwatch();
     protected int pointerLocationX, pointerLocationY;
@@ -32,6 +34,11 @@ public class MenuScreen extends Screen {
 
     @Override
     public void initialize() {
+        try {
+            CreateFile.checkTime();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         playGame = new SpriteFont("SINGLE PLAYER", 200, 150, "z", 30, new Color(49, 207, 240));
         playGame.setOutlineColor(Color.black);
         playGame.setOutlineThickness(5);
@@ -41,6 +48,9 @@ public class MenuScreen extends Screen {
         coopOption = new SpriteFont("CO-OP", 200, 250, "z", 30, Color.white);
         coopOption.setOutlineColor(Color.black);
         coopOption.setOutlineThickness(5);
+        recordTime = new SpriteFont("Record Time: " + CreateFile.recordValue, 200, 450, "z", 30, Color.white);
+        recordTime.setOutlineColor(Color.black);
+        recordTime.setOutlineThickness(5);
         background = new TitleScreenMap();
         background.setAdjustCamera(false);
         keyTimer.setWaitTime(200);
@@ -75,19 +85,22 @@ public class MenuScreen extends Screen {
         if (currentMenuItemHovered == 0) {
         	coopOption.setColor(Color.WHITE);
         	credits.setColor(Color.WHITE);
-            playGame.setColor(Color.RED);          
+            playGame.setColor(Color.RED);
+            recordTime.setColor(Color.RED);
             pointerLocationX = 170;
             pointerLocationY = 130;
         } else if (currentMenuItemHovered == 1) {
             playGame.setColor(Color.WHITE);
             credits.setColor(Color.white);
             coopOption.setColor(Color.RED);
+            recordTime.setColor(Color.RED);
             pointerLocationX = 170;
             pointerLocationY = 230;
         } else if (currentMenuItemHovered == 2){
         	 coopOption.setColor(Color.WHITE);
         	 playGame.setColor(Color.white);
         	 credits.setColor(Color.RED);
+            recordTime.setColor(Color.RED);
              pointerLocationX = 170;
              pointerLocationY = 330;
         }
@@ -117,6 +130,7 @@ public class MenuScreen extends Screen {
         playGame.draw(graphicsHandler);
         coopOption.draw(graphicsHandler);
         credits.draw(graphicsHandler);
+        recordTime.draw(graphicsHandler);
         graphicsHandler.drawFilledRectangleWithBorder(pointerLocationX, pointerLocationY, 20, 20, new Color(49, 207, 240), Color.black, 2);
     }
 

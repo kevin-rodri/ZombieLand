@@ -42,6 +42,7 @@ import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -376,6 +377,11 @@ public class PlayLevelScreen extends Screen {
 			case LEVEL_COMPLETED:
 				health.setIsHidden(true);
 				gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
+				try {
+					CreateFile.record();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				gameOver.setOutlineThickness(50);
 				gameOver.setOutlineColor(Color.black);
 				waveCounter.setText("");
@@ -384,7 +390,6 @@ public class PlayLevelScreen extends Screen {
 				ammoCount.setText("");
 				//shealth.isHidden();
 				gameOver.draw(graphicsHandler);
-
 				break;
 		}
 	
