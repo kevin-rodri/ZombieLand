@@ -18,10 +18,6 @@ public class EnhancedMapTile extends MapTile {
     public void update(Player player) {
         super.update();
     }
-    
-    public void update(Player2 player) {
-        super.update();
-    }
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
