@@ -5,7 +5,6 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
 import Level.Player;
-import Level.Player2;
 import Maps.TitleScreenMap;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;

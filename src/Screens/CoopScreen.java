@@ -142,9 +142,9 @@ public class CoopScreen extends Screen {
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x+50, map.getPlayerStartPosition().y);
 		this.coOp.setMap(map);
-		this.coOp.setLocation(670, 120);
+		this.coOp.setLocation(playerStartPosition.x,playerStartPosition.y);
 		this.coOp.setFacingDirection(player.getFacingDirection());
 		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player2.setMap(map);
@@ -230,13 +230,11 @@ public class CoopScreen extends Screen {
 					}
 
 				} else {
-//					coOp.update();
-//					map.update(coOp);
-					map.update(player);
+					coOp.update();
 					player.update();
-
+					map.update2(coOp);
+					map.update(player);
 				}
-
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
@@ -321,7 +319,6 @@ public class CoopScreen extends Screen {
 		// do drawing things
 		
 		// paint entire buffered image at the end
-
 		
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
@@ -335,11 +332,13 @@ public class CoopScreen extends Screen {
 
 				} else { 
 //					map.draw(player, graphicsHandler);
-					map.draw(coOp, graphicsHandler);
+					map.draw2(coOp, graphicsHandler);
+					System.out.println("COOP:" + coOp.getX()+"," +coOp.getY());
+					System.out.println("Player: " + player.getX() +"," +player.getY());
 //					map.draw(coOp, player, graphicsHandler);
 
 				}
-				// pasue game logic was moved to here
+				// pause game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
 					isGamePaused = !isGamePaused;
 					keyLocker.lockKey(pauseKey);
@@ -366,8 +365,7 @@ public class CoopScreen extends Screen {
 		healthBar.draw(graphicsHandler);
 		ammoCount.draw(graphicsHandler);
 		graphicsHandler.setGraphics(tempG2);
-		graphicsHandler.drawImage(subImage2,Config.GAME_WINDOW_WIDTH/2, 0);
-		
+		graphicsHandler.drawImage(subImage2,Config.GAME_WINDOW_WIDTH/2, 0);	
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {
