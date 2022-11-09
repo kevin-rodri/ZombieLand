@@ -8,7 +8,6 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Player;
-import Level.Player2;
 
 import java.util.HashMap;
 
@@ -24,6 +23,11 @@ this.MOVE_UP_KEY = Key.W;
 this.MOVE_DOWN_KEY = Key.S;
 this.INTERACT_KEY = Key.SPACE;
         walkSpeed = 4.0f;
+        this.MOVE_LEFT_KEY = Key.A;
+        this.MOVE_RIGHT_KEY = Key.D;
+        this.MOVE_UP_KEY = Key.W;
+        this.MOVE_DOWN_KEY = Key.S;
+
     }
     
 

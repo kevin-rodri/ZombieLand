@@ -107,15 +107,15 @@ public class TestMap extends Map {
     public ArrayList<Enemy> loadEnemies() {
   ArrayList<Enemy> enemy = new ArrayList<>();
           // after playing with this, I have given up on picking a good starting point...
- Random random = new Random();
- // generate a number from 1 - 11
- int randomX  = 1 + random.nextInt(10);
- // generate a number from 1 - 11
- int randomY  = 1 + random.nextInt(10);
- Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
- SmallZombie zombieWaveOne  = new SmallZombie(getMapTile(randomX + 3,randomY).getLocation(), zombieOne.getZombieDirection());
- enemy.add(zombieWaveOne); 
- enemy.add(zombieOne);
+//  Random random = new Random();
+//  // generate a number from 1 - 11
+//  int randomX  = 1 + random.nextInt(10);
+//  // generate a number from 1 - 11
+//  int randomY  = 1 + random.nextInt(10);
+//  Zombie zombieOne = new Zombie(getMapTile(randomX,randomX).getLocation(), Direction.DOWN);
+//  SmallZombie zombieWaveOne  = new SmallZombie(getMapTile(randomX + 3,randomY).getLocation(), zombieOne.getZombieDirection());
+//  enemy.add(zombieWaveOne); 
+//  enemy.add(zombieOne);
 return enemy;
     }
 
