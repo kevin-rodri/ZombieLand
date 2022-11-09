@@ -329,13 +329,12 @@ public class CoopScreen extends Screen {
 //					map.draw(coOp, player, graphicsHandler);
 
 
-
 				} else { 
 //					map.draw(player, graphicsHandler);
 					map.draw2(coOp, graphicsHandler);
 					System.out.println("COOP:" + coOp.getX()+"," +coOp.getY());
 					System.out.println("Player: " + player.getX() +"," +player.getY());
-//					map.draw(coOp, player, graphicsHandler);
+				} 
 
 				}
 				// pause game logic was moved to here
