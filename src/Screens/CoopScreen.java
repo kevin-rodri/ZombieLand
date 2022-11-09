@@ -8,8 +8,6 @@ import java.awt.GridLayout;
 import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
-import PowerUp.AssaultRifle;
-import PowerUp.MachineGun;
 import PowerUp.weapons;
 
 import javax.swing.Timer;
@@ -35,14 +33,9 @@ import Level.*;
 import Maps.TestMap;
 import NPCs.Lives;
 import Players.AlexWithAPistol;
-import Players.AlexWithAssaultRifle;
-import Players.AlexWithMachineGun;
 import Players.SecondPlayer;
 import SpriteFont.SpriteFont;
 import Players.Alex;
-import Players.Alex2WithAPistol;
-import Players.Alex2WithAssaultRifle;
-import Players.Alex2WithMachineGun;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -55,35 +48,19 @@ public class CoopScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	protected Player alexWithAPistol; // alex with pistol
-	protected Player alexWithARifle;
-	protected Player alexWithAMachineGun;
-	protected Player coOp;
-	protected Player alexTwoWithPistol;
-	protected Player alexTwoWithAssaultRifle;
-	protected Player alexTwoWithMachineGun;
 	public Player player2;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
 	protected Lives health;
 	private SpriteFont pauseLabel;
-	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second 
-	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first 
+	protected Key shootingKey = Key.F;
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
-	// timers for first player when they pick up weapons with gunsmith (76-78)
-	private Stopwatch TimerPlayerOnePistol = new Stopwatch(); 
-	private  Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch(); 
-	private  Stopwatch TimerPlayerOneMachineGun= new Stopwatch(); 
-	// second player 
-	private Stopwatch TimerPlayerTwoPistol = new Stopwatch(); 
-	private  Stopwatch TimerPlayerTwoAssaultRifle = new Stopwatch(); 
-	private  Stopwatch TimerPlayerTwoMachineGun= new Stopwatch(); 
-	private GameWindow window;
 
 	protected int counter = 0;
 
@@ -158,55 +135,19 @@ public class CoopScreen extends Screen {
 		map.setFlagManager(flagManager);
 
 		// setup player
+
 		this.player = new Alex(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.player.setMap(map);
 		Point playerStartPosition = map.getPlayerStartPosition();
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-
-		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.coOp.setMap(map);
-		this.coOp.setLocation(670, 120);
-		this.coOp.setFacingDirection(Direction.LEFT);
-
-		this.alexWithAPistol = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexWithAPistol.setMap(map);
-		this.alexWithAPistol.setLocation(670, 120);
-		this.alexWithAPistol.setFacingDirection(player.getFacingDirection());
-
-		this.alexWithARifle = new AlexWithAssaultRifle(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexWithARifle.setMap(map);
-		this.alexWithARifle.setLocation(672, 296);
-		this.alexWithARifle.setFacingDirection(player.getFacingDirection());
-
-		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexWithAMachineGun.setMap(map);
-		this.alexWithAMachineGun.setLocation(1104, 824);
-		this.alexWithAMachineGun.setFacingDirection(player.getFacingDirection());
-
-		this.alexTwoWithPistol =  new Alex2WithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithPistol.setMap(map);
-		this.alexTwoWithPistol.setLocation(670, 120);
-		this.alexTwoWithPistol.setFacingDirection(player.getFacingDirection());
-		
-
-		this.alexTwoWithAssaultRifle = new Alex2WithAssaultRifle(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithAssaultRifle.setMap(map);
-		this.alexTwoWithAssaultRifle.setLocation(672, 296);
-		this.alexTwoWithAssaultRifle.setFacingDirection(player.getFacingDirection());
-
-		this.alexTwoWithMachineGun = new Alex2WithMachineGun(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.alexTwoWithMachineGun.setMap(map);
-		this.alexTwoWithMachineGun.setLocation(1104, 824);
-		this.alexTwoWithMachineGun.setFacingDirection(player.getFacingDirection());
-
 		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x+50, map.getPlayerStartPosition().y);
 		this.coOp.setMap(map);
 		this.coOp.setLocation(playerStartPosition.x,playerStartPosition.y);
 		this.coOp.setFacingDirection(player.getFacingDirection());
 		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.player2.setMap(map);
+		this.player2.setMap(map);  
 		this.player2.setLocation(670, 120);
 		this.player2.setFacingDirection(player.getFacingDirection());
 //		 let pieces of map know which button to listen for as the "interact" button
@@ -259,13 +200,6 @@ public class CoopScreen extends Screen {
 				money.setText("$" + MoneyBase.moneyCount);
 				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
-
-				if (weapons.check){
-					if (alexWithAPistol.intersects(map.getNPCById(6))){
-						alexWithAPistol.update();
-						map.update(alexWithAPistol);
-						TimerPlayerOnePistol.isTimeUp();
-
 				if (weapons.check == true) {
 					player.update();
 					map.update(player2);
@@ -273,178 +207,34 @@ public class CoopScreen extends Screen {
 					map.update(coOp);
 					Timer.isTimeUp();
 
-
-					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+					if (Timer.isTimeUp() && !keyLocker.isKeyLocked(shootingKey) && Keyboard.isKeyDown(shootingKey)) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -=1;
-						if (alexWithAPistol.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 5.0f;
-							fireballX = Math.round(alexWithAPistol.getX()) + 50;
+						if (player2.getFacingDirection() == Direction.RIGHT) {
+							movementSpeed = 4.0f;
+							fireballX = Math.round(player2.getX()) + 50;
 						} else {
-							movementSpeed = -5.0f;
-							fireballX = Math.round(alexWithAPistol.getX());
+							movementSpeed = -4.0f;
+							fireballX = Math.round(player2.getX());
 						}
-
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
-						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-					
+						int fireballY = Math.round(player2.getY()) + 18;
+						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 10000);
+
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
-						TimerPlayerOnePistol.setWaitTime(500);				
-						}
-					} else if (alexTwoWithPistol.intersects(map.getNPCById(6))){
-						alexTwoWithPistol.update();
-						map.update(alexTwoWithPistol);
-
-						TimerPlayerTwoPistol.isTimeUp();
-
-					if (TimerPlayerTwoPistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo) && Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
-						float fireballX;
-						float movementSpeed;
-						LightAmmo.ammoCount -=1;
-
-						if (alexTwoWithPistol.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 5.0f;
-							fireballX = Math.round(alexTwoWithPistol.getX()) + 50;
-						} else {
-							movementSpeed = -5.0f;
-							fireballX = Math.round(alexTwoWithPistol.getX());
-						}
-
-						// int fireballY = (int) (player2.getY2() - player2.getY1());
-						int fireballY = Math.round(alexTwoWithPistol.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-					
-
-						// add fireball enemy to the map for it to offically spawn in the level
-						map.addEnemy(bullet);
-						TimerPlayerTwoPistol.setWaitTime(500);				
-						}
-					}
-					
-
-					
-						
-					} else if(AssaultRifle.check){
-
-						if (alexWithARifle.intersects(map.getNPCById(8))) {
-							alexWithARifle.update();
-						map.update(alexWithARifle);
-						TimerPlayerOneAssaultRifle.isTimeUp();
-						if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexWithARifle.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 10.0f;
-								fireballX = Math.round(alexWithARifle.getX()) + 50;
-							} else {
-								movementSpeed = -10.0f;
-								fireballX = Math.round(alexWithARifle.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexWithARifle.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerOneAssaultRifle.setWaitTime(500);
+						Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
+						Timer.setWaitTime(500);
 					}
 
-						 }else if (alexTwoWithAssaultRifle.intersects(map.getNPCById(8))){
-							alexTwoWithAssaultRifle.update();
-							map.update(alexTwoWithAssaultRifle);
-							 
-							TimerPlayerTwoAssaultRifle.isTimeUp();
-						if (TimerPlayerTwoAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo) && Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexTwoWithAssaultRifle.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 10.0f;
-								fireballX = Math.round(alexTwoWithAssaultRifle.getX()) + 50;
-							} else {
-								movementSpeed = -10.0f;
-								fireballX = Math.round(alexTwoWithAssaultRifle.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexTwoWithAssaultRifle.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerTwoAssaultRifle.setWaitTime(500);
-					}
-						  }
-
-				} else if (MachineGun.check){
-
-					if (alexWithAMachineGun.intersects(map.getNPCById(9))){
-						alexWithAMachineGun.update();
-						map.update(alexWithAMachineGun);
-						TimerPlayerOneMachineGun.isTimeUp();
-						if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexWithAMachineGun.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 15.0f;
-								fireballX = Math.round(alexWithAMachineGun.getX()) + 50;
-							} else {
-								movementSpeed = -15.0f;
-								fireballX = Math.round(alexWithAMachineGun.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerOneMachineGun.setWaitTime(500);
-						}
-					} else if (alexTwoWithMachineGun.intersects(map.getNPCById(9))){
-						alexTwoWithMachineGun.update();
-						map.update(alexTwoWithMachineGun);
-
-						TimerPlayerTwoMachineGun.isTimeUp();
-						if (TimerPlayerTwoMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo) && Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexTwoWithMachineGun.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 15.0f;
-								fireballX = Math.round(alexTwoWithMachineGun.getX()) + 50;
-							} else {
-								movementSpeed = -15.0f;
-								fireballX = Math.round(alexTwoWithMachineGun.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexTwoWithMachineGun.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerTwoMachineGun.setWaitTime(500);
-						}
-					}
-			} else {
-					player.update();
-					map.update(player);
+				} else {
 					coOp.update();
-					map.update(coOp);
+					player.update();
+					map.update2(coOp);
+					map.update(player);
 				}
-			}
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
@@ -475,24 +265,19 @@ public class CoopScreen extends Screen {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 			case RUNNING:
-			if (alexWithAPistol.intersects(map.getNPCById(6))){
-				map.draw(alexWithAPistol,  graphicsHandler);
-			} else if (alexTwoWithPistol.intersects(map.getNPCById(6))){
-				map.draw(alexTwoWithPistol,  graphicsHandler);
-			} else if (alexWithAMachineGun.intersects(map.getNPCById(9))){
-			map.draw(alexWithAMachineGun,  graphicsHandler);
-		} else if (alexTwoWithMachineGun.intersects(map.getNPCById(9))){
-			map.draw(alexTwoWithMachineGun,  graphicsHandler);
-		} else if (alexWithARifle.intersects(map.getNPCById(8))) {
-		   map.draw(alexWithARifle,graphicsHandler);
-		}else if (alexTwoWithAssaultRifle.intersects(map.getNPCById(8))){
-			map.draw(alexTwoWithAssaultRifle,graphicsHandler);
-		 }else {
-			map.draw(player, graphicsHandler);
-			map.draw2(coOp, graphicsHandler);
-		}
-				
+				if (weapons.check == true) {
+					map.draw(player2, graphicsHandler);
+	//				map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
+
+
+				} else { 
+					map.draw(player, graphicsHandler);
+//					map.draw2(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
+
+				}
 				// pasue game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
 					isGamePaused = !isGamePaused;
@@ -544,12 +329,13 @@ public class CoopScreen extends Screen {
 //					map.draw(coOp, player, graphicsHandler);
 
 
+
 				} else { 
 //					map.draw(player, graphicsHandler);
 					map.draw2(coOp, graphicsHandler);
-					System.out.println("COOP:" + coOp.getX()+"," +coOp.getY());
-					System.out.println("Player: " + player.getX() +"," +player.getY());
-				} 
+//					map.draw(coOp, player, graphicsHandler);
+
+				}
 				// pause game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
 					isGamePaused = !isGamePaused;

@@ -677,7 +677,7 @@ public abstract class Map {
     }
     
     public void draw2(Player player, GraphicsHandler graphicsHandler) {
-     //   camera2.draw(player, graphicsHandler);
+        camera2.draw(player, graphicsHandler);
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
