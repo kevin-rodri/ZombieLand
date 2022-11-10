@@ -71,6 +71,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
+	// private Timer timer;
 	protected int counter = 1;
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
@@ -81,14 +82,16 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	int z = 10;
 	int sz = 10;
 	Timer t;
+
 	Random random = new Random();
+	Boolean enemyCap = false;
 
 	private void time() {
-		t = new Timer(30000, new ActionListener() {
+		t = new Timer(20000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (counter > 100) {
+				if (HealthSystem.healthCount <= 0) {
 					t.stop();
 				}
 
@@ -102,11 +105,30 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 				// adds more small(sz) and large(z) zombies everyround then calls startWave()
 				// method
-				z = z + 5;
-				sz = sz + 3;
+
+				// if (map.getEnemies().size() >= 100) {
+				// System.out.println("Enemy Counter is greater than 100");
+				// enemyCap = true;
+				// t.stop();
+				// }
+
+				// // checked if the counter
+				// // t.stop();
+				// while (enemyCap.equals(true)) {
+				// if (map.getEnemies().size() < 100) {
+				// System.out.println("less than 100");
+				// t.start();
+				// enemyCap = false;
+				// }
+				// System.out.println("Is greater than 100");
+				// }
+
+				// z = z + 2;
+				// sz = sz + 2;
+				startWave(z, sz);
+				
 
 				m = m * 2;
-				startWave(z, sz);
 
 			}
 		});
@@ -117,22 +139,21 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		this.screenCoordinator = screenCoordinator;
 		pauseLabel = new SpriteFont("PAUSE", 365, 280, "z", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
-		pauseLabel.setOutlineThickness(2.0f);	
+		pauseLabel.setOutlineThickness(2.0f);
 	}
 
-//Method that handles generating small and regular Zombies 
+	// Method that handles generating small and regular Zombies
 	public void startWave(int z, int sz) {
 		counter++;
 		for (int i = 0; i < sz; i++) {
 
-//to randomize zombie spawns outside of the game map
+			// to randomize zombie spawns outside of the game map
 			while (!szOutsideOfMap) {
 				// generate a number from -500 -> 1000
 				randomX = -200 + random.nextInt(2500);
 				// generate a number from -500 -> 1000
 				randomY = -200 + random.nextInt(2500);
-				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
-						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
 					szOutsideOfMap = true;
 				}
 			}
@@ -141,33 +162,36 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			map.addEnemy(zombieWaveOne);
 
 			zombieWaveOne.update();
-			System.out.println(zombieWaveOne.getLocation());
+
 			szOutsideOfMap = false;
 		}
 
 		for (int i = 0; i < sz; i++) {
-//to randomize zombie spawns outside of the game map
+			// to randomize zombie spawns outside of the game map
 			while (!zOutsideOfMap) {
 				// generate a number from -500 -> 1000
-				randomX = -200 + random.nextInt(2500);
+				randomX = -50 + random.nextInt(1620);
 				// generate a number from -500 -> 1000
-				randomY = -200 + random.nextInt(2500);
-				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
-						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+				randomY = -50 + random.nextInt(1620);
+				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
 					zOutsideOfMap = true;
 				}
 			}
+			
 
 			Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
 			map.addEnemy(zombieWaveOne);
 			zombieWaveOne.update();
-			System.out.println(zombieWaveOne.getLocation());
+
 			zOutsideOfMap = false;
 		}
+
+		// checked if the counter
+		// t.stop();
+
 	}
 
 	public void initialize() {
-
 		// setup state
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter, 600, 50, "z", 20, Color.WHITE);
@@ -249,7 +273,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			}
 		}
 		startWave(z, sz);
-		
+
 	}
 
 	public void update() {
@@ -304,7 +328,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						if (player2.getFacingDirection() == Direction.RIGHT) {
 							movementSpeed = 10.0f;
 							fireballX = Math.round(player2.getX()) + 50;
-							
+
 						} else {
 							movementSpeed = -10.0f;
 							fireballX = Math.round(player2.getX());
@@ -328,6 +352,18 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					zombie.update();
 
 				}
+				// To control the amount of enemies that spawn per round. Cap is 72 enemies
+				if (map.getEnemies().size() >= 80) {
+
+					t.stop();
+
+				}
+				if (map.getEnemies().size() < 80) {
+
+					t.start();
+
+				}
+				System.out.println("Zombie count: " + map.getEnemies().size());
 
 				break;
 			// if level has been completed, bring up level cleared screen
@@ -344,7 +380,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	}
 
 	public void draw(GraphicsHandler graphicsHandler) {
-		
+
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 			case RUNNING:
@@ -352,7 +388,6 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					// map.draw(player2, graphicsHandler);
 					// map.draw(coOp, graphicsHandler);
 					map.draw(coOp, player2, graphicsHandler);
-					
 
 				} else {
 
@@ -409,7 +444,6 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	public void resetLevel() {
 		initialize();
 	}
-	
 
 	public void goBackToMenu() {
 		screenCoordinator.setGameState(GameState.MENU);
