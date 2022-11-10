@@ -170,6 +170,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		pauseLabel.setOutlineThickness(2.0f);
 	}
 
+	
 	public void initialize() {
 		// setup state
 		flagManager = new FlagManager();
