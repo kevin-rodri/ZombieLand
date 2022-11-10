@@ -102,7 +102,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 					t.stop();
 				}
-				waveCounter.setText("WAVE " + counter + "/10");
+				waveCounter.setText("WAVE " + counter);
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
