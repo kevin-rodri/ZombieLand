@@ -76,7 +76,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	private Stopwatch TimerPlayerOnePistol = new Stopwatch(); // timer for first player
 	private Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch();
 	private Stopwatch TimerPlayerOneMachineGun = new Stopwatch();
-	protected int counter = 0;
+	protected int counter = 1;
 
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
