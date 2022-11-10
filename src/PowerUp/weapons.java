@@ -32,9 +32,9 @@ public class weapons extends NPC implements SoundController{
 	        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
-	        	// PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
-				// playLevelScreen.initialize();
-				// playLevelScreen.update();
+	        	PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
+				playLevelScreen.initialize();
+				playLevelScreen.update();
 	            try {
 	                playSE(0);
 	       

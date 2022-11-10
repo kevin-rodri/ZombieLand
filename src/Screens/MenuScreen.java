@@ -4,7 +4,7 @@ import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
-import Level.Player;
+import Level.Player2;
 import Maps.TitleScreenMap;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
@@ -25,7 +25,7 @@ public class MenuScreen extends Screen {
     protected Stopwatch keyTimer = new Stopwatch();
     protected int pointerLocationX, pointerLocationY;
     protected KeyLocker keyLocker = new KeyLocker();
-	protected Player coOp;
+	protected Player2 coOp;
 
 
     public MenuScreen(ScreenCoordinator screenCoordinator) {
@@ -85,7 +85,7 @@ public class MenuScreen extends Screen {
         if (currentMenuItemHovered == 0) {
         	coopOption.setColor(Color.WHITE);
         	credits.setColor(Color.WHITE);
-            playGame.setColor(Color.RED);          
+            playGame.setColor(Color.RED);
             recordTime.setColor(Color.RED);
             pointerLocationX = 170;
             pointerLocationY = 130;
