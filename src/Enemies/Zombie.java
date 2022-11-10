@@ -70,8 +70,7 @@ public class Zombie extends Enemy{
         float xPosition = player.getX() - x;
         float yPosition = player.getY() - y;
        
-        System.out.println("Zombie_xLocation" + this.getX());
-        System.out.println("facingDirection" + facingDirection);
+  
 
       
         if (xPosition > zombieSpeed){
