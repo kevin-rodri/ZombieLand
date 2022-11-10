@@ -2,6 +2,7 @@ package Screens;
 
 import java.awt.Color;
 
+
 import Ammo.LightAmmo;
 import Health.HealthSystem;
 import MoneySystem.MoneyBase;
@@ -58,7 +59,7 @@ public class PlayLevelScreen extends Screen {
 	protected Map map;
 	protected Player player;
 	public Player player2;
-	protected Player2 coOp;
+	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
 	protected SpriteFont waveCounter, money, healthBar ,ammoCount;
 	protected WinScreen winScreen;
@@ -345,7 +346,7 @@ public class PlayLevelScreen extends Screen {
 			case RUNNING:
 				if (weapons.check == true) {
 //					map.draw(player2, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
 					map.draw(coOp, player2, graphicsHandler);
 
 
@@ -353,8 +354,8 @@ public class PlayLevelScreen extends Screen {
 				} else {
 
 //					map.draw(player, graphicsHandler);
-//					map.draw(coOp, graphicsHandler);
-					map.draw(coOp, player, graphicsHandler);
+					map.draw(coOp, graphicsHandler);
+//					map.draw(coOp, player, graphicsHandler);
 
 				}
 				// pasue game logic was moved to here
