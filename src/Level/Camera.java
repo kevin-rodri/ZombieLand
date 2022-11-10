@@ -36,7 +36,7 @@ public class Camera extends Rectangle {
         this.map = map;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth;
+        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth ;
         this.leftoverSpaceY = ScreenManager.getScreenHeight() % tileHeight;
     }
 
