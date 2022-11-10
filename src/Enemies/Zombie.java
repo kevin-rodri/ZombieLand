@@ -18,39 +18,34 @@ import java.util.HashMap;
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
  * Code is from the SER-225 platformer game 
  */
-public class Zombie extends Enemy implements SoundController {
 
-    private float zombieSpeed = 1.5f;
-    private Direction startFacingDirection;
-    private Direction facingDirection;
-    public static boolean disappear;
-    public static boolean check = true;
+public class Zombie extends Enemy{
 
-    public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 23, 24), "WALK_RIGHT");
-        // this.startFacingDirection = facingDirection;
-        this.initialize();
-    }
+	private float zombieSpeed = 1.5f;
+	private Direction startFacingDirection;
+	private Direction facingDirection;
+	public static boolean disappear;
+	public static boolean check = true;
 
-    @Override
-    public void initialize() {
-        super.initialize();
-        startFacingDirection = facingDirection;
-        // facingDirection = startFacingDirection;
-        // if (facingDirection == Direction.RIGHT) {
-        // currentAnimationName = "WALK_RIGHT";
-        // } else if (facingDirection == Direction.LEFT) {
-        // currentAnimationName = "WALK_LEFT";
-        // } else if (facingDirection == Direction.DOWN) {
-        // currentAnimationName = this.getCurrentAnimationName();
-        // } else if (facingDirection == Direction.UP) {
-        // currentAnimationName = this.getCurrentAnimationName();
-        // }
-    }
+	public Zombie(Point location, Direction facingDirection) {
+		super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 24, 24), "WALK_RIGHT");
+        this.startFacingDirection = facingDirection;
+		this.initialize();
+	}
 
-    // Method to be used to get the current direction of the zombie (way better than
-    // hard coding their direction in testMap)
-    public Direction getZombieDirection() {
+	@Override
+	public void initialize() {
+		super.initialize();
+		facingDirection = startFacingDirection;
+		if (facingDirection == Direction.RIGHT) {
+			currentAnimationName = "WALK_RIGHT";
+		} else if (facingDirection == Direction.LEFT) {
+			currentAnimationName = "WALK_LEFT";
+		}
+	}
+
+	 // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
+     public Direction getZombieDirection(){
         return facingDirection;
     }
 
@@ -203,35 +198,64 @@ public class Zombie extends Enemy implements SoundController {
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         // hopefully will do after my issue with magenta
-        return new HashMap<String, Frame[]>() {
-            {
-                put("WALK_RIGHT", new Frame[] {
-                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                                .withScale(3)
-                                .withBounds(10, 10, 20, 20)
-                                .build(),
+        return new HashMap<String, Frame[]>() {{
+            put("STAND_RIGHT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-                                .withScale(3)
-                                .withBounds(10, 10, 20, 20)
-                                .build()
+        put("STAND_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(0, 0))
+                        .withScale(3)
+                       .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                });
-                put("WALK_LEFT", new Frame[] {
-                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                                .withScale(3)
-                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                                .withBounds(10, 10, 20, 20)
-                                .build(),
+        put("WALK_RIGHT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                        .withScale(3)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
 
-                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-                                .withScale(3)
-                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                                .withBounds(10, 10, 20, 20)
-                                .build()
-                });
-            }
-        };
+        put("WALK_LEFT", new Frame[] {
+                new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build(),
+                new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                        .withScale(3)
+                        .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                        .withBounds(6, 12, 12, 7)
+                        .build()
+        });
+    }};
     }
 
     @Override

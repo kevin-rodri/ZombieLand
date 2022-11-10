@@ -11,6 +11,7 @@ import org.w3c.dom.css.RGBColor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 /*
  * This is where the game loop starts
@@ -43,8 +44,8 @@ public class GamePanel extends JPanel {
 		this.addKeyListener(Keyboard.getKeyListener());
 
 		graphicsHandler = new GraphicsHandler();
-
 		screenManager = new ScreenManager();
+		
 		
 		pauseLabel = new SpriteFont("PAUSE", 365, 280, "z", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
@@ -109,11 +110,11 @@ public class GamePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) 
-	{
+	{		
 		super.paintComponent(g);
 		// every repaint call will schedule this method to be called
 		// when called, it will setup the graphics handler and then call this class's draw method
-		graphicsHandler.setGraphics((Graphics2D) g);
+		graphicsHandler.setGraphics((Graphics2D)g);
 		if (doPaint) 
 		{
 			draw();
