@@ -83,42 +83,42 @@ public class Alex extends Player {
             });
 
             put("WALK_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                    new FrameBuilder(spriteSheet.getSprite(1, 1), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+                    new FrameBuilder(spriteSheet.getSprite(1, 2), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
+                    new FrameBuilder(spriteSheet.getSprite(1, 3), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
+                    new FrameBuilder(spriteSheet.getSprite(1, 4), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                   new FrameBuilder(spriteSheet.getSprite(1, 5), 200)
+                   new FrameBuilder(spriteSheet.getSprite(1, 5), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                  new FrameBuilder(spriteSheet.getSprite(1, 6), 200)
+                  new FrameBuilder(spriteSheet.getSprite(1, 6), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)
                             .build(),
-                  new FrameBuilder(spriteSheet.getSprite(1, 7), 200)
+                  new FrameBuilder(spriteSheet.getSprite(1, 7), 100)
                             .withScale(3)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                             .withBounds(6, 12, 12, 7)

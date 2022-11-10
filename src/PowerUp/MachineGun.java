@@ -1,5 +1,4 @@
 package PowerUp;
-
 import Builders.FrameBuilder;
 
 import Engine.GraphicsHandler;
@@ -10,7 +9,7 @@ import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
-import Players.AlexWithAPistol;
+import Players.AlexWithAssaultRifle;
 import Screens.PlayLevelScreen;
 import Screens.PlayLevelScreen.PlayLevelScreenState;
 import Scripts.TestMap.DoublePointsScript;
@@ -20,12 +19,14 @@ import Utils.Point;
 import java.util.HashMap;
 import Level.NPC;
 
-public class weapons extends NPC implements SoundController{
-	protected Player player;
+
+public class MachineGun extends NPC implements SoundController {
+
+    protected Player player;
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
-	 public weapons(int id, Point location) {
-	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("gamePistol.png"), 45, 45), "STAND_RIGHT");
+	 public MachineGun(int id, Point location) {
+	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("MachineGun.png"), 45, 45), "STAND_RIGHT");
 	    }
 
 	    public void update(Player player) {
@@ -48,6 +49,7 @@ public class weapons extends NPC implements SoundController{
 	        }
 			super.update(player);
 	    }
+        
 
 	    @Override
 	    public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {

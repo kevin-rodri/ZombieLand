@@ -1,8 +1,10 @@
 package Players;
+
 import Builders.FrameBuilder;
 
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
+import Engine.Key;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
@@ -10,17 +12,16 @@ import Level.Player;
 
 import java.util.HashMap;
 
-// This is the class for the Cat player character
-// basically just sets some values for physics and then defines animations
-public class SecondPlayer extends Player2 {
 
-    public SecondPlayer(float x, float y) {
-        super(new SpriteSheet(ImageLoader.load("Alex2.png"), 24, 24), x, y, "STAND_RIGHT");
-        this.MOVE_LEFT_KEY = Key.A;
+public class Alex2WithAssaultRifle extends Player {
+    public Alex2WithAssaultRifle(float x, float y) {
+
+        super(new SpriteSheet(ImageLoader.load("Alex2WithAssaultRifle.png"), 24, 24), x, y, "STAND_RIGHT");
+this.MOVE_LEFT_KEY = Key.A;
 this.MOVE_RIGHT_KEY = Key.D;
 this.MOVE_UP_KEY = Key.W;
 this.MOVE_DOWN_KEY = Key.S;
-this.INTERACT_KEY = Key.SPACE;
+this.INTERACT_KEY = Key.X;
         walkSpeed = 4.0f;
     }
     
@@ -96,3 +97,4 @@ this.INTERACT_KEY = Key.SPACE;
         }};
     }
 }
+

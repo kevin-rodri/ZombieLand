@@ -26,65 +26,100 @@ import java.util.HashMap;
  */
 public class SmallZombie extends Enemy {
 
-	private float zombieSpeed = 1.5f;
-	private Direction startFacingDirection;
-	private Direction facingDirection;
-	public static boolean disappear;
-	public static boolean check = true;
+    private float zombieSpeed = 1.5f;
+    private Direction startFacingDirection;
+    private Direction facingDirection;
+    public static boolean disappear;
+    public static boolean check = true;
 
-	public SmallZombie(Point location, Direction facingDirection) {
-		super(location.x, location.y, new SpriteSheet(ImageLoader.load("SmallZombie.png"), 23, 24), "WALK_RIGHT");
+    public SmallZombie(Point location, Direction facingDirection) {
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("SmallZombie.png"), 24, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
-		this.initialize();
-	}
+        this.initialize();
+    }
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		facingDirection = startFacingDirection;
-		if (facingDirection == Direction.RIGHT) {
-			currentAnimationName = "WALK_RIGHT";
-		} else if (facingDirection == Direction.LEFT) {
-			currentAnimationName = "WALK_LEFT";
-		}
-      //  walk(facingDirection, zombieSpeed);
-	}
+    @Override
+    public void initialize() {
+        super.initialize();
+        facingDirection = startFacingDirection;
+        if (facingDirection == Direction.RIGHT) {
+            currentAnimationName = "WALK_RIGHT";
+        } else if (facingDirection == Direction.LEFT) {
+            currentAnimationName = "WALK_LEFT";
+        }
+        // walk(facingDirection, zombieSpeed);
+    }
 
-	 // Method to be used to get the current direction of the zombie (way better than hard coding their direction in testMap)
-     public Direction getZombieDirection(){
+    // Method to be used to get the current direction of the zombie (way better than
+    // hard coding their direction in testMap)
+    public Direction getZombieDirection() {
         return facingDirection;
     }
-    public float getSpeed(){
+
+    public void setSmallZombieDirection(Direction direction) {
+        if (direction == Direction.RIGHT) {
+            this.currentAnimationName = "WALK_RIGHT";
+            this.setCurrentAnimationName(currentAnimationName);
+        } else if (direction == Direction.LEFT) {
+            this.currentAnimationName = "WALK_LEFT";
+            this.setCurrentAnimationName(currentAnimationName);
+        }
+    }
+
+    public float getSpeed() {
         return zombieSpeed;
     }
 
     // Update player's state
-   public void update(Player player){
-    // Will get player's key movements in order to move zombie to the direction player is heading towards
-    float xPosition = player.getX() - x;
-    float yPosition = player.getY() - y;
+    public void update(Player player) {
+        // Will get player's key movements in order to move zombie to the direction
+        // player is heading towards
 
-    if (xPosition > zombieSpeed){
-         facingDirection = Direction.RIGHT;
-         walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
-         
-    } else {
-       facingDirection = Direction.LEFT;
-       walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
-    }
+        float xPosition = player.getX() - x;
+        float yPosition = player.getY() - y;
 
-    if (yPosition < zombieSpeed){
-        facingDirection = Direction.UP;
-        walktoPlayer(facingDirection,  zombieSpeed , player.getLocation());
+        if (xPosition > zombieSpeed) {
+            facingDirection = Direction.RIGHT;
+            walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
 
-    } else {
-        facingDirection = Direction.DOWN;
-        walktoPlayer(facingDirection,  zombieSpeed, player.getLocation());
-    }
+        } else {
+            facingDirection = Direction.LEFT;
+            walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        }
 
-    
-    // added this to avoid the glicthy collision
-    if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
+        if (yPosition < zombieSpeed) {
+            facingDirection = Direction.UP;
+            walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+
+        } else {
+            facingDirection = Direction.DOWN;
+            walktoPlayer(facingDirection, zombieSpeed, player.getLocation());
+        }
+
+        // float diffX = xPosition - x;
+        // float diffY = yPosition - y;
+
+        // float angle = (float)Math.atan2(diffY, diffX);
+
+        // x += zombieSpeed * Math.cos(angle);
+        // y += zombieSpeed * Math.sin(angle);
+
+        // if(player.getX() > this.getX()){
+        // setSmallZombieDirection(Direction.RIGHT);
+        // }
+        // else if(player.getX() < this.getX()){
+        // setSmallZombieDirection(Direction.LEFT);
+        // }
+
+        // if(player.getX() > this.getX()){
+        // setSmallZombieDirection(Direction.RIGHT);
+        // }
+        // else if(player.getX() < this.getX()){
+        // setSmallZombieDirection(Direction.LEFT);
+        // }
+
+        // added this to avoid the glicthy collision
+        if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
             MoneyBase.addMoneyMini();
@@ -93,116 +128,119 @@ public class SmallZombie extends Enemy {
                 //System.out.println("Game Over!");
                 //HealthSystem.setMaxHealth();
             }
-     }   
-     if(disappear == true) {
-        this.setIsHidden(true);
+        }
+        if (disappear == true) {
+            this.setIsHidden(true);
 
-    }
-     super.update();
+        }
+        super.update();
     }
 
-//method to see if enemies collide with one another
-// Really useful for current enemies in the game
-// Code for this was taken from here: https://stackoverflow.com/questions/16250790/stopping-sprites-from-overlapping-going-through-each-other
-    // also applies for the  onEndCollisionCheckY method
+    // method to see if enemies collide with one another
+    // Really useful for current enemies in the game
+    // Code for this was taken from here:
+    // https://stackoverflow.com/questions/16250790/stopping-sprites-from-overlapping-going-through-each-other
+    // also applies for the onEndCollisionCheckY method
     @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction, MapEntity entityCollidedWith) {
         ArrayList<Enemy> enemy = map.getEnemies();
-        for (int i= 0;i < enemy.size(); i++){
-            // get reference of one enemy 
+        for (int i = 0; i < enemy.size(); i++) {
+            // get reference of one enemy
             Enemy get = enemy.get(i);
-        for (int enemies = i + 1; enemies < enemy.size(); enemies++){
-            Enemy getCurrentEnemy = enemy.get(enemies);
-                 // check to see if they collide with one another
+            for (int enemies = i + 1; enemies < enemy.size(); enemies++) {
+                Enemy getCurrentEnemy = enemy.get(enemies);
+                // check to see if they collide with one another
                 hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
-                  // if an enemy collides with another one, separate them 
-                  if (hasCollided){
-                    entityCollidedWith = getCurrentEnemy; 
+                // if an enemy collides with another one, separate them
+                if (hasCollided) {
+                    entityCollidedWith = getCurrentEnemy;
                     // check which one has a bigger x position
                     // if so, update their position
-                     if (get.getX() >= getCurrentEnemy.getX()){
-                          get.setX( get.getX() + 5);
-                          getCurrentEnemy.setX(getCurrentEnemy.getX() - 5);
-                      } else {
+                    if (get.getX() >= getCurrentEnemy.getX()) {
+                        get.setX(get.getX() + 5);
+                        getCurrentEnemy.setX(getCurrentEnemy.getX() - 5);
+                    } else {
                         get.setX(get.getX() - 5);
-                        getCurrentEnemy.setX(getCurrentEnemy.getX() + 5); 
-                      }
-                  }
+                        getCurrentEnemy.setX(getCurrentEnemy.getX() + 5);
+                    }
+                }
             }
         }
     }
 
-// method to see if enemies collide with one another
-// Really useful for current enemies in the game
+    // method to see if enemies collide with one another
+    // Really useful for current enemies in the game
     @Override
     public void onEndCollisionCheckY(boolean hasCollided, Direction direction, MapEntity entityCollidedWith) {
         ArrayList<Enemy> enemy = map.getEnemies();
-        for (int i= 0;i < enemy.size(); i++){
-                      // get reference of one enemy 
+        for (int i = 0; i < enemy.size(); i++) {
+            // get reference of one enemy
             Enemy get = enemy.get(i);
-        for (int enemies = i + 1; enemies < enemy.size(); enemies++){
-              //  Get a reference of a another enemy 
-            Enemy getCurrentEnemy = enemy.get(enemies);
-            hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
-               if (hasCollided){
-                entityCollidedWith = getCurrentEnemy;
-                 // check which one has a bigger y position
+            for (int enemies = i + 1; enemies < enemy.size(); enemies++) {
+                // Get a reference of a another enemy
+                Enemy getCurrentEnemy = enemy.get(enemies);
+                hasCollided = get.getBounds().overlaps(getCurrentEnemy.getBounds());
+                if (hasCollided) {
+                    entityCollidedWith = getCurrentEnemy;
+                    // check which one has a bigger y position
                     // if so, update their position
-              if (get.getY() >= getCurrentEnemy.getY()){
-                       get.setY(get.getY() + 5);      
-                       getCurrentEnemy.setY(getCurrentEnemy.getY() - 5);
-                 } else {
-                       getCurrentEnemy.setY(getCurrentEnemy.getY() + 5);
-                       get.setY(get.getY() - 5);     
-                   }
-               }
+                    if (get.getY() >= getCurrentEnemy.getY()) {
+                        get.setY(get.getY() + 5);
+                        getCurrentEnemy.setY(getCurrentEnemy.getY() - 5);
+                    } else {
+                        getCurrentEnemy.setY(getCurrentEnemy.getY() + 5);
+                        get.setY(get.getY() - 5);
+                    }
+                }
             }
         }
     }
-    
-    public void remove(Shooting shooting, Player player2 ) {
-    	 if (shooting.intersects(this)) {
-             this.setIsHidden(true);
-             //this.setInteractScript(DoublePointsScript);
-         }
-    	 super.update();
+
+    public void remove(Shooting shooting, Player player2) {
+        if (shooting.intersects(this)) {
+            this.setIsHidden(true);
+            // this.setInteractScript(DoublePointsScript);
+        }
+        super.update();
     }
 
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         // hopefully will do after my issue with magenta
-        return new HashMap<String, Frame[]>() {{
-           put("WALK_RIGHT", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                           .withScale(3)
-                           .withBounds(10, 10, 20, 20)
-                           .build(), 
+        return new HashMap<String, Frame[]>() {
+            {
+                put("WALK_RIGHT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
+                                .withScale(3)
+                                .withBounds(10, 10, 20, 20)
+                                .build(),
 
-                    new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-                    .withScale(3)
-                    .withBounds(10, 10, 20, 20)
-                    .build()
-            
-           });
-            put("WALK_LEFT", new Frame[] {
-                new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
-                .withScale(3)
-                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                .withBounds(10, 10, 20, 20)
-                .build(), 
+                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
+                                .withScale(3)
+                                .withBounds(10, 10, 20, 20)
+                                .build()
 
-         new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
-         .withScale(3)
-         .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-         .withBounds(10, 10, 20, 20)
-         .build()
-            });
-        }};
+                });
+                put("WALK_LEFT", new Frame[] {
+                        new FrameBuilder(spriteSheet.getSprite(1, 0), 150)
+                                .withScale(3)
+                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                                .withBounds(10, 10, 20, 20)
+                                .build(),
+
+                        new FrameBuilder(spriteSheet.getSprite(1, 1), 150)
+                                .withScale(3)
+                                .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                                .withBounds(10, 10, 20, 20)
+                                .build()
+                });
+            }
+        };
     }
 
-	@Override
-	public void draw(GraphicsHandler graphicsHandler) {
-		super.draw(graphicsHandler);
-	}
+    @Override
+    public void draw(GraphicsHandler graphicsHandler) {
+        super.draw(graphicsHandler);
+    }
 
 }

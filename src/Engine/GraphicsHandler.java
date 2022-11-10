@@ -7,14 +7,20 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JLabel;
+
 
 public class GraphicsHandler {
     private Graphics2D g;
+    private BufferedImage subImage;
 
-    public void setGraphics(Graphics2D g) {
-        this.g = g;
+    public void setGraphics(Graphics2D g) {  	 	
+    	this.g=g;
     }
-
+    public void setBufferedImage(BufferedImage subImage)
+    {
+    	this.subImage=subImage;
+    }
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
     }
@@ -98,5 +104,8 @@ public class GraphicsHandler {
         g.setColor(originalColor);
         g.setStroke(originalStroke);
         g.setRenderingHints(originalHints);
+    }
+    public Graphics2D getGraphics() {  	 	
+    	return g;
     }
 }
