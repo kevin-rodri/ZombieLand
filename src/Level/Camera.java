@@ -32,11 +32,11 @@ public class Camera extends Rectangle {
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
 
     public Camera(int startX, int startY, int tileWidth, int tileHeight, Map map) {
-    	super(startX, startY, ScreenManager.getScreenWidth() / tileWidth , ScreenManager.getScreenHeight() / tileHeight);
+        super(startX, startY, ScreenManager.getScreenWidth() / tileWidth, ScreenManager.getScreenHeight() / tileHeight);
         this.map = map;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth;
+        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth ;
         this.leftoverSpaceY = ScreenManager.getScreenHeight() % tileHeight;
     }
 
@@ -53,6 +53,8 @@ public class Camera extends Rectangle {
         updateMapEntities(player);
         updateScripts();
     }
+    
+
 
     private void updateMapTiles() {
         for (MapTile tile : map.getAnimatedMapTiles()) {
@@ -80,22 +82,6 @@ public class Camera extends Rectangle {
         }
     }
     
-    // public void updateMapEntities(Player2 player) {
-    //     activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
-    //     activeNPCs = loadActiveNPCs();
-    //     activeEnemies = loadActiveEnemies();
-
-    //     for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
-    //         enhancedMapTile.update(player);
-    //     }
-
-    //     for (NPC npc : activeNPCs) {
-    //     //  npc.update(player);
-    //     }
-    //     for (Enemy enemy : activeEnemies) { 
-    //       //   enemy.update(player);
-    //     }
-    // }
 
 
     // updates any currently running script
@@ -206,17 +192,17 @@ public class Camera extends Rectangle {
         return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && !mapEntity.isHidden() && mapEntity.exists() && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
     }
 
+  
+
+
+
 	public void draw(Player player, GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
-	  public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
-	    	drawMapTilesBottomLayer(graphicsHandler);
-	        drawMapEntities(coOp, graphicsHandler);
-	        drawMapEntities(player, graphicsHandler);
-	        drawMapTilesTopLayer(graphicsHandler);
-	  }
+	
+
 
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen

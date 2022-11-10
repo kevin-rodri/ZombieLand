@@ -11,13 +11,15 @@ import Level.Player;
 import Level.PlayerState;
 import Utils.Point;
 import MoneySystem.MoneyBase;
+import Screens.PlayLevelScreen;
+
 import com.sun.jdi.event.MonitorWaitedEvent;
 
 import java.util.HashMap;
 
 // This class is for DoublePoints
 public class DoublePoints extends NPC implements SoundController {
-
+    protected int counter = 0;
     public DoublePoints(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("doublepoints.png"), 50, 43), "STAND_RIGHT");
     }
@@ -38,11 +40,17 @@ public class DoublePoints extends NPC implements SoundController {
                 e.printStackTrace();
              }
          
+             if(PlayLevelScreen.x2End == true){
+                this.setIsHidden(true);
+    
+            }
             //this.setInteractScript(DoublePointsScript);
         }
         super.update(player);
     }
-
+    public void endX2(){
+        this.setIsHidden(true);
+    }
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{

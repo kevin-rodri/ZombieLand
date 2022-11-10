@@ -74,6 +74,7 @@ public class CoopScreen extends Screen {
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
+	protected int x2counter = 0;
 	// timers for first player when they pick up weapons with gunsmith (76-78)
 	private Stopwatch TimerPlayerOnePistol = new Stopwatch(); 
 	private  Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch(); 
@@ -82,11 +83,11 @@ public class CoopScreen extends Screen {
 	private Stopwatch TimerPlayerTwoPistol = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoAssaultRifle = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoMachineGun= new Stopwatch(); 
-
 	protected int counter = 0;
 
 	int m = 1;
 	Timer t;
+	Timer xp;
 
 	private void time() {
 		t = new Timer(5000, new ActionListener() {
@@ -97,7 +98,7 @@ public class CoopScreen extends Screen {
 					t.stop();
 				}
 
-				waveCounter.setText("WAVE " + counter + "/10");
+				waveCounter.setText("WAVE " + counter );
 				//money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
@@ -107,6 +108,23 @@ public class CoopScreen extends Screen {
 			}
 		});
 		t.start();
+	}
+	public void x2time() {
+		xp = new Timer(5000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				if (x2counter>9) {
+					xp.stop();
+					flagManager.setFlag("x2Exp");
+					PlayLevelScreen.x2End = true;
+				}
+
+				x2counter++;
+			}
+		});
+		xp.start();
 	}
 
 	public CoopScreen(ScreenCoordinator screenCoordinator) {
@@ -120,7 +138,7 @@ public class CoopScreen extends Screen {
 
 		// setup state
 		flagManager = new FlagManager();
-		waveCounter = new SpriteFont("WAVE " + counter + "/10", 300, 50, "z", 20, Color.WHITE);
+		waveCounter = new SpriteFont("WAVE " + counter , 300, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
@@ -247,6 +265,23 @@ public class CoopScreen extends Screen {
 					LightAmmo.ammoCount = 30;
 					LightAmmo.ammoClip = 120;
 					//ammoCount.setText("NO AMMO");
+				}
+				if(Nuke.usedNuke==true){
+					map.getEnemies().removeAll(map.getEnemies());
+					Nuke.usedNuke = false;
+				} else if (LightAmmo.ammoClip ==0 && LightAmmo.ammoCount ==0){
+					//ammoCount.setText("NO AMMO");
+					PlayLevelScreen.noAmmo = true;
+				} else {
+					if (PlayLevelScreen.noAmmo ==true) {
+					} else {
+						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+					}
+				}
+	
+				if(HealthSystem.healthCount <= 0){
+					flagManager.setFlag("hasDied");
+					HealthSystem.setMaxHealth();
 				}
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
@@ -514,7 +549,7 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 			if (weapons.check){
-				map.draw(alexWithAPistol,  graphicsHandler);
+				map.draw(alexTwoWithPistol,  graphicsHandler);
 			}else if (MachineGun.check){
 				map.draw(alexTwoWithMachineGun,  graphicsHandler);
 			} else if (AssaultRifle.check){

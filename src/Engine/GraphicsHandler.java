@@ -21,6 +21,9 @@ public class GraphicsHandler {
     {
     	this.subImage=subImage;
     }
+    public Graphics2D getGraphics() {  	 	
+    	return g;
+    }
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
     }
@@ -105,7 +108,6 @@ public class GraphicsHandler {
         g.setStroke(originalStroke);
         g.setRenderingHints(originalHints);
     }
-    public Graphics2D getGraphics() {  	 	
-    	return g;
-    }
+   
 }
+

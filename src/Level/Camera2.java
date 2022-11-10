@@ -34,7 +34,7 @@ public class Camera2 extends Rectangle {
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
 
     public Camera2(int startX, int startY, int tileWidth, int tileHeight, Map map) {
-        super(startX, startY, ScreenManager.getScreenWidth() / tileWidth - 15, ScreenManager.getScreenHeight() / tileHeight);
+        super(startX, startY, ScreenManager.getScreenWidth() / tileWidth, ScreenManager.getScreenHeight() / tileHeight);
         this.map = map;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
@@ -56,6 +56,7 @@ public class Camera2 extends Rectangle {
         updateScripts();
     }
     
+ 
 
     private void updateMapTiles() {
         for (MapTile tile : map.getAnimatedMapTiles()) {
@@ -82,6 +83,8 @@ public class Camera2 extends Rectangle {
             enemy.update(player);
         }
     }
+    
+
 
     // updates any currently running script
     // only one script should be able to be running (active) at a time
@@ -198,6 +201,8 @@ public class Camera2 extends Rectangle {
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
+	
+	
 
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen
