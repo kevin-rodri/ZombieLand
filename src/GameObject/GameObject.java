@@ -253,14 +253,6 @@ public class GameObject extends AnimatedSprite {
 			return Math.round(getX());
 		}
 	}
-	
-	public float getCalibratedXLocation2() {
-		if (map != null) {
-			return Math.round(x) - map.getCamera2().getX();
-		} else {
-			return Math.round(getX());
-		}
-	}
 
 	// gets y location taking into account map camera position
 	public float getCalibratedYLocation() {
@@ -270,15 +262,6 @@ public class GameObject extends AnimatedSprite {
 			return Math.round(getY());
 		}
 	}
-	
-	// gets y location taking into account map camera position
-		public float getCalibratedYLocation2() {
-			if (map != null) {
-				return Math.round(y) - map.getCamera2().getY();
-			} else {
-				return Math.round(getY());
-			}
-		}
 
 	// gets bounds taking into account map camera position
 	public Rectangle getCalibratedBounds() {

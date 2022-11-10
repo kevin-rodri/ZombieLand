@@ -1,9 +1,9 @@
 package Players;
 import Builders.FrameBuilder;
 
+
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
-import Engine.Key;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
@@ -17,17 +17,7 @@ public class SecondPlayer extends Player {
 
     public SecondPlayer(float x, float y) {
         super(new SpriteSheet(ImageLoader.load("Alex2.png"), 24, 24), x, y, "STAND_RIGHT");
-        this.MOVE_LEFT_KEY = Key.A;
-this.MOVE_RIGHT_KEY = Key.D;
-this.MOVE_UP_KEY = Key.W;
-this.MOVE_DOWN_KEY = Key.S;
-this.INTERACT_KEY = Key.SPACE;
         walkSpeed = 4.0f;
-        this.MOVE_LEFT_KEY = Key.A;
-        this.MOVE_RIGHT_KEY = Key.D;
-        this.MOVE_UP_KEY = Key.W;
-        this.MOVE_DOWN_KEY = Key.S;
-
     }
     
 
