@@ -125,9 +125,9 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 			// to randomize zombie spawns outside of the game map
 			while (!szOutsideOfMap) {
-				// generate a number from -500 -> 1000
+				// generate a number from -500 --> 1000
 				randomX = -200 + random.nextInt(1620);
-				// generate a number from -500 -> 1000
+				// generate a number from -500 --> 1000
 				randomY = -200 + random.nextInt(1620);
 				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
 					szOutsideOfMap = true;
@@ -145,9 +145,9 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		for (int i = 0; i < sz; i++) {
 			// to randomize zombie spawns outside of the game map
 			while (!zOutsideOfMap) {
-				// generate a number from -500 -> 1000
+				// generate a number from -500 --> 1000
 				randomX = -50 + random.nextInt(1620);
-				// generate a number from -500 -> 1000
+				// generate a number from -500 --> 1000
 				randomY = -50 + random.nextInt(1620);
 				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
 					zOutsideOfMap = true;
