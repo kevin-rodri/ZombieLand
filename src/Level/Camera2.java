@@ -56,11 +56,7 @@ public class Camera2 extends Rectangle {
         updateScripts();
     }
     
-    public void update(Player2 player) {
-        updateMapTiles();
-        updateMapEntities(player);
-        updateScripts();
-    }
+ 
 
     private void updateMapTiles() {
         for (MapTile tile : map.getAnimatedMapTiles()) {
@@ -88,22 +84,7 @@ public class Camera2 extends Rectangle {
         }
     }
     
-    public void updateMapEntities(Player2 player) {
-        activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
-        activeNPCs = loadActiveNPCs();
-        activeEnemies = loadActiveEnemies();
 
-        for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
-            enhancedMapTile.update(player);
-        }
-
-        for (NPC npc : activeNPCs) {
-//            npc.update(player);
-        }
-        for (Enemy enemy : activeEnemies) {
-//            enemy.update(player);
-        }
-    }
 
     // updates any currently running script
     // only one script should be able to be running (active) at a time
@@ -215,66 +196,13 @@ public class Camera2 extends Rectangle {
 
   
 
-    private void drawMapEntities(Player2 coOp, GraphicsHandler graphicsHandler) {
-		// TODO Auto-generated method stub
-       ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
-        
-        for (Enemy enemy : activeEnemies) {
-            if (containsDraw(enemy)) {
-                enemy.draw(graphicsHandler);
-            }
-        }
-
-        // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
-        // if drawn here, npc will later be "overlapped" by player
-        // if drawn later, npc will "cover" player
-        for (NPC npc : activeNPCs) {
-            if (containsDraw(npc)) {
-                if (npc.getBounds().getY() < coOp.getBounds().getY1()  + (coOp.getBounds().getHeight() / 2f)) {
-                    npc.draw(graphicsHandler);
-                }
-                else {
-                    drawNpcsAfterPlayer.add(npc);
-                }
-            }
-        }
-
-        // player is drawn to screen
-        coOp.draw(graphicsHandler);
-
-        // npcs determined to be drawn after player from the above step are drawn here
-        for (NPC npc : drawNpcsAfterPlayer) {
-            npc.draw(graphicsHandler);
-        }
-
-        // Uncomment this to see triggers drawn on screen
-        // helps for placing them in the correct spot/debugging
-        /*
-         * for (Trigger trigger : activeTriggers) {
-            if (containsDraw(trigger)) {
-                trigger.draw(graphicsHandler);
-            }
-        }
-         */
-	}
-
 	public void draw(Player player, GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
 	
-	  public void draw(Player2 coOp, GraphicsHandler graphicsHandler) {
-	    	drawMapTilesBottomLayer(graphicsHandler);
-	        drawMapEntities(coOp, graphicsHandler);
-	        drawMapTilesTopLayer(graphicsHandler);
-	  }
-	  public void draw(Player2 coOp, Player player, GraphicsHandler graphicsHandler) {
-	    	drawMapTilesBottomLayer(graphicsHandler);
-	        drawMapEntities(coOp, graphicsHandler);
-	        drawMapEntities(player, graphicsHandler);
-	        drawMapTilesTopLayer(graphicsHandler);
-	  }
+	
 
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen

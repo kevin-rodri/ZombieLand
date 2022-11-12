@@ -56,7 +56,6 @@ public class ScreenCoordinator extends Screen {
 						break;
 					case COOP:
 						currentScreen = coopScreen;
-						coopScreen.setWindow(window);
 						break;
 				}
 				currentScreen.initialize();

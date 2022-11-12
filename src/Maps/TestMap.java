@@ -6,6 +6,7 @@ import NPCs.*;
 import NPCs.Lives;
 import Players.*;
 import PowerUp.ExtraLife;
+import PowerUp.MachineGun;
 import EnhancedMapTiles.Rock;
 import Level.Camera;
 import Level.Enemy;
@@ -17,6 +18,7 @@ import Level.Trigger;
 
 import NPCs.Dinosaur;
 import NPCs.Walrus;
+import PowerUp.AssaultRifle;
 import PowerUp.DoublePoints;
 import PowerUp.Nuke;
 import PowerUp.weapons;
@@ -93,7 +95,13 @@ public class TestMap extends Map {
         gunsmith.setInteractScript(new GunsmithScript());
         npcs.add(gunsmith);
 
+        AssaultRifle assaultRifle = new AssaultRifle(8, getMapTile(14, 7).getLocation().subtractY(40));
+        nuke.setInteractScript(new WalrusScript());
+        npcs.add(assaultRifle);
 
+        MachineGun machineGun = new MachineGun(9, getMapTile(23, 18).getLocation().subtractY(40));
+        nuke.setInteractScript(new WalrusScript());
+        npcs.add(machineGun);
         return npcs;
     }
 
