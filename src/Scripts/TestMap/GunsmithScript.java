@@ -1,12 +1,16 @@
 package Scripts.TestMap;
 
+import Engine.Key;
 import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
-
+import Engine.Keyboard;
 // script for talking to walrus npc
-public class GunsmithScript extends Script<NPC> {
 
+public class GunsmithScript extends Script<NPC> {
+public static boolean pistolVis = false;
+public static boolean assaultVis = false;
+public static boolean mgVis = false;
     @Override
     protected void setup() {
         lockPlayer();
@@ -15,8 +19,16 @@ public class GunsmithScript extends Script<NPC> {
         // changes what walrus says when talking to him the first time (flag is not set) vs talking to him afterwards (flag is set)
         if (!isFlagSet("hasTalkedToGunsmith")) {
             addTextToTextboxQueue( "Hi!");
-            addTextToTextboxQueue( "What gun would you like to purchase?\n1)Gun1  2)Gun2  3)Gun3  4)Gun4  5)Gun5");
-
+            addTextToTextboxQueue( "What gun would you like to purchase?\n1) Pistol  2) Assault Rifle  3) Special Machine Gun");
+            if(Keyboard.isKeyDown(Key.ONE)){
+                pistolVis = true;
+            }
+            if(Keyboard.isKeyDown(Key.TWO)){
+                assaultVis = true;
+            }
+            if(Keyboard.isKeyDown(Key.THREE)){
+                mgVis = true;
+            }
         }
         else {
             addTextToTextboxQueue("You're on Cooldown please wait" + "x" + "minutes");

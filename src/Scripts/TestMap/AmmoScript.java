@@ -1,8 +1,10 @@
 package Scripts.TestMap;
 
+import Engine.Key;
 import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
+import Engine.Keyboard;
 
 // script for talking to walrus npc
 public class AmmoScript extends Script<NPC> {
@@ -15,7 +17,16 @@ public class AmmoScript extends Script<NPC> {
         // changes what walrus says when talking to him the first time (flag is not set) vs talking to him afterwards (flag is set)
         if (!isFlagSet("hasTalkedToAmmoNPC")) {
             addTextToTextboxQueue( "Hi!");
-            addTextToTextboxQueue( "What type of ammo would you like to purchase?\n1)Light 2)Heavy 3)Special");
+            addTextToTextboxQueue( "How much ammo would you like to purchase?\n1) 30 2) 60 3) 120");
+            if(Keyboard.isKeyDown(Key.ONE)){
+
+            }
+            if(Keyboard.isKeyDown(Key.TWO)){
+
+            }
+            if(Keyboard.isKeyDown(Key.THREE)){
+
+            }
 
         }
         else {
