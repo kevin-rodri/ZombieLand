@@ -87,7 +87,7 @@ public class TestMap extends Map {
         lifeup.setInteractScript(new WalrusScript());
         npcs.add(lifeup);
 
-        AmmoNPC ammonpc = new AmmoNPC(7, getMapTile(15, 28).getLocation().subtractY(40));
+        AmmoNPC ammonpc = new AmmoNPC(10, getMapTile(15, 28).getLocation().subtractY(40));
         ammonpc.setInteractScript(new AmmoScript());
         npcs.add(ammonpc);
 
@@ -103,6 +103,8 @@ public class TestMap extends Map {
         nuke.setInteractScript(new WalrusScript());
         npcs.add(machineGun);
         return npcs;
+
+
     }
 
     @Override

@@ -17,5 +17,8 @@ public class MoneyBase {
         moneyCount += 10;
     }
     public static void addMoneyMini(){ moneyCount += 25;}
+    public static void buyAssault(){ moneyCount -= 100;}
+    public static void buyPistol(){ moneyCount -= 50;}
+    public static void buyMG(){ moneyCount-=500;}
 }
 

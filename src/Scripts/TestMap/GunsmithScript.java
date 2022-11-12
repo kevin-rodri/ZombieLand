@@ -5,6 +5,7 @@ import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
 import Engine.Keyboard;
+import MoneySystem.MoneyBase;
 // script for talking to walrus npc
 
 public class GunsmithScript extends Script<NPC> {
@@ -20,13 +21,16 @@ public static boolean mgVis = false;
         if (!isFlagSet("hasTalkedToGunsmith")) {
             addTextToTextboxQueue( "Hi!");
             addTextToTextboxQueue( "What gun would you like to purchase?\n1) Pistol  2) Assault Rifle  3) Special Machine Gun");
-            if(Keyboard.isKeyDown(Key.ONE)){
+            if(Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 50){
+                MoneyBase.buyPistol();
                 pistolVis = true;
             }
-            if(Keyboard.isKeyDown(Key.TWO)){
+            if(Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 100){
+                MoneyBase.buyAssault();
                 assaultVis = true;
             }
-            if(Keyboard.isKeyDown(Key.THREE)){
+            if(Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500){
+                MoneyBase.buyMG();
                 mgVis = true;
             }
         }
