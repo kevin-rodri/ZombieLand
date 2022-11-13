@@ -42,6 +42,8 @@ import Utils.Point;
 import Utils.Stopwatch;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -90,6 +92,9 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 	Timer t;
 	Timer xp;
+	Timer fuGame;
+
+	public static int fullGameTime = 0;
 
 	private void time() {
 		t = new Timer(20000, new ActionListener() {
@@ -109,6 +114,20 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			}
 		});
 		t.start();
+	}
+	public void gameTime(){
+		fuGame = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flagManager.isFlagSet("hasDied")){
+
+					fuGame.stop();
+
+				}
+				fullGameTime ++;
+			}
+		});
+		fuGame.start();
 	}
 
 	public void x2time() {
@@ -181,6 +200,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 	public void initialize() {
 		// setup state
+
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter, 600, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
@@ -219,6 +239,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
+		gameTime();
 
 		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.coOp.setMap(map);
@@ -448,6 +469,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				break;
 			case LEVEL_COMPLETED:
 				health.setIsHidden(true);
+				try {
+					CreateFile.record();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
 				gameOver.setOutlineThickness(50);
 				gameOver.setOutlineColor(Color.black);

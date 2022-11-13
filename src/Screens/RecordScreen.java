@@ -9,7 +9,8 @@ class CreateFile
     public static void record() throws IOException
     {
         // Accept a string
-        String str = "20:00";
+        int xt = PlayLevelScreen.fullGameTime;
+        String str = String.valueOf(xt);
 
         // attach a file to FileWriter
         FileWriter fw=new FileWriter(Config.RESOURCES_PATH + "record.txt");
@@ -24,7 +25,8 @@ class CreateFile
         fw.close();
     }
     public static int ch;
-    public static String recordValue = "00:00";
+    public static String recordValue = "";
+    public static boolean recordMin = false;
     public static void checkTime() throws IOException
         {
             File file = new File(Config.RESOURCES_PATH + "record.txt");
@@ -38,8 +40,12 @@ class CreateFile
                 System.out.println(fileContent);
                 recordValue = fileContent;
             }
+
             catch (IOException e) {
                 e.printStackTrace();
+            }
+            if(Integer.parseInt(recordValue)>60){
+                recordMin =true;
             }
         }
 

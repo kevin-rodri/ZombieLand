@@ -49,7 +49,7 @@ public class MenuScreen extends Screen {
         coopOption = new SpriteFont("CO-OP", 200, 250, "z", 30, Color.white);
         coopOption.setOutlineColor(Color.black);
         coopOption.setOutlineThickness(5);
-        recordTime = new SpriteFont("Record Time: " + CreateFile.recordValue, 200, 450, "z", 30, Color.white);
+        recordTime = new SpriteFont("Record Time: " + CreateFile.recordValue + "seconds", 200, 450, "z", 30, Color.white);
         recordTime.setOutlineColor(Color.black);
         recordTime.setOutlineThickness(5);
         background = new TitleScreenMap();
@@ -62,6 +62,9 @@ public class MenuScreen extends Screen {
     public void update() {
         // update background map (to play tile animations
     	background.update(coOp);
+        if(CreateFile.recordMin==true){
+            //recordTime.setText("Record Time: " + CreateFile.recordValue);
+        }
 
         // if down or up is pressed, change menu item "hovered" over (blue square in front of text will move along with currentMenuItemHovered changing)
         if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
