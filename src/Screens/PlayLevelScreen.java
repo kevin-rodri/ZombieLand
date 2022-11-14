@@ -52,7 +52,8 @@ import Screens.PlayLevelScreen;
 import Utils.Point;
 
 // This class is for when the platformer game is actually being played
-public class PlayLevelScreen extends Screen implements SoundController {
+// note: Got rid of SoundController but we can add it back.. I was getting a werid error 
+public class PlayLevelScreen extends Screen  {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
