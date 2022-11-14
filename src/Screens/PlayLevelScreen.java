@@ -1,4 +1,5 @@
 package Screens;
+
 import java.awt.Color;
 import Ammo.LightAmmo;
 import Health.HealthSystem;
@@ -47,6 +48,7 @@ import java.util.Random;
 import java.util.TimerTask;
 import Screens.PlayLevelScreen;
 import Utils.Point;
+
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen implements SoundController {
 	protected ScreenCoordinator screenCoordinator;
@@ -64,22 +66,24 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	protected Lives health;
 	private SpriteFont pauseLabel;
 	private SpriteFont gameOver;
-	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second 
-	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first 
+	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
+	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch TimerPlayerOnePistol = new Stopwatch(); // timer for first player
-	private  Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch(); 
-	private  Stopwatch TimerPlayerOneMachineGun= new Stopwatch(); 
+	private Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch();
+	private Stopwatch TimerPlayerOneMachineGun = new Stopwatch();
 	protected int counter = 0;
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
 	int randomX = 100;
 	int randomY = 100;
 	protected int x2counter = 0;
-	public static boolean noAmmo=false;
+	public static boolean noAmmo = false;
 	public static boolean x2End = false;
+	public static int numberShotsFired = 0;
+	public static int numberOfWaves = 0;
 
 	int m = 1;
 	int z = 10;
@@ -88,6 +92,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 	Timer t;
 	Timer xp;
+
 	private void time() {
 		t = new Timer(30000, new ActionListener() {
 			@Override
@@ -97,6 +102,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					t.stop();
 				}
 				waveCounter.setText("WAVE " + counter);
+				numberOfWaves++;
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 				z = z + 5;
@@ -104,39 +110,41 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 				m = m * 2;
 				startWave(z, sz);
-				
-							// hopefully the random zombie spawning works here.. 
-							// weird place to put zombie spawn logic, but the glitchy zombie movement is gone :)
-							Random random = new Random();
-							// generate a number from 1 - 11
-		 int randomX  = 1 + random.nextInt(10);
-		 // generate a number from 1 - 11
-		 int randomY  = 1 + random.nextInt(10);
 
-				for (int i = 0; i < 3; i++){
-					SmallZombie zombieWaveOne  = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);   
-				   zombieWaveOne.update();
-				  }
-				  for (int i = 0; i < 3; i++){
-					Zombie zombieWaveOne  = new Zombie(new Point(randomX, randomY), Direction.LEFT);
-					map.addEnemy(zombieWaveOne);   
-					 zombieWaveOne.update();
-				  }
-				  m = m * 2;
+				// hopefully the random zombie spawning works here..
+				// weird place to put zombie spawn logic, but the glitchy zombie movement is
+				// gone :)
+				Random random = new Random();
+				// generate a number from 1 - 11
+				int randomX = 1 + random.nextInt(10);
+				// generate a number from 1 - 11
+				int randomY = 1 + random.nextInt(10);
+
+				for (int i = 0; i < 3; i++) {
+					SmallZombie zombieWaveOne = new SmallZombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);
+					zombieWaveOne.update();
+				}
+				for (int i = 0; i < 3; i++) {
+					Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
+					map.addEnemy(zombieWaveOne);
+					zombieWaveOne.update();
+				}
+				m = m * 2;
 				counter++;
-				
+
 			}
 		});
 		t.start();
 	}
+
 	public void x2time() {
 		xp = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
-				if (x2counter>9) {
+				if (x2counter > 9) {
 					xp.stop();
 					flagManager.setFlag("x2Exp");
 					x2End = true;
@@ -148,7 +156,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		xp.start();
 	}
 
-	//Method that handles generating small and regular Zombies 
+	// Method that handles generating small and regular Zombies
 	public void startWave(int z, int sz) {
 		counter++;
 		for (int i = 0; i < sz; i++) {
@@ -159,8 +167,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				randomX = -200 + random.nextInt(2500);
 				// generate a number from -500 -> 1000
 				randomY = -200 + random.nextInt(2500);
-				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
-						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0 && randomY >= 2500
+						|| randomX >= 2500 && randomY >= 0) {
 					szOutsideOfMap = true;
 				}
 			}
@@ -180,8 +188,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				randomX = -200 + random.nextInt(2500);
 				// generate a number from -500 -> 1000
 				randomY = -200 + random.nextInt(2500);
-				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0
-						&& randomY >= 2500 || randomX >= 2500 && randomY >= 0) {
+				if (randomX >= 0 && randomY <= 0 || randomX <= 0 && randomY >= 0 || randomX >= 0 && randomY >= 2500
+						|| randomX >= 2500 && randomY >= 0) {
 					zOutsideOfMap = true;
 				}
 			}
@@ -189,11 +197,9 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			Zombie zombieWaveOne = new Zombie(new Point(randomX, randomY), Direction.LEFT);
 			map.addEnemy(zombieWaveOne);
 			zombieWaveOne.update();
-			System.out.println(zombieWaveOne.getLocation());
 			zOutsideOfMap = false;
 		}
 	}
-
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		this.screenCoordinator = screenCoordinator;
@@ -201,10 +207,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		pauseLabel.setOutlineColor(Color.black);
 		pauseLabel.setOutlineThickness(2.0f);
 	}
+
 	public void initialize() {
 		// setup state
 		flagManager = new FlagManager();
-		waveCounter = new SpriteFont("WAVE " + counter , 600, 50, "z", 20, Color.WHITE);
+		waveCounter = new SpriteFont("WAVE " + counter, 600, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
 		waveCounter.setOutlineThickness(5);
 		money = new SpriteFont("$" + MoneyBase.moneyCount, 10, 50, "z", 20, Color.WHITE);
@@ -215,7 +222,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		x2time();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
-		Point HealthHUD = new Point(1300,10);
+		Point HealthHUD = new Point(1300, 10);
 		health = new Lives(2, HealthHUD);
 		health.setHeight(50);
 		health.setWidth(50);
@@ -246,7 +253,6 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		this.coOp.setMap(map);
 		this.coOp.setLocation(670, 120);
 		this.coOp.setFacingDirection(Direction.LEFT);
-	
 
 		this.alexWithAPistol = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexWithAPistol.setMap(map);
@@ -258,11 +264,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		this.alexWithARifle.setLocation(672, 296);
 		this.alexWithARifle.setFacingDirection(player.getFacingDirection());
 
-		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x,
+		map.getPlayerStartPosition().y);
 		this.alexWithAMachineGun.setMap(map);
 		this.alexWithAMachineGun.setLocation(1104, 824);
 		this.alexWithAMachineGun.setFacingDirection(player.getFacingDirection());
-
 
 //		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
@@ -293,6 +299,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		}
 		startWave(z, sz);
 	}
+
 	public void update() {
 		// based on screen state, perform specific actions
 		switch (playLevelScreenState) {
@@ -300,136 +307,138 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		// platformer level going
 		case RUNNING:
 			Zombie zombie = new Zombie(new Point(4, 4), Direction.RIGHT);
-			if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip>0){
-				LightAmmo.ammoClip -=30;
+			if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip > 0) {
+				LightAmmo.ammoClip -= 30;
 				LightAmmo.ammoCount += 30;
 			}
 
-			if(Nuke.usedNuke==true){
+			if (Nuke.usedNuke == true) {
+				Shooting.numberOfKills = Shooting.numberOfKills + map.getEnemies().size();
 				map.getEnemies().removeAll(map.getEnemies());
 				Nuke.usedNuke = false;
-			} else if (LightAmmo.ammoClip ==0 && LightAmmo.ammoCount ==0){
-				//ammoCount.setText("NO AMMO");
+			} else if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
+				// ammoCount.setText("NO AMMO");
 				noAmmo = true;
 			} else {
-				if (noAmmo==true) {
+				if (noAmmo == true) {
 				} else {
 					ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 				}
 			}
 
-			if(HealthSystem.healthCount <= 0){
+			if (HealthSystem.healthCount <= 45) {
 				flagManager.setFlag("hasDied");
 				HealthSystem.setMaxHealth();
 			}
 
-				healthBar.setText("" + HealthSystem.healthCount);
-				money.setText("$" + MoneyBase.moneyCount);
-				ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+			healthBar.setText("" + HealthSystem.healthCount);
+			money.setText("$" + MoneyBase.moneyCount);
+			ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 
 // To control the amount of enemies that spawn per round. Cap is 72 enemies
-if (map.getEnemies().size() >= 80) {
+			if (map.getEnemies().size() >= 80) {
 
-	t.stop();
+				t.stop();
 
-}
-if (map.getEnemies().size() < 80) {
+			}
+			if (map.getEnemies().size() < 80) {
 
-	t.start();
+				t.start();
 
-}
-				
-					
-				if (weapons.check){
-					alexWithAPistol.update();
-					map.update(alexWithAPistol);
-					TimerPlayerOnePistol.isTimeUp();
-					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
-						float fireballX;
-						float movementSpeed;
-						LightAmmo.ammoCount -=1;
-						if (alexWithAPistol.getFacingDirection() == Direction.RIGHT) {
-							movementSpeed = 5.0f;
-							fireballX = Math.round(alexWithAPistol.getX()) + 50;
-						} else {
-							movementSpeed = -5.0f;
-							fireballX = Math.round(alexWithAPistol.getX());
-						}
+			}
 
-						// int fireballY = (int) (player2.getY2() - player2.getY1());
-						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
-						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-					
-
-						// add fireball enemy to the map for it to offically spawn in the level
-						map.addEnemy(bullet);
-						TimerPlayerOnePistol.setWaitTime(500);				
-						}
-						
-					} else if(AssaultRifle.check){
-						alexWithARifle.update();
-						map.update(alexWithARifle);
-					TimerPlayerOneAssaultRifle.isTimeUp();
-						if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexWithARifle.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 10.0f;
-								fireballX = Math.round(alexWithARifle.getX()) + 50;
-							} else {
-								movementSpeed = -10.0f;
-								fireballX = Math.round(alexWithARifle.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexWithARifle.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerOneAssaultRifle.setWaitTime(500);
+			if (weapons.check) {
+				alexWithAPistol.update();
+				map.update(alexWithAPistol);
+				TimerPlayerOnePistol.isTimeUp();
+				if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+					float fireballX;
+					float movementSpeed;
+					LightAmmo.ammoCount -= 1;
+					if (alexWithAPistol.getFacingDirection() == Direction.RIGHT) {
+						movementSpeed = 5.0f;
+						fireballX = Math.round(alexWithAPistol.getX()) + 50;
+					} else {
+						movementSpeed = -5.0f;
+						fireballX = Math.round(alexWithAPistol.getX());
 					}
-					
-				
-				} else if (MachineGun.check){
-					alexWithAMachineGun.update();
-					map.update(alexWithAMachineGun);
-					TimerPlayerOneMachineGun.isTimeUp();
-						if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne) && Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
-							float fireballX;
-							float movementSpeed;
-							LightAmmo.ammoCount -=1;
-							if (alexWithAMachineGun.getFacingDirection() == Direction.RIGHT) {
-								movementSpeed = 15.0f;
-								fireballX = Math.round(alexWithAMachineGun.getX()) + 50;
-							} else {
-								movementSpeed = -15.0f;
-								fireballX = Math.round(alexWithAMachineGun.getX());
-							}
-	
-							// int fireballY = (int) (player2.getY2() - player2.getY1());
-							int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
-							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-						
-	
-							// add fireball enemy to the map for it to offically spawn in the level
-							map.addEnemy(bullet);
-							TimerPlayerOneMachineGun.setWaitTime(500);
+
+					// int fireballY = (int) (player2.getY2() - player2.getY1());
+					int fireballY = Math.round(alexWithAPistol.getY()) + 18;
+					numberShotsFired++;
+					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+
+					// add fireball enemy to the map for it to offically spawn in the level
+					map.addEnemy(bullet);
+					TimerPlayerOnePistol.setWaitTime(500);
+				}
+
+			} else if (AssaultRifle.check) {
+				alexWithARifle.update();
+				map.update(alexWithARifle);
+				TimerPlayerOneAssaultRifle.isTimeUp();
+				if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+					float fireballX;
+					float movementSpeed;
+					LightAmmo.ammoCount -= 1;
+					if (alexWithARifle.getFacingDirection() == Direction.RIGHT) {
+						movementSpeed = 10.0f;
+						fireballX = Math.round(alexWithARifle.getX()) + 50;
+					} else {
+						movementSpeed = -10.0f;
+						fireballX = Math.round(alexWithARifle.getX());
 					}
-			
-			} 
+
+					// int fireballY = (int) (player2.getY2() - player2.getY1());
+					int fireballY = Math.round(alexWithARifle.getY()) + 18;
+					numberShotsFired++;
+					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+
+					// add fireball enemy to the map for it to offically spawn in the level
+					map.addEnemy(bullet);
+					TimerPlayerOneAssaultRifle.setWaitTime(500);
+				}
+
+			} else if (MachineGun.check) {
+				alexWithAMachineGun.update();
+				map.update(alexWithAMachineGun);
+				TimerPlayerOneMachineGun.isTimeUp();
+				if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+					float fireballX;
+					float movementSpeed;
+					LightAmmo.ammoCount -= 1;
+					if (alexWithAMachineGun.getFacingDirection() == Direction.RIGHT) {
+						movementSpeed = 15.0f;
+						fireballX = Math.round(alexWithAMachineGun.getX()) + 50;
+					} else {
+						movementSpeed = -15.0f;
+						fireballX = Math.round(alexWithAMachineGun.getX());
+					}
+
+					// int fireballY = (int) (player2.getY2() - player2.getY1());
+					int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
+					numberShotsFired++;
+					Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+
+					// add fireball enemy to the map for it to offically spawn in the level
+					map.addEnemy(bullet);
+					TimerPlayerOneMachineGun.setWaitTime(500);
+				}
+
+			}
 			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 				player.update();
 				map.update(player);
-				
+
 			}
-				break;
-			// if level has been completed, bring up level cleared screen
-			case LEVEL_COMPLETED:
-				//winScreen.update();
-				break;
+			break;
+		// if level has been completed, bring up level cleared screen
+		case LEVEL_COMPLETED:
+//			 winScreen.update();
+			break;
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
@@ -438,68 +447,75 @@ if (map.getEnemies().size() < 80) {
 		}
 	}
 
-
 	public void draw(GraphicsHandler graphicsHandler) {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
-			case RUNNING:
-if (weapons.check){
-	map.draw(alexWithAPistol,  graphicsHandler);
-}  else if (MachineGun.check){
-	map.draw(alexWithAMachineGun,  graphicsHandler);
-}  else if (AssaultRifle.check) {
-   map.draw(alexWithARifle,graphicsHandler);
-} 
-if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-	map.draw(player, graphicsHandler);
-}
-				// pasue game logic was moved to here
-				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-					isGamePaused = !isGamePaused;
-					keyLocker.lockKey(pauseKey);
-				}
-				
-				if (Keyboard.isKeyUp(pauseKey)) {
-					keyLocker.unlockKey(pauseKey);
-				}
-				pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
-				// if game is paused, draw pause gfx over Screen gfx
-				if (isGamePaused) {
-					pauseLabel.draw(graphicsHandler);
-					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
-				}
-		
-				break;
-			case LEVEL_COMPLETED:
-				health.setIsHidden(true);
-				gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
-				gameOver.setOutlineThickness(50);
-				gameOver.setOutlineColor(Color.black);
-				waveCounter.setText("");
-				money.setText("");
-				healthBar.setText("");
-				ammoCount.setText("");
-				//shealth.isHidden();
-				gameOver.draw(graphicsHandler);
-
-				break;
+		case RUNNING:
+			if (weapons.check) {
+				map.draw(alexWithAPistol, graphicsHandler);
+			} else if (MachineGun.check) {
+				map.draw(alexWithAMachineGun, graphicsHandler);
+			} else if (AssaultRifle.check) {
+				map.draw(alexWithARifle, graphicsHandler);
 			}
-		
+			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
+				map.draw(player, graphicsHandler);
+			}
+			// pasue game logic was moved to here
+			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+				isGamePaused = !isGamePaused;
+				keyLocker.lockKey(pauseKey);
+			}
+
+			if (Keyboard.isKeyUp(pauseKey)) {
+				keyLocker.unlockKey(pauseKey);
+			}
+			pauseLabel = new SpriteFont("HELP", 365, 280, "Comic Sans", 24, Color.white);
+			// if game is paused, draw pause gfx over Screen gfx
+			if (isGamePaused) {
+				pauseLabel.draw(graphicsHandler);
+				graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+						ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+			}
+			break;
+		case LEVEL_COMPLETED:
+//			winScreen.draw(graphicsHandler);
+			
+//			 WinScreen.draw(graphicsHandler);
+            screenCoordinator.setGameState(GameState.WinScreen);
+			health.setIsHidden(true);
+			gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
+			gameOver.setOutlineThickness(50);
+			gameOver.setOutlineColor(Color.black);
+			waveCounter.setText("");
+			money.setText("");
+			healthBar.setText("");
+			ammoCount.setText("");
+			// shealth.isHidden();
+			gameOver.draw(graphicsHandler);
+
+			break;
+		}
+
 		waveCounter.draw(graphicsHandler);
 		money.draw(graphicsHandler);
 		health.draw(graphicsHandler);
 		healthBar.draw(graphicsHandler);
 		ammoCount.draw(graphicsHandler);
 	}
+
 	public PlayLevelScreenState getPlayLevelScreenState() {
 		return playLevelScreenState;
 	}
+
 	public void resetLevel() {
 		initialize();
 	}
+
 	public void goBackToMenu() {
 		screenCoordinator.setGameState(GameState.MENU);
 	}
+
 	// This enum represents the different states this screen can be in
 	public enum PlayLevelScreenState {
 		RUNNING, LEVEL_COMPLETED

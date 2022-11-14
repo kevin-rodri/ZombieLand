@@ -83,6 +83,7 @@ public class CoopScreen extends Screen {
 	private Stopwatch TimerPlayerTwoPistol = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoAssaultRifle = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoMachineGun= new Stopwatch(); 
+	public static int shotsFired = 0;
 	protected int counter = 0;
 
 	int m = 1;
@@ -109,6 +110,8 @@ public class CoopScreen extends Screen {
 		});
 		t.start();
 	}
+	
+	
 	public void x2time() {
 		xp = new Timer(5000, new ActionListener() {
 			@Override
@@ -311,6 +314,8 @@ public class CoopScreen extends Screen {
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+						shotsFired++;
+
 
 
 						// add fireball enemy to the map for it to offically spawn in the level
@@ -337,7 +342,7 @@ public class CoopScreen extends Screen {
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexTwoWithPistol.getY()) + 18;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-
+						shotsFired++;
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
@@ -368,7 +373,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexWithARifle.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-
+							shotsFired++;
 
 							// add fireball enemy to the map for it to offically spawn in the level
 							map.addEnemy(bullet);
@@ -393,6 +398,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexTwoWithAssaultRifle.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -424,6 +430,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -449,6 +456,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexTwoWithMachineGun.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -461,6 +469,7 @@ public class CoopScreen extends Screen {
 					map.update(player);
 					coOp.update();
 					map.update(coOp);
+					System.out.println(shotsFired);
 				}
 				
 				break;
