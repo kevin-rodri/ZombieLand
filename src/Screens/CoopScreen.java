@@ -468,8 +468,8 @@ public class CoopScreen extends Screen {
 					player.update();
 					map.update(player);
 					coOp.update();
-					map.update(coOp);
-					System.out.println(shotsFired);
+
+					map.update2(coOp);
 				}
 				
 				break;
@@ -558,13 +558,13 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 			if (weapons.check){
-				map.draw(alexTwoWithPistol,  graphicsHandler);
+				map.draw2(alexTwoWithPistol,  graphicsHandler);
 			}else if (MachineGun.check){
-				map.draw(alexTwoWithMachineGun,  graphicsHandler);
+				map.draw2(alexTwoWithMachineGun,  graphicsHandler);
 			} else if (AssaultRifle.check){
-				map.draw(alexTwoWithAssaultRifle,graphicsHandler);
+				map.draw2(alexTwoWithAssaultRifle,graphicsHandler);
 			 }else {
-				map.draw(coOp, graphicsHandler);
+				map.draw2(coOp, graphicsHandler);
 			}
 				// pause game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
