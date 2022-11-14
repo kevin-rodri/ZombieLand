@@ -326,7 +326,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				}
 			}
 
-			if (HealthSystem.healthCount <= 45) {
+			if (HealthSystem.healthCount <= 0) {
 				flagManager.setFlag("hasDied");
 				HealthSystem.setMaxHealth();
 			}
