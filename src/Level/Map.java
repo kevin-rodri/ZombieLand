@@ -39,7 +39,7 @@ public abstract class Map {
 
     // camera class that handles the viewable part of the map that is seen by the player of a game during a level
     protected Camera camera;
-    protected Camera camera2;
+    protected Camera2 camera2;
 
 
     // location player should start on when this map is first loaded
@@ -122,7 +122,7 @@ public abstract class Map {
 
         this.loadScripts();
         
-        this.camera2 = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+        this.camera2 = new Camera2(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
        
@@ -310,7 +310,7 @@ public abstract class Map {
         return camera;
     }
     
-    public Camera getCamera2() {
+    public Camera2 getCamera2() {
         return camera2;
     }
 
