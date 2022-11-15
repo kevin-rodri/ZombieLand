@@ -40,6 +40,11 @@ public class MenuScreen extends Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            CreateFile.checkMin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         playGame = new SpriteFont("SINGLE PLAYER", 200, 150, "z", 30, new Color(49, 207, 240));
         playGame.setOutlineColor(Color.black);
         playGame.setOutlineThickness(5);
