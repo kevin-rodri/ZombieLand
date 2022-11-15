@@ -93,8 +93,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	Timer t;
 	Timer xp;
 	Timer fuGame;
+	Timer fuGameMin;
 
 	public static int fullGameTime = 0;
+	public static int fullGameMin = 0;
 
 	private void time() {
 		t = new Timer(20000, new ActionListener() {
@@ -124,10 +126,27 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					fuGame.stop();
 
 				}
+				if(fullGameTime <60){
+					fullGameTime = 0;
+				}
 				fullGameTime ++;
+
 			}
 		});
 		fuGame.start();
+	}
+	public void gameMin(){
+		fuGameMin = new Timer(60000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flagManager.isFlagSet("hasDied")){
+					fuGameMin.stop();
+				}
+
+				fullGameMin++;
+			}
+		});
+		fuGameMin.start();
 	}
 
 	public void x2time() {
@@ -240,7 +259,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
 		gameTime();
-
+		gameMin();
 		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.coOp.setMap(map);
 		this.coOp.setLocation(670, 120);
@@ -471,6 +490,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				health.setIsHidden(true);
 				try {
 					CreateFile.record();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					CreateFile.recordMin();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
