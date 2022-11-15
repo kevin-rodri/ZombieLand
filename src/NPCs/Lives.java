@@ -25,6 +25,7 @@ public class Lives extends NPC  {
 	        }
 	        super.update(player);
 	 }
+	 
 
     @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {

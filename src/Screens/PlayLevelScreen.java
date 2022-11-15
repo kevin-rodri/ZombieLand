@@ -63,7 +63,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	protected SpriteFont waveCounter, money, healthBar, ammoCount;
 	protected WinScreen winScreen;
 	protected FlagManager flagManager;
-	protected Lives health;
+	protected  Lives health;
 	private SpriteFont pauseLabel;
 	private SpriteFont gameOver;
 	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
@@ -210,6 +210,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 	public void initialize() {
 		// setup state
+        this.playLevelScreenState = PlayLevelScreenState.RUNNING;
+        winScreen = new WinScreen(this);
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter, 600, 50, "z", 20, Color.WHITE);
 		waveCounter.setOutlineColor(Color.black);
@@ -437,7 +439,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 			break;
 		// if level has been completed, bring up level cleared screen
 		case LEVEL_COMPLETED:
-//			 winScreen.update();
+			 winScreen.update();
 			break;
 		}
 
@@ -477,31 +479,28 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
 						ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
 			}
+			waveCounter.draw(graphicsHandler);
+			money.draw(graphicsHandler);
+			health.draw(graphicsHandler);
+			healthBar.draw(graphicsHandler);
+			ammoCount.draw(graphicsHandler);
 			break;
 		case LEVEL_COMPLETED:
-//			winScreen.draw(graphicsHandler);
-			
-//			 WinScreen.draw(graphicsHandler);
-            screenCoordinator.setGameState(GameState.WinScreen);
+			winScreen.initialize();
+			winScreen.draw(graphicsHandler);
+//            screenCoordinator.setGameState(GameState.WinScreen);
 			health.setIsHidden(true);
-			gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
-			gameOver.setOutlineThickness(50);
-			gameOver.setOutlineColor(Color.black);
+//			gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
+//			gameOver.setOutlineThickness(50);
+//			gameOver.setOutlineColor(Color.black);
 			waveCounter.setText("");
 			money.setText("");
 			healthBar.setText("");
 			ammoCount.setText("");
-			// shealth.isHidden();
-			gameOver.draw(graphicsHandler);
+			health.setIsHidden(true);
 
 			break;
 		}
-
-		waveCounter.draw(graphicsHandler);
-		money.draw(graphicsHandler);
-		health.draw(graphicsHandler);
-		healthBar.draw(graphicsHandler);
-		ammoCount.draw(graphicsHandler);
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {
