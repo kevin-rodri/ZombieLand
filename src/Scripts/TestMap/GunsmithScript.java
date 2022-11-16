@@ -9,6 +9,8 @@ import MoneySystem.MoneyBase;
 // script for talking to walrus npc
 import Utils.Stopwatch;
 
+import java.awt.event.KeyEvent;
+
 public class GunsmithScript extends Script<NPC> {
 public static boolean pistolVis = false;
 public static boolean assaultVis = false;
@@ -33,11 +35,11 @@ private Stopwatch watch = new Stopwatch();
                     System.out.println("yes key two");
                     MoneyBase.buyAssault();
                     GunsmithScript.assaultVis = true;
-                } else if(Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500){
+                } else if(Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500) {
                     System.out.println("yes key three");
                     MoneyBase.buyMG();
                     GunsmithScript.mgVis = true;
-            }
+                }
         } else {
             watch.setWaitTime(30000);
             counter = (((30000 - watch.getTimeLeft()) / 1000) %  60);
