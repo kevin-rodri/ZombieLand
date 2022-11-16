@@ -71,6 +71,8 @@ public class PlayLevelScreen extends Screen  {
 	protected Lives health;
 	private SpriteFont pauseLabel;
 	private SpriteFont gameOver;
+	public static int numberShotsFired = 0;
+	public static int numberOfWaves = 0;
 	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
 	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
 	private final Key pauseKey = Key.P;
@@ -102,7 +104,7 @@ public class PlayLevelScreen extends Screen  {
 	public static int fullGameMin = 0;
 
 	private void time() {
-		t = new Timer(20000, new ActionListener() {
+		t = new Timer(30000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -110,6 +112,7 @@ public class PlayLevelScreen extends Screen  {
 					t.stop();
 				}
 				waveCounter.setText("WAVE " + counter);
+				numberOfWaves++;
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
@@ -260,6 +263,7 @@ public class PlayLevelScreen extends Screen  {
 		Point playerStartPosition = map.getPlayerStartPosition();
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
+		winScreen = new WinScreen(this);
 		this.player.setFacingDirection(Direction.LEFT);
 		gameTime();
 		gameMin();
@@ -327,6 +331,7 @@ public class PlayLevelScreen extends Screen  {
 				}
 
 				if (Nuke.usedNuke == true) {
+					Shooting.numberOfKills = Shooting.numberOfKills + map.getEnemies().size();
 					map.getEnemies().removeAll(map.getEnemies());
 					Nuke.usedNuke = false;
 				} else if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
@@ -481,6 +486,7 @@ public class PlayLevelScreen extends Screen  {
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
+				winScreen.update();
 				// winScreen.update();
 				break;
 		}
@@ -524,7 +530,7 @@ public class PlayLevelScreen extends Screen  {
 
 				break;
 			case LEVEL_COMPLETED:
-				health.setIsHidden(true);
+
 				try {
 					CreateFile.record();
 				} catch (IOException e) {
@@ -535,15 +541,18 @@ public class PlayLevelScreen extends Screen  {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				gameOver = new SpriteFont("Game Over", 800, 400, "Comic Sans", 100, Color.red);
-				gameOver.setOutlineThickness(50);
-				gameOver.setOutlineColor(Color.black);
+				winScreen.initialize();
+				winScreen.draw(graphicsHandler);
+				//screenCoordinator.setGameState(GameState.WinScreen);
+
+
 				waveCounter.setText("");
 				money.setText("");
 				healthBar.setText("");
 				ammoCount.setText("");
-				// shealth.isHidden();
-				gameOver.draw(graphicsHandler);
+				//gameOver.draw(graphicsHandler);
+				health.setIsHidden(true);
+
 
 				break;
 		}
