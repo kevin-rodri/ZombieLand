@@ -138,7 +138,7 @@ public class CoopScreen extends Screen {
 	}
 
 	public void initialize() {
-
+		
 		// setup state
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter , 300, 50, "z", 20, Color.WHITE);
@@ -251,6 +251,7 @@ public class CoopScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
+		map.getCamera().setWidth(map.getCamera().getWidth()-15);
 	}
 
 	public void update() {
