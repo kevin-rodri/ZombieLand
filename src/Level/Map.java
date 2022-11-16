@@ -122,7 +122,7 @@ public abstract class Map {
 
         this.loadScripts();
         
-        this.camera2 = new Camera2(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+        this.camera2 = new Camera2(475, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
        
