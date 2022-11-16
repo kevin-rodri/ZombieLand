@@ -77,9 +77,6 @@ public class TestMap extends Map {
         nuke.setInteractScript(new NukeScript());
         npcs.add(nuke);
         
-        weapons pistol = new weapons(6, getMapTile(14, 3).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
-        npcs.add(pistol);
 
         ExtraLife lifeup = new ExtraLife(5, getMapTile(30, (int) Math.floor(Math.random()*(30-1+1)+1)).getLocation().subtractY(40));
         lifeup.setInteractScript(new WalrusScript());
