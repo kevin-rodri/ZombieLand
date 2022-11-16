@@ -358,20 +358,22 @@ public class PlayLevelScreen extends Screen  {
 					t.start();
 
 				}
+				if(GunsmithScript.runningGUNSMITH==true) {
 
-				if(Keyboard.isKeyDown(Key.ONE)  && MoneyBase.moneyCount >= 50){
-                    System.out.println("yes key one");
-                    MoneyBase.buyPistol();
-                    GunsmithScript.pistolVis = true;
-                } else  if(Keyboard.isKeyDown(Key.TWO)  && MoneyBase.moneyCount >= 100){
-                    System.out.println("yes key two");
-                    MoneyBase.buyAssault();
-                    GunsmithScript.assaultVis = true;
-                } else if(Keyboard.isKeyDown(Key.THREE)  && MoneyBase.moneyCount >= 500){
-                    System.out.println("yes key three");
-                    MoneyBase.buyMG();
-                    GunsmithScript.mgVis = true;
-            }
+					if (Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 50) {
+						System.out.println("yes key one");
+						MoneyBase.buyPistol();
+						GunsmithScript.pistolVis = true;
+					} else if (Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 100) {
+						System.out.println("yes key two");
+						MoneyBase.buyAssault();
+						GunsmithScript.assaultVis = true;
+					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500) {
+						System.out.println("yes key three");
+						MoneyBase.buyMG();
+						GunsmithScript.mgVis = true;
+					}
+				}
 			
 				if (weapons.check) {
 					alexWithAPistol.update();

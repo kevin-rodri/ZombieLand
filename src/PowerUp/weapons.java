@@ -30,8 +30,9 @@ public class weapons extends NPC implements SoundController{
 	    }
 
 	    public void update(Player player) {
-			
-			this.setIsHidden(true);
+			if(GunsmithScript.pistolVis== false){
+				this.setIsHidden(true);
+			}
 			if(GunsmithScript.pistolVis == true){
 				this.setIsHidden(false);
 			}

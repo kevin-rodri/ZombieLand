@@ -17,7 +17,7 @@ public static boolean assaultVis = false;
 public static boolean mgVis = false;
 private float counter;
 private Stopwatch watch = new Stopwatch();
-private boolean running = false;
+public static boolean runningGUNSMITH = false;
 
     @Override
     protected void setup() {
@@ -28,7 +28,7 @@ private boolean running = false;
         if (!isFlagSet("hasTalkedToGunsmith") ) {
             addTextToTextboxQueue( "Hi!");
             addTextToTextboxQueue( "What gun would you like to purchase?\n1) Pistol  2) Assault Rifle  3) Special Machine Gun");
-             running = true; 
+             runningGUNSMITH = true;
 
             watch.setWaitTime(30000);
         } else {
