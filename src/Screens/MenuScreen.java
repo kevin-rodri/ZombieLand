@@ -54,7 +54,7 @@ public class MenuScreen extends Screen {
         coopOption = new SpriteFont("CO-OP", 200, 250, "z", 30, Color.white);
         coopOption.setOutlineColor(Color.black);
         coopOption.setOutlineThickness(5);
-        recordTime = new SpriteFont("Record Time: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " seconds ", 200, 450, "z", 30, Color.white);
+        recordTime = new SpriteFont("Previous Time: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " seconds ", 200, 450, "z", 30, Color.white);
         recordTime.setOutlineColor(Color.black);
         recordTime.setOutlineThickness(5);
         background = new TitleScreenMap();

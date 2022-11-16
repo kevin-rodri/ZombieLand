@@ -128,7 +128,7 @@ public class PlayLevelScreen extends Screen  {
 					fuGame.stop();
 
 				}
-				if(fullGameTime <60){
+				if(fullGameTime>59){
 					fullGameTime = 0;
 				}
 				fullGameTime ++;
