@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.TimerTask;
 import Screens.PlayLevelScreen;
+import Scripts.TestMap.GunsmithScript;
 import Utils.Point;
 
 // This class is for when the platformer game is actually being played
@@ -358,6 +359,20 @@ public class PlayLevelScreen extends Screen  {
 
 				}
 
+				if(Keyboard.isKeyDown(Key.ONE)  && MoneyBase.moneyCount >= 50){
+                    System.out.println("yes key one");
+                    MoneyBase.buyPistol();
+                    GunsmithScript.pistolVis = true;
+                } else  if(Keyboard.isKeyDown(Key.TWO)  && MoneyBase.moneyCount >= 100){
+                    System.out.println("yes key two");
+                    MoneyBase.buyAssault();
+                    GunsmithScript.assaultVis = true;
+                } else if(Keyboard.isKeyDown(Key.THREE)  && MoneyBase.moneyCount >= 500){
+                    System.out.println("yes key three");
+                    MoneyBase.buyMG();
+                    GunsmithScript.mgVis = true;
+            }
+			
 				if (weapons.check) {
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
