@@ -683,14 +683,14 @@ public abstract class Map {
         }
     }
 
-    public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
-        camera.draw(player, graphicsHandler);
-       // camera2.draw(coOp, graphicsHandler);
-        camera2.draw(player, graphicsHandler);
-        if (textbox.isActive()) {
-            textbox.draw(graphicsHandler);
-        }
-    }
+//    public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
+//        camera.draw(player, graphicsHandler);
+//       // camera2.draw(coOp, graphicsHandler);
+//        camera2.draw(player, graphicsHandler);
+//        if (textbox.isActive()) {
+//            textbox.draw(graphicsHandler);
+//        }
+//    }
     
 
     public FlagManager getFlagManager() { return flagManager; }

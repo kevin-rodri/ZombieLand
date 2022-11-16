@@ -294,6 +294,20 @@ public class GameObject extends AnimatedSprite {
 			return getBounds();
 		}
 	}
+	
+	public Rectangle getCalibratedBounds2() {
+		if (map != null) {
+			Rectangle bounds = getBounds();
+			return new Rectangle(
+					Math.round(bounds.getX1()) - Math.round(map.getCamera2().getX()),
+					Math.round(bounds.getY1()) - Math.round(map.getCamera2().getY()),
+					Math.round(bounds.getWidth()),
+					Math.round(bounds.getHeight())
+			);
+		} else {
+			return getBounds();
+		}
+	}
 
 	// set this game object's map to make it a "part of" the map, allowing calibrated positions and collision handling logic to work
 	public void setMap(Map map) {
@@ -321,6 +335,27 @@ public class GameObject extends AnimatedSprite {
 			super.draw(graphicsHandler);
 		}
 	}
+	
+	public void draw2(GraphicsHandler graphicsHandler) {
+		if (map != null) {
+			graphicsHandler.drawImage(
+					currentFrame.getImage(),
+					Math.round(getCalibratedXLocation2()),
+					Math.round(getCalibratedYLocation2()),
+					currentFrame.getWidth(),
+					currentFrame.getHeight(),
+					currentFrame.getImageEffect());
+
+			// Uncomment this to draw player's bounds to screen -- useful for debugging
+			/*
+			if (this instanceof Player) {
+				drawBounds(graphicsHandler, new Color(255, 0, 0, 100));
+			}
+			 */
+		} else {
+			super.draw(graphicsHandler);
+		}
+	}
 
 	@Override
 	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
@@ -332,4 +367,5 @@ public class GameObject extends AnimatedSprite {
 			super.drawBounds(graphicsHandler, color);
 		}
 	}
+	
 }

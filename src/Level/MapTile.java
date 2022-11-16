@@ -100,9 +100,17 @@ public class MapTile extends MapEntity {
     public void drawBottomLayer(GraphicsHandler graphicsHandler) {
         bottomLayer.draw(graphicsHandler);
     }
+    
+    public void drawBottomLayer2(GraphicsHandler graphicsHandler) {
+        bottomLayer.draw2(graphicsHandler);
+    }
 
     public void drawTopLayer(GraphicsHandler graphicsHandler) {
         topLayer.draw(graphicsHandler);
+    }
+    
+    public void drawTopLayer2(GraphicsHandler graphicsHandler) {
+        topLayer.draw2(graphicsHandler);
     }
 
     @Override

@@ -213,14 +213,14 @@ public class Camera2 extends Rectangle {
             for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
                 MapTile tile = map.getMapTile(j, i);
                 if (tile != null) {
-                    tile.drawBottomLayer(graphicsHandler);
+                    tile.drawBottomLayer2(graphicsHandler);
                 }
             }
         }
 
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
             if (containsDraw(enhancedMapTile)) {
-                enhancedMapTile.drawBottomLayer(graphicsHandler);
+                enhancedMapTile.drawBottomLayer2(graphicsHandler);
             }
         }
     }
@@ -232,14 +232,14 @@ public class Camera2 extends Rectangle {
             for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
                 MapTile tile = map.getMapTile(j, i);
                 if (tile != null && tile.getTopLayer() != null) {
-                    tile.drawTopLayer(graphicsHandler);
+                    tile.drawTopLayer2(graphicsHandler);
                 }
             }
         }
 
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
             if (containsDraw(enhancedMapTile) && enhancedMapTile.getTopLayer() != null) {
-                enhancedMapTile.drawTopLayer(graphicsHandler);
+                enhancedMapTile.drawTopLayer2(graphicsHandler);
             }
         }
     }
@@ -250,7 +250,7 @@ public class Camera2 extends Rectangle {
         
         for (Enemy enemy : activeEnemies) {
             if (containsDraw(enemy)) {
-                enemy.draw(graphicsHandler);
+                enemy.draw2(graphicsHandler);
             }
         }
 
@@ -260,7 +260,7 @@ public class Camera2 extends Rectangle {
         for (NPC npc : activeNPCs) {
             if (containsDraw(npc)) {
                 if (npc.getBounds().getY() < player.getBounds().getY1()  + (player.getBounds().getHeight() / 2f)) {
-                    npc.draw(graphicsHandler);
+                    npc.draw2(graphicsHandler);
                 }
                 else {
                     drawNpcsAfterPlayer.add(npc);
@@ -273,7 +273,7 @@ public class Camera2 extends Rectangle {
 
         // npcs determined to be drawn after player from the above step are drawn here
         for (NPC npc : drawNpcsAfterPlayer) {
-            npc.draw(graphicsHandler);
+            npc.draw2(graphicsHandler);
         }
 
         // Uncomment this to see triggers drawn on screen

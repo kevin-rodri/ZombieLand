@@ -32,7 +32,7 @@ public class SecondPlayer extends Player {
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-        super.draw(graphicsHandler);
+        super.draw2(graphicsHandler);
     //   drawBounds(graphicsHandler, new Color(255, 0, 0, 170));
     }
 
