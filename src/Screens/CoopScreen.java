@@ -465,6 +465,7 @@ public class CoopScreen extends Screen {
 						
 					}
 			} else {
+					map.update(coOp);
 					player.update();
 					map.update(player);
 					coOp.update();
