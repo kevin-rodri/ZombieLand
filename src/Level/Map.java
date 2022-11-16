@@ -573,7 +573,7 @@ public abstract class Map {
     
     private void adjustMovementX2(Player player) {
         // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and move camera forward
-        if (player.getCalibratedXLocation() > xMidPoint && camera2.getEndBoundX() < endBoundX) {
+        if (player.getCalibratedXLocation2() > xMidPoint && camera2.getEndBoundX() < endBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation2();
             camera2.moveX(-xMidPointDifference);
 
@@ -584,7 +584,7 @@ public abstract class Map {
             }
         }
         // if player goes past center screen (on the left side) and there is more map to show on the left side, push player back to center and move camera backwards
-        else if (player.getCalibratedXLocation() < xMidPoint && camera2.getX() > startBoundX) {
+        else if (player.getCalibratedXLocation2() < xMidPoint && camera2.getX() > startBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation2();
             camera2.moveX(-xMidPointDifference);
 
