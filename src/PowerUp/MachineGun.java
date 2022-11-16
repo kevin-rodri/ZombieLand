@@ -32,10 +32,8 @@ public class MachineGun extends NPC implements SoundController {
 
 	    public void update(Player player) {
 
-			this.setIsHidden(true);
-			if(GunsmithScript.mgVis == true){
-				this.setIsHidden(false);
-			}
+		
+			
 	        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);

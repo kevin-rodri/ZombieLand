@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.TimerTask;
 import Screens.PlayLevelScreen;
+import Scripts.TestMap.AmmoScript;
 import Scripts.TestMap.GunsmithScript;
 import Utils.Point;
 
@@ -358,20 +359,38 @@ public class PlayLevelScreen extends Screen  {
 					t.start();
 
 				}
-				if(GunsmithScript.runningGUNSMITH==true) {
+				// will check to see if ammo script is running
+				// TO-DO: Implement whatever has to go here.
+				if (AmmoScript.ammoScriptRunning){
+					if(Keyboard.isKeyDown(Key.ONE)){
 
+					}
+					if(Keyboard.isKeyDown(Key.TWO)){
+		
+					}
+					if(Keyboard.isKeyDown(Key.THREE)){
+		
+					}
+				}
+				
+
+				// Will check to see if the GunSmith script is running
+				if(GunsmithScript.runningGUNSMITH==true) {
+					// Case One: A pistol will appear on the map
 					if (Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 50) {
-						System.out.println("yes key one");
 						MoneyBase.buyPistol();
-						GunsmithScript.pistolVis = true;
+						weapons pistol = new weapons(6, new Point(672, 104));
+						map.addNPC(pistol);
+						// Case Two: A asssault rifle will appear on the map
 					} else if (Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 100) {
-						System.out.println("yes key two");
 						MoneyBase.buyAssault();
-						GunsmithScript.assaultVis = true;
+						AssaultRifle assaultRifle = new AssaultRifle(8, new Point(672, 296));
+						map.addNPC(assaultRifle);
+							// Case Three: A machine gun will appear on the map
 					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500) {
-						System.out.println("yes key three");
 						MoneyBase.buyMG();
-						GunsmithScript.mgVis = true;
+						MachineGun machineGun = new MachineGun(9, new Point(1104, 824));
+        				map.addNPC(machineGun);
 					}
 				}
 			
