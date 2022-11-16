@@ -13,6 +13,7 @@ import Players.AlexWithAssaultRifle;
 import Screens.PlayLevelScreen;
 import Screens.PlayLevelScreen.PlayLevelScreenState;
 import Scripts.TestMap.DoublePointsScript;
+import Scripts.TestMap.GunsmithScript;
 import Utils.Direction;
 import Utils.Point;
 
@@ -30,6 +31,11 @@ public class MachineGun extends NPC implements SoundController {
 	    }
 
 	    public void update(Player player) {
+
+			this.setIsHidden(true);
+			if(GunsmithScript.mgVis == true){
+				this.setIsHidden(false);
+			}
 	        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
