@@ -4,11 +4,15 @@ import Engine.Key;
 import Level.NPC;
 import Level.Script;
 import Level.ScriptState;
+import Utils.Stopwatch;
 import Engine.Keyboard;
 
 // script for talking to walrus npc
 public class AmmoScript extends Script<NPC> {
-
+    private float counter;
+    private Stopwatch watch = new Stopwatch();
+    public static boolean ammoScriptRunning = false;
+    
     @Override
     protected void setup() {
         lockPlayer();
@@ -18,20 +22,19 @@ public class AmmoScript extends Script<NPC> {
         if (!isFlagSet("hasTalkedToAmmoNPC")) {
             addTextToTextboxQueue( "Hi!");
             addTextToTextboxQueue( "How much ammo would you like to purchase?\n1) 30 2) 60 3) 120");
-            if(Keyboard.isKeyDown(Key.ONE)){
+            ammoScriptRunning = true;
 
-            }
-            if(Keyboard.isKeyDown(Key.TWO)){
+            watch.setWaitTime(90000);
+        }else {
 
-            }
-            if(Keyboard.isKeyDown(Key.THREE)){
-
-            }
-
-        }
-        else {
-            addTextToTextboxQueue("You're on Cooldown please wait" + "x" + " minutes");
-        }
+        if (counter == 0.0f){
+            unsetFlag("hasTalkedToGunsmith");
+            watch.reset();
+        } 
+        counter = (((90000 - watch.getTimeLeft()) / 1000) %  60);
+        // this line will eventually be changed according to the script kyle will voice record
+        addTextToTextboxQueue("You're on Cooldown please wait " + counter + " seconds");
+    }
         entity.facePlayer(player);
     }
 

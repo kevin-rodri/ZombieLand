@@ -22,6 +22,7 @@ import PowerUp.AssaultRifle;
 import PowerUp.DoublePoints;
 import PowerUp.Nuke;
 import PowerUp.weapons;
+import Screens.PlayLevelScreen;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.*;
 import Tilesets.CommonTileset;
@@ -79,9 +80,6 @@ public class TestMap extends Map {
         nuke.setInteractScript(new NukeScript());
         npcs.add(nuke);
         
-        weapons pistol = new weapons(6, getMapTile(14, 3).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
-        npcs.add(pistol);
 
         ExtraLife lifeup = new ExtraLife(5, getMapTile(30, (int) Math.floor(Math.random()*(30-1+1)+1)).getLocation().subtractY(40));
         lifeup.setInteractScript(new WalrusScript());
@@ -95,13 +93,8 @@ public class TestMap extends Map {
         gunsmith.setInteractScript(new GunsmithScript());
         npcs.add(gunsmith);
 
-        AssaultRifle assaultRifle = new AssaultRifle(8, getMapTile(14, 7).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
-        npcs.add(assaultRifle);
-
-        MachineGun machineGun = new MachineGun(9, getMapTile(23, 18).getLocation().subtractY(40));
-        nuke.setInteractScript(new WalrusScript());
-        npcs.add(machineGun);
+       
+    
         return npcs;
 
 
