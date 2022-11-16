@@ -8,6 +8,7 @@ import Screens.CoopScreen;
 import Screens.CreditsScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
+import Screens.WinScreen;
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -22,6 +23,7 @@ public class ScreenCoordinator extends Screen {
 	protected GameState previousGameState;
 	private CoopScreen coopScreen = new CoopScreen(this);
 	private GameWindow window;
+//	private WinScreen WinScreen = new WinScreen(this);
 
 	public GameState getGameState() {
 		return gameState;
@@ -57,6 +59,9 @@ public class ScreenCoordinator extends Screen {
 					case COOP:
 						currentScreen = coopScreen;
 						break;
+//					case WinScreen:
+//						currentScreen = WinScreen;
+						
 				}
 				currentScreen.initialize();
 			}

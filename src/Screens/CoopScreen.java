@@ -83,6 +83,7 @@ public class CoopScreen extends Screen {
 	private Stopwatch TimerPlayerTwoPistol = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoAssaultRifle = new Stopwatch(); 
 	private  Stopwatch TimerPlayerTwoMachineGun= new Stopwatch(); 
+	public static int shotsFired = 0;
 	protected int counter = 0;
 
 	int m = 1;
@@ -109,6 +110,8 @@ public class CoopScreen extends Screen {
 		});
 		t.start();
 	}
+	
+	
 	public void x2time() {
 		xp = new Timer(5000, new ActionListener() {
 			@Override
@@ -135,7 +138,7 @@ public class CoopScreen extends Screen {
 	}
 
 	public void initialize() {
-
+		
 		// setup state
 		flagManager = new FlagManager();
 		waveCounter = new SpriteFont("WAVE " + counter , 300, 50, "z", 20, Color.WHITE);
@@ -248,6 +251,7 @@ public class CoopScreen extends Screen {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
+		map.getCamera().setWidth(map.getCamera().getWidth()-15);
 	}
 
 	public void update() {
@@ -311,6 +315,8 @@ public class CoopScreen extends Screen {
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+						shotsFired++;
+
 
 
 						// add fireball enemy to the map for it to offically spawn in the level
@@ -337,7 +343,7 @@ public class CoopScreen extends Screen {
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexTwoWithPistol.getY()) + 18;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-
+						shotsFired++;
 
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
@@ -368,7 +374,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexWithARifle.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
-
+							shotsFired++;
 
 							// add fireball enemy to the map for it to offically spawn in the level
 							map.addEnemy(bullet);
@@ -393,6 +399,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexTwoWithAssaultRifle.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -424,6 +431,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -449,6 +457,7 @@ public class CoopScreen extends Screen {
 							// int fireballY = (int) (player2.getY2() - player2.getY1());
 							int fireballY = Math.round(alexTwoWithMachineGun.getY()) + 18;
 							Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
+							shotsFired++;
 
 
 							// add fireball enemy to the map for it to offically spawn in the level
@@ -457,10 +466,11 @@ public class CoopScreen extends Screen {
 						
 					}
 			} else {
+					map.update(coOp);
 					player.update();
 					map.update(player);
 					coOp.update();
-					map.update(coOp);
+					map.update2(coOp);
 				}
 				
 				break;
@@ -549,13 +559,13 @@ public class CoopScreen extends Screen {
 		switch (playLevelScreenState) {
 			case RUNNING:
 			if (weapons.check){
-				map.draw(alexTwoWithPistol,  graphicsHandler);
+				map.draw2(alexTwoWithPistol,  graphicsHandler);
 			}else if (MachineGun.check){
-				map.draw(alexTwoWithMachineGun,  graphicsHandler);
+				map.draw2(alexTwoWithMachineGun,  graphicsHandler);
 			} else if (AssaultRifle.check){
-				map.draw(alexTwoWithAssaultRifle,graphicsHandler);
+				map.draw2(alexTwoWithAssaultRifle,graphicsHandler);
 			 }else {
-				map.draw(coOp, graphicsHandler);
+				map.draw2(coOp, graphicsHandler);
 			}
 				// pause game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {

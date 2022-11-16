@@ -22,6 +22,8 @@ public class Shooting extends Enemy {
 	private float movementSpeed;
 	private Stopwatch existenceTimer = new Stopwatch();
 	public static int bigDmg  = 0;
+	public static int numberOfKills = 0;
+	
 
 	public Shooting(Point location, float movementSpeed, int existenceTime) {
 		super(location.x, location.y, new SpriteSheet(ImageLoader.load("pistolBullet.png"), 7, 7), "DEFAULT");
@@ -79,6 +81,7 @@ public class Shooting extends Enemy {
                   }
 				  if(bigDmg ==2){
 					  bigDmg=0;
+					  numberOfKills++;
 					  MoneyBase.addMoneyMini();
 					  entityCollidedWith = get;
 					  enemy.remove(entityCollidedWith);

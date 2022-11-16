@@ -1,8 +1,6 @@
 package Level;
 
 import Engine.GraphicsHandler;
-
-
 import Engine.ScreenManager;
 import GameObject.GameObject;
 import GameObject.Rectangle;
@@ -29,16 +27,16 @@ public class Camera2 extends Rectangle {
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
     private ArrayList<Trigger> activeTriggers = new ArrayList<>();
     private ArrayList<Enemy> activeEnemies = new ArrayList<>();
-
+   
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
 
     public Camera2(int startX, int startY, int tileWidth, int tileHeight, Map map) {
-        super(startX, startY, ScreenManager.getScreenWidth() / tileWidth, ScreenManager.getScreenHeight() / tileHeight);
+        super(startX, startY, ScreenManager.getScreenWidth() / tileWidth-15, ScreenManager.getScreenHeight() / tileHeight);
         this.map = map;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth;
+        this.leftoverSpaceX = ScreenManager.getScreenWidth() % tileWidth ;
         this.leftoverSpaceY = ScreenManager.getScreenHeight() % tileHeight;
     }
 
@@ -56,7 +54,7 @@ public class Camera2 extends Rectangle {
         updateScripts();
     }
     
- 
+
 
     private void updateMapTiles() {
         for (MapTile tile : map.getAnimatedMapTiles()) {
@@ -196,13 +194,15 @@ public class Camera2 extends Rectangle {
 
   
 
+
+
 	public void draw(Player player, GraphicsHandler graphicsHandler) {
         drawMapTilesBottomLayer(graphicsHandler);
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
 	
-	
+
 
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen
@@ -213,14 +213,14 @@ public class Camera2 extends Rectangle {
             for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
                 MapTile tile = map.getMapTile(j, i);
                 if (tile != null) {
-                    tile.drawBottomLayer(graphicsHandler);
+                    tile.drawBottomLayer2(graphicsHandler);
                 }
             }
         }
 
         for (EnhancedMapTile enhancedMapTile : activeEnhancedMapTiles) {
             if (containsDraw(enhancedMapTile)) {
-                enhancedMapTile.drawBottomLayer(graphicsHandler);
+                enhancedMapTile.drawBottomLayer2(graphicsHandler);
             }
         }
     }
@@ -232,7 +232,7 @@ public class Camera2 extends Rectangle {
             for (int j = tileIndex.x - 1; j <= tileIndex.x + width + 1; j++) {
                 MapTile tile = map.getMapTile(j, i);
                 if (tile != null && tile.getTopLayer() != null) {
-                    tile.drawTopLayer(graphicsHandler);
+                    tile.drawTopLayer2(graphicsHandler);
                 }
             }
         }
@@ -250,7 +250,7 @@ public class Camera2 extends Rectangle {
         
         for (Enemy enemy : activeEnemies) {
             if (containsDraw(enemy)) {
-                enemy.draw(graphicsHandler);
+                enemy.draw2(graphicsHandler);
             }
         }
 
@@ -260,7 +260,7 @@ public class Camera2 extends Rectangle {
         for (NPC npc : activeNPCs) {
             if (containsDraw(npc)) {
                 if (npc.getBounds().getY() < player.getBounds().getY1()  + (player.getBounds().getHeight() / 2f)) {
-                    npc.draw(graphicsHandler);
+                    npc.draw2(graphicsHandler);
                 }
                 else {
                     drawNpcsAfterPlayer.add(npc);
@@ -269,11 +269,11 @@ public class Camera2 extends Rectangle {
         }
 
         // player is drawn to screen
-        player.draw(graphicsHandler);
+        player.draw2(graphicsHandler);
 
         // npcs determined to be drawn after player from the above step are drawn here
         for (NPC npc : drawNpcsAfterPlayer) {
-            npc.draw(graphicsHandler);
+            npc.draw2(graphicsHandler);
         }
 
         // Uncomment this to see triggers drawn on screen
@@ -338,4 +338,3 @@ public class Camera2 extends Rectangle {
         return this.getEndBoundY() >= map.getEndBoundY();
     }
 }
-
