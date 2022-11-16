@@ -418,6 +418,7 @@ public class PlayLevelScreen extends Screen  {
 
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexWithAPistol.getY()) + 18;
+						numberShotsFired++;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
 
 						// add fireball enemy to the map for it to offically spawn in the level
@@ -444,6 +445,7 @@ public class PlayLevelScreen extends Screen  {
 
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexWithARifle.getY()) + 18;
+						numberShotsFired++;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
 
 						// add fireball enemy to the map for it to offically spawn in the level
@@ -470,6 +472,7 @@ public class PlayLevelScreen extends Screen  {
 
 						// int fireballY = (int) (player2.getY2() - player2.getY1());
 						int fireballY = Math.round(alexWithAMachineGun.getY()) + 18;
+						numberShotsFired++;
 						Shooting bullet = new Shooting(new Point(fireballX, fireballY), movementSpeed, 100000);
 
 						// add fireball enemy to the map for it to offically spawn in the level
@@ -527,6 +530,11 @@ public class PlayLevelScreen extends Screen  {
 					graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
 							ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
 				}
+				waveCounter.draw(graphicsHandler);
+				money.draw(graphicsHandler);
+				health.draw(graphicsHandler);
+				healthBar.draw(graphicsHandler);
+				ammoCount.draw(graphicsHandler);
 
 				break;
 			case LEVEL_COMPLETED:
@@ -556,12 +564,6 @@ public class PlayLevelScreen extends Screen  {
 
 				break;
 		}
-
-		waveCounter.draw(graphicsHandler);
-		money.draw(graphicsHandler);
-		health.draw(graphicsHandler);
-		healthBar.draw(graphicsHandler);
-		ammoCount.draw(graphicsHandler);
 	}
 
 	public PlayLevelScreenState getPlayLevelScreenState() {
