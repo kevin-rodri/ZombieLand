@@ -1,5 +1,8 @@
 package Scripts.TestMap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Engine.Key;
 import Engine.KeyLocker;
 import Level.FlagManager;
@@ -9,10 +12,10 @@ import Level.ScriptState;
 import Engine.Keyboard;
 import MoneySystem.MoneyBase;
 // script for talking to walrus npc
-import Utils.Stopwatch;
 
-public class GunsmithScript extends Script<NPC> {
+public class GunsmithScript extends Script<NPC> implements SoundController {
 public static boolean runningGUNSMITH = false;
+private Timer timer = new Timer();
 
     @Override
     protected void setup() {
@@ -21,8 +24,20 @@ public static boolean runningGUNSMITH = false;
 
         // changes what walrus says when talking to him the first time (flag is not set) vs talking to him afterwards (flag is set)
         if (!isFlagSet("hasTalkedToGunsmith") ) {
-            addTextToTextboxQueue( "Hi!");
-            addTextToTextboxQueue( "What gun would you like to purchase?\n1) Pistol  2) Assault Rifle  3) Special Machine Gun");
+            addTextToTextboxQueue( "Why hello there, young sir Alex.");
+            playSE(10);
+
+
+            addTextToTextboxQueue( "Tis’ the season to enjoy a gun fight!\n What gun are you looking for:\n1) Pistol  2) Assault Rifle  3) Special Machine Gun");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // TODO: Compress the four sound files to one.
+                    playSE(11);
+                }
+            }, 4000);
+           
+            
              runningGUNSMITH = true;
         }
         entity.facePlayer(player);
