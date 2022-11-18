@@ -22,7 +22,7 @@ class CreateFile
         for (int i = 0; i < str.length(); i++)
             fw.write(str.charAt(i));
 
-        System.out.println("Writing successful");
+        //System.out.println("Writing successful");
         //close the file
         fw.close();
     }
@@ -41,7 +41,7 @@ class CreateFile
         for (int i = 0; i < strm.length(); i++)
             fwm.write(strm.charAt(i));
 
-        System.out.println("Writing successful");
+        //System.out.println("Writing successful");
         //close the file
         fwm.close();
     }
