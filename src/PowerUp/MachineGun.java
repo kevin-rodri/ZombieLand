@@ -9,7 +9,13 @@ import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
 import Level.PlayerState;
+import Players.Alex;
+import Players.Alex2WithAPistol;
+import Players.Alex2WithAssaultRifle;
+import Players.AlexWithAPistol;
 import Players.AlexWithAssaultRifle;
+import Players.AlexWithMachineGun;
+import Players.SecondPlayer;
 import Screens.PlayLevelScreen;
 import Screens.PlayLevelScreen.PlayLevelScreenState;
 import Scripts.TestMap.DoublePointsScript;
@@ -26,15 +32,19 @@ public class MachineGun extends NPC implements SoundController {
     protected Player player;
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
+	public static boolean second = false;
 	 public MachineGun(int id, Point location) {
 	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("MachineGun.png"), 45, 45), "STAND_RIGHT");
 	    }
 
 	    public void update(Player player) {
 
-		
+			if ((player instanceof SecondPlayer || player instanceof Alex2WithAPistol || player instanceof Alex2WithAssaultRifle) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING){
+				second = true;
+				this.setIsHidden(true);
+			}
 			
-	        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
+	        if ( (player instanceof Alex || player instanceof AlexWithAssaultRifle || player instanceof AlexWithAPistol) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
 	        	// PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
