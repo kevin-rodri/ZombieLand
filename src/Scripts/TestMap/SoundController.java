@@ -12,7 +12,7 @@ public interface SoundController {
         sound.loop();
     }
 
-    public default void stopMuisc() {
+    public default void stopMusic() {
         sound.stop();
 
     }

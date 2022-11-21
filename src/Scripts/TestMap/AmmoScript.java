@@ -16,6 +16,7 @@ public class AmmoScript extends Script<NPC> implements SoundController {
     private float counter;
     private Stopwatch watch = new Stopwatch();
     public static boolean ammoScriptRunning = false;
+    public static boolean notEnoughFunds = false;
     private Timer timer = new Timer();
 
     @Override
@@ -48,7 +49,7 @@ public class AmmoScript extends Script<NPC> implements SoundController {
                         playSE(7);
                     }
                 }, 10000);
-               
+
             
                 addTextToTextboxQueue( "Alright, good luck. Watch out for the crazy’s... ");
                timer.schedule(new TimerTask() {
@@ -62,6 +63,7 @@ public class AmmoScript extends Script<NPC> implements SoundController {
             
        
             ammoScriptRunning = true;
+
 
             watch.setWaitTime(90000);
         } else {
