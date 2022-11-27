@@ -503,7 +503,6 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				winScreen.update();
-				// winScreen.update();
 				break;
 		}
 

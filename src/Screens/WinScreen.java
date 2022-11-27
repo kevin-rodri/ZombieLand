@@ -56,7 +56,6 @@ public class WinScreen extends Screen {
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-//    	initialize();
         graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.black);
         winMessage.draw(graphicsHandler);
         instructions.draw(graphicsHandler);

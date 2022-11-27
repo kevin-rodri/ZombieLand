@@ -669,6 +669,13 @@ public abstract class Map {
 
     }
 
+    public void draw(Player player, Player player2, GraphicsHandler graphicsHandler) {
+        camera.draw(player, player2, graphicsHandler);
+        if (textbox.isActive()) {
+            textbox.draw(graphicsHandler);
+        }
+    }
+    
     public void draw(Player player, GraphicsHandler graphicsHandler) {
         camera.draw(player, graphicsHandler);
         if (textbox.isActive()) {
@@ -682,15 +689,14 @@ public abstract class Map {
             textbox.draw(graphicsHandler);
         }
     }
+    
+    public void draw3(Player player, Player player2, GraphicsHandler graphicsHandler) {
+        camera2.draw(player, graphicsHandler);
+        if (textbox.isActive()) {
+            textbox.draw(graphicsHandler);
+        }
+    }
 
-//    public void draw(Player coOp, Player player, GraphicsHandler graphicsHandler) {
-//        camera.draw(player, graphicsHandler);
-//       // camera2.draw(coOp, graphicsHandler);
-//        camera2.draw(player, graphicsHandler);
-//        if (textbox.isActive()) {
-//            textbox.draw(graphicsHandler);
-//        }
-//    }
     
 
     public FlagManager getFlagManager() { return flagManager; }
