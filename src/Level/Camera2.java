@@ -201,6 +201,11 @@ public class Camera2 extends Rectangle {
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
+	public void draw(Player player, Player player2, GraphicsHandler graphicsHandler) {
+		drawMapTilesBottomLayer(graphicsHandler);
+		drawMapEntities(player, player2, graphicsHandler);
+		drawMapTilesTopLayer(graphicsHandler);
+	}
 	
 
 
@@ -287,6 +292,46 @@ public class Camera2 extends Rectangle {
          */
         
     }
+    public void drawMapEntities(Player player, Player player2, GraphicsHandler graphicsHandler) {
+		ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
+
+		for (Enemy enemy : activeEnemies) {
+			if (containsDraw(enemy)) {
+				enemy.draw2(graphicsHandler);
+			}
+		}
+
+		// goes through each active npc and determines if it should be drawn at this
+		// time based on their location relative to the player
+		// if drawn here, npc will later be "overlapped" by player
+		// if drawn later, npc will "cover" player
+		for (NPC npc : activeNPCs) {
+			if (containsDraw(npc)) {
+				if (npc.getBounds().getY() < player.getBounds().getY1() + (player.getBounds().getHeight() / 2f)) {
+					npc.draw2(graphicsHandler);
+				} else {
+					drawNpcsAfterPlayer.add(npc);
+				}
+			}
+		}
+
+		// player is drawn to screen
+		player.draw(graphicsHandler);
+		player2.draw2(graphicsHandler);
+
+		// npcs determined to be drawn after player from the above step are drawn here
+		for (NPC npc : drawNpcsAfterPlayer) {
+			npc.draw2(graphicsHandler);
+		}
+
+		// Uncomment this to see triggers drawn on screen
+		// helps for placing them in the correct spot/debugging
+		/*
+		 * for (Trigger trigger : activeTriggers) { if (containsDraw(trigger)) {
+		 * trigger.draw(graphicsHandler); } }
+		 */
+
+	}
 
 
     // checks if a game object's position falls within the camera's current radius

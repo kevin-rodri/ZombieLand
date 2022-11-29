@@ -690,11 +690,22 @@ public abstract class Map {
         }
     }
     
-    public void draw3(Player player, Player player2, GraphicsHandler graphicsHandler) {
-        camera2.draw(player, graphicsHandler);
-        if (textbox.isActive()) {
-            textbox.draw(graphicsHandler);
-        }
+    public void draw3(Player player, Player player2, GraphicsHandler graphicsHandler, int playerNumber) {
+    	if(playerNumber==1)
+    	{
+    		camera.draw(player,player2, graphicsHandler);
+            if (textbox.isActive()) {
+                textbox.draw(graphicsHandler);
+            }
+    	}
+    	else if(playerNumber==2)
+    	{
+    		camera2.draw(player2,player, graphicsHandler);
+            if (textbox.isActive()) {
+                textbox.draw(graphicsHandler);
+            }
+    	}
+        
     }
 
     

@@ -207,7 +207,6 @@ public class Camera extends Rectangle {
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
-
 	public void draw(Player player, Player player2, GraphicsHandler graphicsHandler) {
 		drawMapTilesBottomLayer(graphicsHandler);
 		drawMapEntities(player, player2, graphicsHandler);
@@ -323,8 +322,9 @@ public class Camera extends Rectangle {
 		}
 
 		// player is drawn to screen
+//		player2.draw(graphicsHandler);
 		player.draw(graphicsHandler);
-		player2.draw2(graphicsHandler);
+		
 
 		// npcs determined to be drawn after player from the above step are drawn here
 		for (NPC npc : drawNpcsAfterPlayer) {

@@ -593,8 +593,8 @@ public class CoopScreen extends Screen {
 			}
 
 			player.update();
-			map.update(player);
 			coOp.update();
+			map.update(player);		
 			map.update2(coOp);
 
 			break;
@@ -644,8 +644,8 @@ public class CoopScreen extends Screen {
 
 			}
 			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-//				map.draw(player, coOp, graphicsHandler);
-				map.draw(player, graphicsHandler);
+				map.draw3(player, coOp, graphicsHandler,1);
+		//		map.draw(player, graphicsHandler);
 
 			}
 			
@@ -671,9 +671,8 @@ public class CoopScreen extends Screen {
 			healthBar.draw(graphicsHandler);
 			ammoCount.draw(graphicsHandler);
 			graphicsHandler.setGraphics(tempG);
-			graphicsHandler.drawImage(subImage, 0, 0);
-			graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH / 2, 0, 25, 1000, new Color(40, 40, 40),
-					new Color(40, 40, 40), 30);
+			graphicsHandler.drawImage(subImage, 0, 0);		
+			graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH / 2, 0, 25, 1000, new Color(40, 40, 40),new Color(40, 40, 40), 30);
 			break;
 		case LEVEL_COMPLETED:
 			try {
@@ -697,9 +696,6 @@ public class CoopScreen extends Screen {
 			//gameOver.draw(graphicsHandler);
 			health.setIsHidden(true);
 		}
-
-
-		// graphicsHandler.drawImage(subImage,Config.GAME_WINDOW_WIDTH/2, 0);
 // RIGHT SIDE		
 
 		// do drawing things
@@ -725,7 +721,8 @@ public class CoopScreen extends Screen {
 				map.draw2(alexTwoWithMachineGun, graphicsHandler);
 			}
 			if (!AssaultRifle.second && !weapons.second && !MachineGun.second) {
-				map.draw2(coOp, graphicsHandler);
+				map.draw3(player, coOp, graphicsHandler,2);
+		//		map.draw2(coOp, graphicsHandler);
 			}
 			// pause game logic was moved to here
 			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
