@@ -126,6 +126,7 @@ public class MenuScreen extends Screen implements SoundController{
             else if(menuItemSelected == 1)
             {
             	screenCoordinator.setGameState(GameState.COOP);
+                playSE(30);
             }
             else if (menuItemSelected == 2) {
                 screenCoordinator.setGameState(GameState.CREDITS);

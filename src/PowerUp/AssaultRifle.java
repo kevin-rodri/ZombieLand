@@ -25,6 +25,8 @@ import Utils.Direction;
 import Utils.Point;
 
 import java.util.HashMap;
+import java.util.Random;
+
 import Level.NPC;
 
 // Class that holds assualt rifle 
@@ -33,7 +35,9 @@ public class AssaultRifle extends NPC implements SoundController{
 	protected Player player;
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
-	public static boolean second = false;
+	public static boolean second = false;	
+	int randomVoiceLine = 0;
+	Random random = new Random();
 	 public AssaultRifle(int id, Point location) {
 	        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("AssaultRifle.png"), 45, 45), "STAND_RIGHT");
 	    }
@@ -48,18 +52,12 @@ public class AssaultRifle extends NPC implements SoundController{
 	        if ( (player instanceof Alex || player instanceof AlexWithAPistol || player instanceof AlexWithMachineGun) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
-	        	// PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
-				// playLevelScreen.initialize();
-				// playLevelScreen.update();
-	            try {
-	                playSE(0);
-	       
-	             } catch(Exception e) {
-	                System.out.println("toString(): " + e.toString());
-	                System.out.println("getMessage(): " + e.getMessage());
-	                System.out.println("StackTrace: ");
-	                e.printStackTrace();
-	             }
+	        	randomVoiceLine = random.nextInt(30);
+			if (randomVoiceLine <= 15) {
+				playSE(21);
+			} else if (randomVoiceLine <= 30 && randomVoiceLine > 15) {
+				playSE(20);
+			}
 
 	        }
 			super.update(player);

@@ -51,7 +51,11 @@ public class SoundFX {
         soundeffects[18] = ".//Resources//sounds/a-double-points_EXCITED.wav";
         soundeffects[20] = ".//Resources/sounds/a-itsshowtime.wav";
         soundeffects[21] = ".//Resources/sounds/a-hey-mush-brain-over-here_ATTEMPTED_ATTITUDE.wav";
+        soundeffects[22] = ".//Resources/sounds/a-i-eat-zombies-for-breakfast.wav";
+        soundeffects[23] = ".//Resources/sounds/a-show-me-the-money_EXCITED.wav";
+        soundeffects[24] = ".//Resources/sounds/a-is-that-all-youve-got_SERIOUSLY.wav";
         // Phalex voice lines
+        soundeffects[30] = ".//Resources/sounds/f-meet-your-maker.wav";
     }
 
     public String[] getSoundEffects() {
@@ -88,7 +92,7 @@ public class SoundFX {
     }
 
     public void loop() {
-        // clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void stop() {

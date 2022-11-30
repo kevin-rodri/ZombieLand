@@ -14,18 +14,21 @@ import Utils.Point;
 import java.util.ArrayList;
 import Utils.Stopwatch;
 import java.util.HashMap;
+import java.util.Random;
 
 /*
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
  * Code is from the SER-225 platformer game 
  */
-public class Zombie extends Enemy{
+public class Zombie extends Enemy implements SoundController{
 
 	private float zombieSpeed = 1.5f;
 	private Direction startFacingDirection;
 	private Direction facingDirection;
 	public static boolean disappear;
 	public static boolean check = true;
+    int randomVoiceLine = 0;
+    Random random = new Random();
 
 
 	public Zombie(Point location, Direction facingDirection) {
@@ -154,6 +157,11 @@ public class Zombie extends Enemy{
              //bigDmg+=1;
              //System.out.println(bigDmg);
              this.setIsHidden(true);
+             playSE(15);
+             randomVoiceLine = random.nextInt(100);
+             if (randomVoiceLine == 25%0){
+
+             }
              //this.setInteractScript(DoublePointsScript);
          }
 

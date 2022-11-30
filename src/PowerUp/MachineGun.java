@@ -25,6 +25,8 @@ import Utils.Direction;
 import Utils.Point;
 
 import java.util.HashMap;
+import java.util.Random;
+
 import Level.NPC;
 
 public class MachineGun extends NPC implements SoundController {
@@ -33,6 +35,8 @@ public class MachineGun extends NPC implements SoundController {
 	protected PlayLevelScreenState playLevelScreenState;
 	public static boolean check = false;
 	public static boolean second = false;
+	int randomVoiceLine = 0;
+	Random random = new Random();
 
 	public MachineGun(int id, Point location) {
 		super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("MachineGun.png"), 45, 45), "STAND_RIGHT");
@@ -51,7 +55,12 @@ public class MachineGun extends NPC implements SoundController {
 				&& player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 			check = true;
 			this.setIsHidden(true);
-			playSE(21);
+			randomVoiceLine = random.nextInt(30);
+			if (randomVoiceLine <= 15) {
+				playSE(21);
+			} else if (randomVoiceLine <= 30 && randomVoiceLine > 15) {
+				playSE(20);
+			}
 
 		}
 		super.update(player);
@@ -77,3 +86,10 @@ public class MachineGun extends NPC implements SoundController {
 		super.draw(graphicsHandler);
 	}
 }
+
+	
+
+
+	
+
+	

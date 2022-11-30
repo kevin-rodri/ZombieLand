@@ -55,7 +55,7 @@ import Utils.Point;
 
 // This class is for when the platformer game is actually being played
 // note: Got rid of SoundController but we can add it back.. I was getting a werid error 
-public class PlayLevelScreen extends Screen  implements SoundController {
+public class PlayLevelScreen extends Screen implements SoundController {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
@@ -89,7 +89,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 	protected int x2counter = 0;
 	public static boolean noAmmo = false;
 	public static boolean x2End = false;
-	boolean hasMachineGun = false; 
+	boolean hasMachineGun = false;
+	int randomVoiceLine = 0;
+	Random randomize = new Random();
 
 	int m = 1;
 	int z = 10;
@@ -124,29 +126,31 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 		});
 		t.start();
 	}
-	public void gameTime(){
+
+	public void gameTime() {
 		fuGame = new Timer(1000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(flagManager.isFlagSet("hasDied")){
+				if (flagManager.isFlagSet("hasDied")) {
 
 					fuGame.stop();
 
 				}
-				if(fullGameTime>59){
+				if (fullGameTime > 59) {
 					fullGameTime = 0;
 				}
-				fullGameTime ++;
+				fullGameTime++;
 
 			}
 		});
 		fuGame.start();
 	}
-	public void gameMin(){
+
+	public void gameMin() {
 		fuGameMin = new Timer(60000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(flagManager.isFlagSet("hasDied")){
+				if (flagManager.isFlagSet("hasDied")) {
 					fuGameMin.stop();
 				}
 
@@ -172,7 +176,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			}
 		});
 		xp.start();
-		
+
 	}
 
 	// Method that handles generating small and regular Zombies
@@ -187,7 +191,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				randomX = -50 + random.nextInt(1620);
 				// generate a number from -500 --> 1620
 				randomY = -50 + random.nextInt(1620);
-				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
+				if (randomX <= 0 && randomY <= 1620 || randomX >= 1620 && randomY <= 1620 || randomY <= 0) {
 					szOutsideOfMap = true;
 				}
 			}
@@ -206,7 +210,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				randomX = -50 + random.nextInt(1620);
 				// generate a number from -50 --> 1620
 				randomY = -50 + random.nextInt(1620);
-				if (randomX <= 0 && randomY <= 1750 || randomX >= 1620 && randomY <= 1750 || randomY <= 0) {
+				if (randomX <= 0 && randomY <= 1620 || randomX >= 1620 && randomY <= 1620 || randomY <= 0) {
 					zOutsideOfMap = true;
 				}
 			}
@@ -330,16 +334,16 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip > 0) {
 					LightAmmo.ammoClip -= 30;
 					LightAmmo.ammoCount += 30;
-					//Alex reload voice line
+					// Alex reload voice line
 					playSE(14);
-					//Weapon reload FX
+					// Weapon reload FX
 					playSE(16);
 				}
 
 				if (Nuke.usedNuke == true) {
 					Shooting.numberOfKills = Shooting.numberOfKills + map.getEnemies().size();
 					map.getEnemies().removeAll(map.getEnemies());
-					//Alex Nuke voice line
+					// Alex Nuke voice line
 					playSE(17);
 					Nuke.usedNuke = false;
 				} else if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
@@ -374,37 +378,37 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				}
 				// will check to see if ammo script is running
 				// TO-DO: Implement whatever has to go here.
-				if (AmmoScript.ammoScriptRunning){
-					if(Keyboard.isKeyDown(Key.ONE)){
+				if (AmmoScript.ammoScriptRunning) {
+					if (Keyboard.isKeyDown(Key.ONE)) {
 
 					}
-					if(Keyboard.isKeyDown(Key.TWO)){
-		
+					if (Keyboard.isKeyDown(Key.TWO)) {
+
 					}
-					if(Keyboard.isKeyDown(Key.THREE)){
-		
+					if (Keyboard.isKeyDown(Key.THREE)) {
+
 					}
 				}
-// if (hasMachineGun == true){
-// 	playSE(20);
+				// if (hasMachineGun == true){
+				// playSE(20);
 
-// }
+				// }
 
 				// Will check to see if the AmmoSmith script is running
-				if(AmmoScript.ammoScriptRunning == true){
+				if (AmmoScript.ammoScriptRunning == true) {
 					if (Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 100) {
 						MoneyBase.buy30Rounds();
 						LightAmmo.ammoClip += 30;
-					} else if (Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 150){
+					} else if (Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 150) {
 						MoneyBase.buy60Rounds();
-						LightAmmo.ammoClip +=60;
-					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >=200){
+						LightAmmo.ammoClip += 60;
+					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 200) {
 						MoneyBase.buy120Rounds();
-						LightAmmo.ammoClip +=120;
+						LightAmmo.ammoClip += 120;
 					}
 				}
 				// Will check to see if the GunSmith script is running
-				if(GunsmithScript.runningGUNSMITH==true) {
+				if (GunsmithScript.runningGUNSMITH == true) {
 					// Case One: A pistol will appear on the map
 					if (Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 50) {
 						MoneyBase.buyPistol();
@@ -415,14 +419,14 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						MoneyBase.buyAssault();
 						AssaultRifle assaultRifle = new AssaultRifle(8, new Point(672, 296));
 						map.addNPC(assaultRifle);
-							// Case Three: A machine gun will appear on the map
+						// Case Three: A machine gun will appear on the map
 					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount <= 500) {
 						MoneyBase.buyMG();
 						MachineGun machineGun = new MachineGun(9, new Point(1104, 824));
-        				map.addNPC(machineGun);
+						map.addNPC(machineGun);
 					}
 				}
-			
+
 				if (weapons.check) {
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
@@ -448,6 +452,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						TimerPlayerOnePistol.setWaitTime(500);
+
 					}
 
 				} else if (AssaultRifle.check) {
@@ -480,7 +485,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				} else if (MachineGun.check) {
 
 					alexWithAMachineGun.update();
-					
+
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
 					if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
@@ -504,8 +509,16 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						TimerPlayerOneMachineGun.setWaitTime(500);
-					}
+						randomVoiceLine = random.nextInt(60);
+						if (randomVoiceLine <= 2) {
+							playSE(22);
+						} else if (randomVoiceLine >= 20 && randomVoiceLine < 22) {
+							playSE(15);
+						} else if (randomVoiceLine >= 40 && randomVoiceLine < 42) {
+							playSE(24);
 
+						}
+					}
 				}
 				if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 					player.update();
@@ -516,7 +529,6 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
 				winScreen.update();
-				// winScreen.update();
 				break;
 		}
 
@@ -534,7 +546,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.draw(alexWithAPistol, graphicsHandler);
 				} else if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
-					//playSE(21);
+					// playSE(21);
 				} else if (AssaultRifle.check) {
 					map.draw(alexWithARifle, graphicsHandler);
 				}
@@ -578,16 +590,14 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				}
 				winScreen.initialize();
 				winScreen.draw(graphicsHandler);
-				//screenCoordinator.setGameState(GameState.WinScreen);
-
+				// screenCoordinator.setGameState(GameState.WinScreen);
 
 				waveCounter.setText("");
 				money.setText("");
 				healthBar.setText("");
 				ammoCount.setText("");
-				//gameOver.draw(graphicsHandler);
+				// gameOver.draw(graphicsHandler);
 				health.setIsHidden(true);
-
 
 				break;
 		}

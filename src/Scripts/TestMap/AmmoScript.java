@@ -40,7 +40,7 @@ public class AmmoScript extends Script<NPC> implements SoundController {
                 }
             }, 5000);
            
-            addTextToTextboxQueue( "I have plenty of options to choose from: \n1) 30 2) 60 3) 120");
+            addTextToTextboxQueue( "I have plenty of options to choose from: \n1) 30 - $100 2) 60 - $150 3) 120 - $200");
              
                 timer.schedule(new TimerTask() {
                     @Override
