@@ -27,6 +27,8 @@ public class Camera2 extends Rectangle {
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
     private ArrayList<Trigger> activeTriggers = new ArrayList<>();
     private ArrayList<Enemy> activeEnemies = new ArrayList<>();
+    private int yLocation;
+    private int xLocation;
    
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
@@ -192,10 +194,10 @@ public class Camera2 extends Rectangle {
         drawMapEntities(player, graphicsHandler);
         drawMapTilesTopLayer(graphicsHandler);
     }
-	public void draw(Player player, Player player2, GraphicsHandler graphicsHandler) {
+	public void draw(Player player, Player player2, GraphicsHandler graphicsHandler) {	
 		drawMapTilesBottomLayer(graphicsHandler);
 		drawMapEntities(player, player2, graphicsHandler);
-		drawMapTilesTopLayer(graphicsHandler);
+		drawMapTilesTopLayer(graphicsHandler);	
 	}
     // draws the bottom layer of visible map tiles to the screen
     // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen
@@ -304,7 +306,7 @@ public class Camera2 extends Rectangle {
 
 		// player is drawn to screen
 		player.draw(graphicsHandler);
-	//	player2.draw2(graphicsHandler);
+		player2.draw2(graphicsHandler);
 
 		// npcs determined to be drawn after player from the above step are drawn here
 		for (NPC npc : drawNpcsAfterPlayer) {
