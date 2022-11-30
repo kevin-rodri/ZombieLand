@@ -287,35 +287,28 @@ public class CoopScreen extends Screen {
 
 		this.alexWithAPistol = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexWithAPistol.setMap(map);
-		this.alexWithAPistol.setLocation(670, 120);
 		this.alexWithAPistol.setFacingDirection(player.getFacingDirection());
 
 		this.alexWithARifle = new AlexWithAssaultRifle(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexWithARifle.setMap(map);
-		this.alexWithARifle.setLocation(672, 296);
 		this.alexWithARifle.setFacingDirection(player.getFacingDirection());
 
-		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x,
-				map.getPlayerStartPosition().y);
+		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x,map.getPlayerStartPosition().y);
 		this.alexWithAMachineGun.setMap(map);
-		this.alexWithAMachineGun.setLocation(1104, 824);
 		this.alexWithAMachineGun.setFacingDirection(player.getFacingDirection());
 
 		this.alexTwoWithPistol = new Alex2WithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexTwoWithPistol.setMap(map);
-		this.alexTwoWithPistol.setLocation(670, 120);
 		this.alexTwoWithPistol.setFacingDirection(player.getFacingDirection());
 
 		this.alexTwoWithAssaultRifle = new Alex2WithAssaultRifle(map.getPlayerStartPosition().x,
 				map.getPlayerStartPosition().y);
 		this.alexTwoWithAssaultRifle.setMap(map);
-		this.alexTwoWithAssaultRifle.setLocation(672, 296);
 		this.alexTwoWithAssaultRifle.setFacingDirection(player.getFacingDirection());
 
 		this.alexTwoWithMachineGun = new Alex2WithMachineGun(map.getPlayerStartPosition().x,
 				map.getPlayerStartPosition().y);
 		this.alexTwoWithMachineGun.setMap(map);
-		this.alexTwoWithMachineGun.setLocation(1104, 824);
 		this.alexTwoWithMachineGun.setFacingDirection(player.getFacingDirection());
 //		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
