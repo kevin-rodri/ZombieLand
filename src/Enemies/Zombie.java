@@ -79,7 +79,7 @@ public class Zombie extends Enemy{
 
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
-            MoneyBase.addMoneyZombie();
+            //MoneyBase.addMoneyZombie();
 
      }   
      if(disappear == true) {
