@@ -75,6 +75,10 @@ public class CoopScreen extends Screen {
 	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
 	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
 	private final Key pauseKey = Key.P;
+	protected Key movingForPlayer2W = Key.W; // shooting key for second
+	protected Key movingForPlayer2A = Key.A;
+	protected Key movingForPlayer2S = Key.S;
+	protected Key movingForPlayer2D = Key.A;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
@@ -89,7 +93,7 @@ public class CoopScreen extends Screen {
 	private Stopwatch TimerPlayerTwoMachineGun = new Stopwatch();
 	public static int shotsFired = 0;
 	public static int numberOfWaves = 0;
-	protected int counter = 0;
+	protected int counter = 1;
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
 	private boolean playerTwoIntersectsPistol = false;
@@ -105,21 +109,21 @@ public class CoopScreen extends Screen {
 	Random random = new Random();
 
 	private void time() {
-		t = new Timer(5000, new ActionListener() {
+		t = new Timer(30000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (counter > 9) {
+				if (HealthSystem.healthCount <= 0) {
 					t.stop();
 				}
-
 				waveCounter.setText("WAVE " + counter);
+				numberOfWaves++;
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
+				startWave(z, sz);
 				m = m * 2;
-				counter++;
-				numberOfWaves++;
+
 			}
 		});
 		t.start();
@@ -239,14 +243,11 @@ public class CoopScreen extends Screen {
 		this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.playLevelScreenState = PlayLevelScreenState.RUNNING;
 		this.player.setFacingDirection(Direction.LEFT);
-		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x + 50, map.getPlayerStartPosition().y);
+		
+		this.coOp = new SecondPlayer(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.coOp.setMap(map);
 		this.coOp.setLocation(playerStartPosition.x, playerStartPosition.y);
 		this.coOp.setFacingDirection(player.getFacingDirection());
-		this.player2 = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
-		this.player2.setMap(map);
-		this.player2.setLocation(670, 120);
-		this.player2.setFacingDirection(player.getFacingDirection());
 
 		this.alexWithAPistol = new AlexWithAPistol(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
 		this.alexWithAPistol.setMap(map);
@@ -309,6 +310,7 @@ public class CoopScreen extends Screen {
 			}
 		}
 		map.getCamera().setWidth(map.getCamera().getWidth() - 15);
+		coOp.setLocation(coOp.getX()+150, coOp.getY());
 
 		startWave(z, sz);
 	}
@@ -350,7 +352,18 @@ public class CoopScreen extends Screen {
 			healthBar.setText("" + HealthSystem.healthCount);
 			money.setText("$" + MoneyBase.moneyCount);
 			ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+	
+			// To control the amount of enemies that spawn per round. Cap is 72 enemies
+				if (map.getEnemies().size() >= 80) {
 
+					t.stop();
+
+				}
+				if (map.getEnemies().size() < 80) {
+
+					t.start();
+
+				}
 			// will check to see if ammo script is running
 			// TO-DO: Implement whatever has to go here.
 			if (AmmoScript.ammoScriptRunning) {
@@ -407,7 +420,7 @@ public class CoopScreen extends Screen {
 				}
 			}
 
-			if (weapons.second) {
+			if (weapons.second) {		
 				alexTwoWithPistol.update();
 				map.update(alexTwoWithPistol);
 
@@ -590,13 +603,11 @@ public class CoopScreen extends Screen {
 
 				}
 
-			}
-
+			}			
+			map.update(player);	
+			map.update2(coOp);	
 			player.update();
 			coOp.update();
-			map.update(player);		
-			map.update2(coOp);
-
 			break;
 		// if level has been completed, bring up level cleared screen
 		case LEVEL_COMPLETED:
@@ -651,10 +662,8 @@ public class CoopScreen extends Screen {
 			
 			// pasue game logic was moved to here
 			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-				isGamePaused = !isGamePaused;
-				keyLocker.lockKey(pauseKey);
+				isGamePaused = !isGamePaused;		
 		}
-
 			if (Keyboard.isKeyUp(pauseKey)) {
 				keyLocker.unlockKey(pauseKey);
 			}
@@ -721,7 +730,7 @@ public class CoopScreen extends Screen {
 				map.draw2(alexTwoWithMachineGun, graphicsHandler);
 			}
 			if (!AssaultRifle.second && !weapons.second && !MachineGun.second) {
-				map.draw3(player, coOp, graphicsHandler,2);
+				map.draw3(coOp, player, graphicsHandler,2);
 		//		map.draw2(coOp, graphicsHandler);
 			}
 			// pause game logic was moved to here

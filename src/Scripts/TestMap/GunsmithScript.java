@@ -39,6 +39,19 @@ private Timer timer = new Timer();
            
             
              runningGUNSMITH = true;
+        } else {
+            addTextToTextboxQueue( "Why hello there, young sir Alex.");
+            playSE(10);
+
+//What gun are you looking for
+            addTextToTextboxQueue( "Tis’ the season to enjoy a gun fight!\n1) Pistol $50  2) Assault Rifle $100  3) Machine Gun $500");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // TODO: Compress the four sound files to one.
+                    playSE(11);
+                }
+            }, 4000);
         }
         entity.facePlayer(player);
     }
