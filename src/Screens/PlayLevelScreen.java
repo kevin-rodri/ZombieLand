@@ -439,7 +439,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						TimerPlayerOnePistol.setWaitTime(500);
 					}
 
-				} else if (AssaultRifle.check) {
+				}  if (AssaultRifle.check) {
+					weapons.check = false;
+					MachineGun.check = false;
 					alexWithARifle.update();
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
@@ -466,7 +468,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						TimerPlayerOneAssaultRifle.setWaitTime(500);
 					}
 
-				} else if (MachineGun.check) {
+				}  if (MachineGun.check) {
+					weapons.check = false;
+					AssaultRifle.check = false;
 					alexWithAMachineGun.update();
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
@@ -494,11 +498,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}
-				if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-					player.update();
-					map.update(player);
-
-				}
+				weapons.check = true;
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
@@ -518,13 +518,14 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			case RUNNING:
 				if (weapons.check) {
 					map.draw(alexWithAPistol, graphicsHandler);
-				} else if (MachineGun.check) {
+				}  if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
-				} else if (AssaultRifle.check) {
+					weapons.check = false;
+					AssaultRifle.check = false;
+				}  if (AssaultRifle.check) {
 					map.draw(alexWithARifle, graphicsHandler);
-				}
-				if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-					map.draw(player, graphicsHandler);
+					weapons.check = false;
+					MachineGun.check = false;
 				}
 				// pasue game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
