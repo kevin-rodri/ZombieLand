@@ -212,7 +212,11 @@ public class Camera extends Rectangle {
 		drawMapEntities(player, player2, graphicsHandler);
 		drawMapTilesTopLayer(graphicsHandler);
 	}
-
+	public void draw(MapTile tile,Player player)
+	{
+		
+		
+	}
 	// draws the bottom layer of visible map tiles to the screen
 	// this is different than "active" map tiles as determined in the update method
 	// -- there is no reason to actually draw to screen anything that can't be seen
@@ -300,7 +304,6 @@ public class Camera extends Rectangle {
     }
 	public void drawMapEntities(Player player, Player player2, GraphicsHandler graphicsHandler) {
 		ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
-
 		for (Enemy enemy : activeEnemies) {
 			if (containsDraw(enemy)) {
 				enemy.draw(graphicsHandler);
@@ -315,6 +318,7 @@ public class Camera extends Rectangle {
 			if (containsDraw(npc)) {
 				if (npc.getBounds().getY() < player.getBounds().getY1() + (player.getBounds().getHeight() / 2f)) {
 					npc.draw(graphicsHandler);
+					
 				} else {
 					drawNpcsAfterPlayer.add(npc);
 				}
@@ -322,8 +326,11 @@ public class Camera extends Rectangle {
 		}
 
 		// player is drawn to screen
-//		player2.draw(graphicsHandler);
+		player2.draw(graphicsHandler);
+		System.out.println(player2.getX());
+		System.out.println("Cal: " + player2.getCalibratedXLocation());
 		player.draw(graphicsHandler);
+		
 		
 
 		// npcs determined to be drawn after player from the above step are drawn here

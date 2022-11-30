@@ -255,7 +255,7 @@ public abstract class Map {
             }
         }
     }
-
+//!!!!
     // returns a tile based on a position in the map
     public MapTile getTileByPosition(int xPosition, int yPosition) {
         Point tileIndex = getTileIndexByPosition(xPosition, yPosition);
@@ -690,26 +690,22 @@ public abstract class Map {
         }
     }
     
-    public void draw3(Player player, Player player2, GraphicsHandler graphicsHandler, int playerNumber) {
-    	if(playerNumber==1)
+    public void draw3(Player player, Player player2, GraphicsHandler graphicsHandler, int cameraNumber) {
+    	if(cameraNumber==1)
     	{
     		camera.draw(player,player2, graphicsHandler);
             if (textbox.isActive()) {
                 textbox.draw(graphicsHandler);
             }
     	}
-    	else if(playerNumber==2)
+    	else if(cameraNumber==2)
     	{
-    		camera2.draw(player2,player, graphicsHandler);
+    		camera2.draw(player,player2, graphicsHandler);
             if (textbox.isActive()) {
                 textbox.draw(graphicsHandler);
             }
-    	}
-        
+    	}    
     }
-
-    
-
     public FlagManager getFlagManager() { return flagManager; }
 
     public void setFlagManager(FlagManager flagManager) {
