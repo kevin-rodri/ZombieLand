@@ -19,6 +19,7 @@ public class CoopWinScreen {
 	protected SpriteFont timeSurvived;
 	protected KeyLocker keyLocker = new KeyLocker();
 	protected CoopScreen coopScreen;
+	protected final int waves = CoopScreen.numberOfWaves++;
 
 	public CoopWinScreen(CoopScreen coopScreen) {
 		initialize();
