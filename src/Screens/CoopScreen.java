@@ -97,10 +97,14 @@ public class CoopScreen extends Screen {
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
 	private boolean playerTwoIntersectsPistol = false;
+	public static int fullGameTime = 0;
+	public static int fullGameMin = 0;
 
 	int m = 1;
 	Timer t;
 	Timer xp;
+	Timer fuGame;
+	Timer fuGameMin;
 
 	int randomX = 100;
 	int randomY = 100;
@@ -170,6 +174,38 @@ public class CoopScreen extends Screen {
 			zombieWaveOne.update();
 			zOutsideOfMap = false;
 		}
+	}
+	public void gameTime(){
+		fuGame = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flagManager.isFlagSet("hasDied")){
+
+					fuGame.stop();
+
+				}
+				if(fullGameTime>59){
+					fullGameTime = 0;
+				}
+				fullGameTime ++;
+
+			}
+		});
+		fuGame.start();
+	}
+	public void gameMin(){
+		fuGameMin = new Timer(60000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flagManager.isFlagSet("hasDied")){
+					fuGameMin.stop();
+
+				}
+
+				fullGameMin++;
+			}
+		});
+		fuGameMin.start();
 	}
 
 	public void x2time() {
