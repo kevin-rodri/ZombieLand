@@ -89,6 +89,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 	protected int x2counter = 0;
 	public static boolean noAmmo = false;
 	public static boolean x2End = false;
+	boolean hasMachineGun = false; 
 
 	int m = 1;
 	int z = 10;
@@ -171,6 +172,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			}
 		});
 		xp.start();
+		
 	}
 
 	// Method that handles generating small and regular Zombies
@@ -328,11 +330,17 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip > 0) {
 					LightAmmo.ammoClip -= 30;
 					LightAmmo.ammoCount += 30;
+					//Alex reload voice line
+					playSE(14);
+					//Weapon reload FX
+					playSE(16);
 				}
 
 				if (Nuke.usedNuke == true) {
 					Shooting.numberOfKills = Shooting.numberOfKills + map.getEnemies().size();
 					map.getEnemies().removeAll(map.getEnemies());
+					//Alex Nuke voice line
+					playSE(17);
 					Nuke.usedNuke = false;
 				} else if (LightAmmo.ammoClip == 0 && LightAmmo.ammoCount == 0) {
 					// ammoCount.setText("NO AMMO");
@@ -377,7 +385,10 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 		
 					}
 				}
+// if (hasMachineGun == true){
+// 	playSE(20);
 
+// }
 
 				// Will check to see if the AmmoSmith script is running
 				if(AmmoScript.ammoScriptRunning == true){
@@ -405,7 +416,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 						AssaultRifle assaultRifle = new AssaultRifle(8, new Point(672, 296));
 						map.addNPC(assaultRifle);
 							// Case Three: A machine gun will appear on the map
-					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500) {
+					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount <= 500) {
 						MoneyBase.buyMG();
 						MachineGun machineGun = new MachineGun(9, new Point(1104, 824));
         				map.addNPC(machineGun);
@@ -467,7 +478,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				} else if (MachineGun.check) {
+
 					alexWithAMachineGun.update();
+					
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
 					if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
@@ -521,6 +534,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.draw(alexWithAPistol, graphicsHandler);
 				} else if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
+					//playSE(21);
 				} else if (AssaultRifle.check) {
 					map.draw(alexWithARifle, graphicsHandler);
 				}
