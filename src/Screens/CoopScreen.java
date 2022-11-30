@@ -93,7 +93,7 @@ public class CoopScreen extends Screen {
 	private Stopwatch TimerPlayerTwoMachineGun = new Stopwatch();
 	public static int shotsFired = 0;
 	public static int numberOfWaves = 0;
-	protected int counter = 0;
+	protected int counter = 1;
 	boolean szOutsideOfMap = false;
 	boolean zOutsideOfMap = false;
 	private boolean playerTwoIntersectsPistol = false;
@@ -109,21 +109,21 @@ public class CoopScreen extends Screen {
 	Random random = new Random();
 
 	private void time() {
-		t = new Timer(5000, new ActionListener() {
+		t = new Timer(30000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (counter > 9) {
+				if (HealthSystem.healthCount <= 0) {
 					t.stop();
 				}
-
 				waveCounter.setText("WAVE " + counter);
+				numberOfWaves++;
 				// money.setText("$" + m);
 				MoneyBase.addMoneyOT();
 
+				startWave(z, sz);
 				m = m * 2;
-				counter++;
-				numberOfWaves++;
+
 			}
 		});
 		t.start();
@@ -352,7 +352,18 @@ public class CoopScreen extends Screen {
 			healthBar.setText("" + HealthSystem.healthCount);
 			money.setText("$" + MoneyBase.moneyCount);
 			ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
+	
+			// To control the amount of enemies that spawn per round. Cap is 72 enemies
+				if (map.getEnemies().size() >= 80) {
 
+					t.stop();
+
+				}
+				if (map.getEnemies().size() < 80) {
+
+					t.start();
+
+				}
 			// will check to see if ammo script is running
 			// TO-DO: Implement whatever has to go here.
 			if (AmmoScript.ammoScriptRunning) {
