@@ -305,9 +305,14 @@ public class Camera2 extends Rectangle {
 		}
 
 		// player is drawn to screen
-		player.draw(graphicsHandler);
+//		player.draw(graphicsHandler);
 		player2.draw2(graphicsHandler);
 
+		
+		NPC playerNpc = new NPC(99,player.getX(),player.getY(),player.getCurrentAnimation()[player.getCurrentFrameIndex()]);
+		playerNpc.setMap(map);
+		playerNpc.draw2(graphicsHandler);
+		
 		// npcs determined to be drawn after player from the above step are drawn here
 		for (NPC npc : drawNpcsAfterPlayer) {
 			npc.draw2(graphicsHandler);

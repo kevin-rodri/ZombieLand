@@ -549,7 +549,6 @@ public class CoopScreen extends Screen {
 			}
 
 			if (AssaultRifle.second) {
-
 				alexTwoWithAssaultRifle.update();
 				map.update(alexTwoWithAssaultRifle);
 
@@ -640,10 +639,10 @@ public class CoopScreen extends Screen {
 				}
 
 			}			
-			map.update(player);	
-			map.update2(coOp);	
-			player.update();
-			coOp.update();
+			map.update(alexWithAPistol);	
+			map.update2(alexTwoWithPistol);	
+			alexWithAPistol.update();
+			alexTwoWithPistol.update();
 			break;
 		// if level has been completed, bring up level cleared screen
 		case LEVEL_COMPLETED:
@@ -691,7 +690,7 @@ public class CoopScreen extends Screen {
 
 			}
 			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-				map.draw3(player, coOp, graphicsHandler,1);
+				map.draw3(alexWithAPistol, alexTwoWithPistol, graphicsHandler,1);
 		//		map.draw(player, graphicsHandler);
 
 			}
@@ -766,7 +765,7 @@ public class CoopScreen extends Screen {
 				map.draw2(alexTwoWithMachineGun, graphicsHandler);
 			}
 			if (!AssaultRifle.second && !weapons.second && !MachineGun.second) {
-				map.draw3(coOp, player, graphicsHandler,2);
+				map.draw3(alexTwoWithPistol, alexWithAPistol, graphicsHandler,2);
 		//		map.draw2(coOp, graphicsHandler);
 			}
 			// pause game logic was moved to here
