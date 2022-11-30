@@ -514,11 +514,7 @@ public class CoopScreen extends Screen {
 			}
 
 			if (AssaultRifle.check) {
-				AssaultRifle.second = true;
-				weapons.check = false;
-				weapons.second = false;
-				MachineGun.check = false;
-				MachineGun.second = false;
+
 				alexWithARifle.update();
 				map.update(alexWithARifle);
 				updating = alexWithARifle;
@@ -550,11 +546,7 @@ public class CoopScreen extends Screen {
 			}
 
 			if (AssaultRifle.second) {
-				AssaultRifle.check = true;
-				weapons.check = false;
-				weapons.second = false;
-				MachineGun.check = false;
-				MachineGun.second = false;
+
 				alexTwoWithAssaultRifle.update();
 				map.update2(alexTwoWithAssaultRifle);
 				TimerPlayerTwoAssaultRifle.isTimeUp();
@@ -585,12 +577,7 @@ public class CoopScreen extends Screen {
 			}
 
 			if (MachineGun.check) {
-				System.out.println("Yes it is updating");
-				MachineGun.second = true;
-				weapons.check = false;
-				weapons.second = false;
-				AssaultRifle.check = false;
-				AssaultRifle.second = false;
+
 				alexWithAMachineGun.update();
 				map.update(alexWithAMachineGun);
 				TimerPlayerOneMachineGun.isTimeUp();
@@ -619,11 +606,7 @@ public class CoopScreen extends Screen {
 			}
 
 			if (MachineGun.second) {
-				MachineGun.check = true;
-				weapons.check = false;
-				weapons.second = false;
-				AssaultRifle.check = false;
-				AssaultRifle.second = false;
+
 				alexTwoWithMachineGun.update();
 				map.update2(alexTwoWithMachineGun);
 				TimerPlayerTwoMachineGun.isTimeUp();
@@ -656,8 +639,12 @@ public class CoopScreen extends Screen {
 //			map.update2(alexTwoWithPistol);	
 //			alexWithAPistol.update();
 //			alexTwoWithPistol.update();
-			weapons.check = true;
-			weapons.second = true;
+			int i = 0;
+			if(i == 0) {
+				weapons.check = true;
+				weapons.second = true;
+				i = 1;
+			}
 			break;
 		// if level has been completed, bring up level cleared screen
 		case LEVEL_COMPLETED:

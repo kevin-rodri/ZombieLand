@@ -413,6 +413,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				}
 			
 				if (weapons.check) {
+//					AssaultRifle.check = false;
+//					MachineGun.check = false;
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
 					TimerPlayerOnePistol.isTimeUp();
@@ -440,8 +442,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}  if (AssaultRifle.check) {
-					weapons.check = false;
-					MachineGun.check = false;
+//					weapons.check = false;
+//					MachineGun.check = false;
 					alexWithARifle.update();
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
@@ -469,8 +471,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}  if (MachineGun.check) {
-					weapons.check = false;
-					AssaultRifle.check = false;
+//					weapons.check = false;
+//					AssaultRifle.check = false;
 					alexWithAMachineGun.update();
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
@@ -498,7 +500,11 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}
-				weapons.check = true;
+				int i = 0;
+				if(i == 0) {
+					weapons.check = true;
+					i = 1;
+				}
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:

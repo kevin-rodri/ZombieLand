@@ -42,11 +42,21 @@ public class MachineGun extends NPC implements SoundController {
 			if ((player instanceof SecondPlayer || player instanceof Alex2WithAPistol || player instanceof Alex2WithAssaultRifle) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING){
 				second = true;
 				this.setIsHidden(true);
+				    MachineGun.check = true;
+					weapons.check = false;
+					weapons.second = false;
+					AssaultRifle.check = false;
+					AssaultRifle.second = false;
 			}
 			
 	        if ( (player instanceof Alex || player instanceof AlexWithAssaultRifle || player instanceof AlexWithAPistol) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
+	            MachineGun.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				AssaultRifle.check = false;
+				AssaultRifle.second = false;
 	        	// PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
 				// playLevelScreen.initialize();
 				// playLevelScreen.update();
