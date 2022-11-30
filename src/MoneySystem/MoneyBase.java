@@ -2,7 +2,7 @@ package MoneySystem;
 import Players.Alex;
 
 public class MoneyBase {
-    public static int moneyCount = 10;
+    public static int moneyCount = 1000;
 
     public static void addMoneyZombie() {
         moneyCount += 50;

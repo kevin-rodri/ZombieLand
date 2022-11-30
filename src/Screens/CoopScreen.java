@@ -83,6 +83,8 @@ public class CoopScreen extends Screen {
 	protected KeyLocker keyLocker = new KeyLocker();
 	private Stopwatch Timer = new Stopwatch();
 	protected int x2counter = 0;
+	protected Player updating = alexWithAPistol;
+	protected Player updating2 = alexTwoWithPistol;
 	// timers for first player when they pick up weapons with gunsmith (76-78)
 	private Stopwatch TimerPlayerOnePistol = new Stopwatch();
 	private Stopwatch TimerPlayerOneAssaultRifle = new Stopwatch();
@@ -451,8 +453,8 @@ public class CoopScreen extends Screen {
 
 			if (weapons.second) {		
 				alexTwoWithPistol.update();
-				map.update(alexTwoWithPistol);
-
+				map.update2(alexTwoWithPistol);
+				updating2 = alexTwoWithPistol;
 				TimerPlayerTwoPistol.isTimeUp();
 
 				if (TimerPlayerTwoPistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
@@ -512,8 +514,14 @@ public class CoopScreen extends Screen {
 			}
 
 			if (AssaultRifle.check) {
+				AssaultRifle.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 				alexWithARifle.update();
 				map.update(alexWithARifle);
+				updating = alexWithARifle;
 
 				TimerPlayerOneAssaultRifle.isTimeUp();
 				if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
@@ -542,9 +550,13 @@ public class CoopScreen extends Screen {
 			}
 
 			if (AssaultRifle.second) {
+				AssaultRifle.check = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 				alexTwoWithAssaultRifle.update();
-				map.update(alexTwoWithAssaultRifle);
-
+				map.update2(alexTwoWithAssaultRifle);
 				TimerPlayerTwoAssaultRifle.isTimeUp();
 				if (TimerPlayerTwoAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
 						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
@@ -573,9 +585,14 @@ public class CoopScreen extends Screen {
 			}
 
 			if (MachineGun.check) {
+				System.out.println("Yes it is updating");
+				MachineGun.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				AssaultRifle.check = false;
+				AssaultRifle.second = false;
 				alexWithAMachineGun.update();
 				map.update(alexWithAMachineGun);
-
 				TimerPlayerOneMachineGun.isTimeUp();
 				if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
 						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
@@ -602,10 +619,13 @@ public class CoopScreen extends Screen {
 			}
 
 			if (MachineGun.second) {
-
+				MachineGun.check = true;
+				weapons.check = false;
+				weapons.second = false;
+				AssaultRifle.check = false;
+				AssaultRifle.second = false;
 				alexTwoWithMachineGun.update();
-				map.update(alexTwoWithMachineGun);
-
+				map.update2(alexTwoWithMachineGun);
 				TimerPlayerTwoMachineGun.isTimeUp();
 				if (TimerPlayerTwoMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
 						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
@@ -632,10 +652,12 @@ public class CoopScreen extends Screen {
 				}
 
 			}			
-			map.update(alexWithAPistol);	
-			map.update2(alexTwoWithPistol);	
-			alexWithAPistol.update();
-			alexTwoWithPistol.update();
+//			map.update(alexWithAPistol);	
+//			map.update2(alexTwoWithPistol);	
+//			alexWithAPistol.update();
+//			alexTwoWithPistol.update();
+			weapons.check = true;
+			weapons.second = true;
 			break;
 		// if level has been completed, bring up level cleared screen
 		case LEVEL_COMPLETED:
@@ -672,20 +694,25 @@ public class CoopScreen extends Screen {
 			graphicsHandler.setGraphics(buffG);
 			if (weapons.check) {
 //				map.draw(alexWithAPistol, coOp, graphicsHandler);
-				map.draw(alexWithAPistol, graphicsHandler);
-			} else if (MachineGun.check) {
-//				map.draw(alexWithAMachineGun, coOp, graphicsHandler);
-				map.draw(alexWithAMachineGun, graphicsHandler);
-
-			} else if (AssaultRifle.check) {
-//				map.draw(alexWithARifle, coOp, graphicsHandler);
-				map.draw(alexWithARifle, graphicsHandler);
-
-			}
-			if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
 				map.draw3(alexWithAPistol, alexTwoWithPistol, graphicsHandler,1);
-		//		map.draw(player, graphicsHandler);
+			} if (MachineGun.check) {
+//				map.draw(alexWithAMachineGun, coOp, graphicsHandler);
+				map.draw3(alexWithAMachineGun,alexTwoWithMachineGun, graphicsHandler,1);
+				MachineGun.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				AssaultRifle.check = false;
+				AssaultRifle.second = false;
 
+			} if (AssaultRifle.check) {
+//				map.draw(alexWithARifle, coOp, graphicsHandler);
+				System.out.println("Yes it is updating11111");
+				map.draw3(alexWithARifle, alexTwoWithAssaultRifle, graphicsHandler,1);
+				AssaultRifle.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 			}
 			
 			// pasue game logic was moved to here
@@ -751,15 +778,22 @@ public class CoopScreen extends Screen {
 			// change graphics handler to point to buffered images graphics
 			graphicsHandler.setGraphics(buffG2);
 			if (weapons.second) {
-				map.draw2(alexTwoWithPistol, graphicsHandler);
-			} else if (MachineGun.second) {
-				map.draw2(alexTwoWithMachineGun, graphicsHandler);
-			} else if (AssaultRifle.second) {
-				map.draw2(alexTwoWithMachineGun, graphicsHandler);
-			}
-			if (!AssaultRifle.second && !weapons.second && !MachineGun.second) {
 				map.draw3(alexTwoWithPistol, alexWithAPistol, graphicsHandler,2);
-		//		map.draw2(coOp, graphicsHandler);
+			}  if (MachineGun.second) {
+				map.draw3(alexTwoWithMachineGun,alexWithAMachineGun, graphicsHandler,2);
+				MachineGun.check = true;
+				weapons.check = false;
+				weapons.second = false;
+				AssaultRifle.check = false;
+				AssaultRifle.second = false;
+			}  if (AssaultRifle.second) {
+				System.out.println("Yes it is updating bruh");
+				map.draw3(alexTwoWithAssaultRifle, alexWithARifle, graphicsHandler,2);
+				AssaultRifle.check = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 			}
 			// pause game logic was moved to here
 			if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
