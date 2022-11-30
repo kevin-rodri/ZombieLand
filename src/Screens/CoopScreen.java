@@ -295,8 +295,7 @@ public class CoopScreen extends Screen {
 		this.alexWithARifle.setMap(map);
 		this.alexWithARifle.setFacingDirection(player.getFacingDirection());
 
-		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x,
-				map.getPlayerStartPosition().y);
+		this.alexWithAMachineGun = new AlexWithMachineGun(map.getPlayerStartPosition().x,map.getPlayerStartPosition().y);
 		this.alexWithAMachineGun.setMap(map);
 		this.alexWithAMachineGun.setFacingDirection(player.getFacingDirection());
 
