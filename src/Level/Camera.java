@@ -216,11 +216,6 @@ public class Camera extends Rectangle implements SoundController {
 		drawMapEntities(player, player2, graphicsHandler);
 		drawMapTilesTopLayer(graphicsHandler);
 	}
-	public void draw(MapTile tile,Player player)
-	{
-		
-		
-	}
 	// draws the bottom layer of visible map tiles to the screen
 	// this is different than "active" map tiles as determined in the update method
 	// -- there is no reason to actually draw to screen anything that can't be seen
@@ -330,13 +325,12 @@ public class Camera extends Rectangle implements SoundController {
 		}
 
 		// player is drawn to screen
-		player2.draw(graphicsHandler);
-		System.out.println(player2.getX());
-		System.out.println("Cal: " + player2.getCalibratedXLocation());
+	//	player2.draw(graphicsHandler);
 		player.draw(graphicsHandler);
 		
-		
-
+		NPC playerNpc = new NPC(99,player2.getX(),player2.getY(),player2.getCurrentAnimation()[player2.getCurrentFrameIndex()]);
+		playerNpc.setMap(map);
+		playerNpc.draw(graphicsHandler);
 		// npcs determined to be drawn after player from the above step are drawn here
 		for (NPC npc : drawNpcsAfterPlayer) {
 			npc.draw(graphicsHandler);

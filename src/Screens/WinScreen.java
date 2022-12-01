@@ -6,6 +6,7 @@ import Game.ScreenCoordinator;
 import SpriteFont.SpriteFont;
 
 import java.awt.*;
+import java.io.IOException;
 
 import Enemies.Shooting;
 
@@ -31,6 +32,16 @@ public class WinScreen extends Screen {
 
     @Override
     public void initialize() {
+        try {
+            CreateFile.checkTime();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            CreateFile.checkMin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         winMessage = new SpriteFont("Game Over!", 650, 270, "Comic Sans", 30, Color.white);
         shots = new SpriteFont("Shots Fired: " + PlayLevelScreen.numberShotsFired, 600, 400, "Comic Sans", 30, Color.white);
         kills = new SpriteFont("Number Of Kills: " + Shooting.numberOfKills, 600, 500, "Comic Sans", 30, Color.white);

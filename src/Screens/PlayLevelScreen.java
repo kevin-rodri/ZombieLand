@@ -92,6 +92,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	boolean hasMachineGun = false;
 	int randomVoiceLine = 0;
 	Random randomize = new Random();
+	protected Stopwatch stopwatch = new Stopwatch();
+	Boolean clearedForLines = true;
 
 	int m = 1;
 	int z = 10;
@@ -116,7 +118,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				}
 				waveCounter.setText("WAVE " + counter);
 				numberOfWaves++;
-				// money.setText("$" + m);
+
 				MoneyBase.addMoneyOT();
 
 				startWave(z, sz);
@@ -355,7 +357,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 					}
 				}
-
+				if (LightAmmo.ammoCount % 10 == 0 && LightAmmo.ammoCount % 2 == 0) {
+					clearedForLines = true;
+				} else {
+					clearedForLines = false;
+				}
 				if (HealthSystem.healthCount <= 0) {
 					flagManager.setFlag("hasDied");
 					HealthSystem.setMaxHealth();
@@ -452,10 +458,14 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						TimerPlayerOnePistol.setWaitTime(500);
+						playAlexVoiceLines();
 
 					}
 
-				} else if (AssaultRifle.check) {
+				}
+				if (AssaultRifle.check) {
+					weapons.check = false;
+					MachineGun.check = false;
 					alexWithARifle.update();
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
@@ -480,10 +490,13 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						TimerPlayerOneAssaultRifle.setWaitTime(500);
+						playAlexVoiceLines();
 					}
 
-				} else if (MachineGun.check) {
-
+				}
+				if (MachineGun.check) {
+					weapons.check = false;
+					AssaultRifle.check = false;
 					alexWithAMachineGun.update();
 
 					map.update(alexWithAMachineGun);
@@ -509,22 +522,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						// add fireball enemy to the map for it to offically spawn in the level
 						map.addEnemy(bullet);
 						TimerPlayerOneMachineGun.setWaitTime(500);
-						randomVoiceLine = random.nextInt(60);
-						if (randomVoiceLine <= 2) {
-							playSE(22);
-						} else if (randomVoiceLine >= 20 && randomVoiceLine < 22) {
-							playSE(15);
-						} else if (randomVoiceLine >= 40 && randomVoiceLine < 42) {
-							playSE(24);
-
-						}
+						playAlexVoiceLines();
 					}
 				}
-				if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-					player.update();
-					map.update(player);
-
-				}
+				weapons.check = true;
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:
@@ -538,20 +539,47 @@ public class PlayLevelScreen extends Screen implements SoundController {
 		}
 	}
 
+	public void playAlexVoiceLines() {
+
+		if (clearedForLines.equals(true)) {
+			stopwatch.setWaitTime(1000);
+			randomVoiceLine = random.nextInt(50);
+			if (randomVoiceLine <= 10) {
+				playSE(22);
+			} else if (randomVoiceLine >= 20 && randomVoiceLine < 30) {
+				playSE(15);
+			} else if (randomVoiceLine > 10 && randomVoiceLine < 20) {
+				playSE(24);
+			} else if (randomVoiceLine > 30 && randomVoiceLine < 40) {
+				playSE(20);
+
+			} else if (randomVoiceLine > 40 && randomVoiceLine < 50) {
+				playSE(21);
+			}
+		}
+	}
+
 	public void draw(GraphicsHandler graphicsHandler) {
 		// based on screen state, draw appropriate graphics
 		switch (playLevelScreenState) {
 			case RUNNING:
 				if (weapons.check) {
 					map.draw(alexWithAPistol, graphicsHandler);
-				} else if (MachineGun.check) {
+				}
+				if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
+
 					// playSE(21);
 				} else if (AssaultRifle.check) {
-					map.draw(alexWithARifle, graphicsHandler);
+
+					weapons.check = false;
+					AssaultRifle.check = false;
 				}
-				if (!AssaultRifle.check && !weapons.check && !MachineGun.check) {
-					map.draw(player, graphicsHandler);
+				if (AssaultRifle.check) {
+
+					map.draw(alexWithARifle, graphicsHandler);
+					weapons.check = false;
+					MachineGun.check = false;
 				}
 				// pasue game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {

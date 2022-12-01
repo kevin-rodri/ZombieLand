@@ -49,6 +49,12 @@ public class MachineGun extends NPC implements SoundController {
 				&& player.getPlayerState() == PlayerState.WALKING) {
 			second = true;
 			this.setIsHidden(true);
+			randomVoiceLine = random.nextInt(30);
+			if (randomVoiceLine <= 15) {
+				playSE(30);
+			} else if (randomVoiceLine <= 30 && randomVoiceLine > 15) {
+				playSE(30);
+			}
 		}
 
 		if ((player instanceof Alex || player instanceof AlexWithAssaultRifle || player instanceof AlexWithAPistol)

@@ -46,7 +46,8 @@ public class Shooting extends Enemy implements SoundController {
 		initialize();
 	}
 
-	@Override
+
+    @Override
 	public void update(Player player) {
 		// if timer is up, set map entity status to REMOVED
 		// the camera class will see this next frame and remove it permanently from the
@@ -93,6 +94,7 @@ public class Shooting extends Enemy implements SoundController {
 					MoneyBase.addMoneyMini();
 					entityCollidedWith = get;
 					enemy.remove(entityCollidedWith);
+					
 
 				}
 

@@ -82,7 +82,7 @@ public class Zombie extends Enemy implements SoundController{
 
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
-            MoneyBase.addMoneyZombie();
+            //MoneyBase.addMoneyZombie();
 
      }   
      if(disappear == true) {
@@ -157,11 +157,6 @@ public class Zombie extends Enemy implements SoundController{
              //bigDmg+=1;
              //System.out.println(bigDmg);
              this.setIsHidden(true);
-             playSE(15);
-             randomVoiceLine = random.nextInt(100);
-             if (randomVoiceLine == 25%0){
-
-             }
              //this.setInteractScript(DoublePointsScript);
          }
 
