@@ -106,6 +106,7 @@ public class CoopScreen extends Screen implements SoundController {
 	private boolean playerTwoIntersectsPistol = false;
 	public static int fullGameTime = 0;
 	public static int fullGameMin = 0;
+	public static boolean NoAmmo = PlayLevelScreen.noAmmo;
 
 	int m = 1;
 	Timer t;
@@ -256,6 +257,8 @@ public class CoopScreen extends Screen implements SoundController {
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
+		gameMin();
+		gameTime();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
 		Point HealthHUD = new Point(600, 10);
@@ -415,19 +418,7 @@ public class CoopScreen extends Screen implements SoundController {
 					t.start();
 
 				}
-				// will check to see if ammo script is running
-				// TO-DO: Implement whatever has to go here.
-				if (AmmoScript.ammoScriptRunning) {
-					if (Keyboard.isKeyDown(Key.ONE)) {
-
-					}
-					if (Keyboard.isKeyDown(Key.TWO)) {
-
-					}
-					if (Keyboard.isKeyDown(Key.THREE)) {
-
-					}
-				}
+				
 
 				// To control the amount of enemies that spawn per round. Cap is 72 enemies
 				if (map.getEnemies().size() >= 80) {
@@ -471,6 +462,7 @@ public class CoopScreen extends Screen implements SoundController {
 					}
 				}
 
+
 				if (weapons.second) {
 					alexTwoWithPistol.update();
 					map.update2(alexTwoWithPistol);
@@ -504,6 +496,7 @@ public class CoopScreen extends Screen implements SoundController {
 
 				}
 
+
 				if (weapons.check) {
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
@@ -531,7 +524,10 @@ public class CoopScreen extends Screen implements SoundController {
 						map.addEnemy(bullet);
 						TimerPlayerOnePistol.setWaitTime(500);
 						playAlexVoiceLines();
-					}
+
+			}
+
+			
 
 				}
 
@@ -568,8 +564,9 @@ public class CoopScreen extends Screen implements SoundController {
 						map.addEnemy(bullet);
 						TimerPlayerOneAssaultRifle.setWaitTime(500);
 						playAlexVoiceLines();
-					}
+			}
 
+			
 				}
 
 				if (AssaultRifle.second) {
@@ -603,8 +600,9 @@ public class CoopScreen extends Screen implements SoundController {
 						map.addEnemy(bullet);
 						TimerPlayerTwoAssaultRifle.setWaitTime(500);
 						playFalexVoiceLines();
-					}
+			}
 
+			
 				}
 
 				if (MachineGun.check) {
@@ -639,7 +637,9 @@ public class CoopScreen extends Screen implements SoundController {
 						map.addEnemy(bullet);
 						TimerPlayerOneMachineGun.setWaitTime(500);
 						playAlexVoiceLines();
-					}
+			}
+
+		
 				}
 
 				if (MachineGun.second) {

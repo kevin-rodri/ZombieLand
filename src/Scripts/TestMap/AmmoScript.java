@@ -13,8 +13,6 @@ import Engine.Keyboard;
 
 // script for talking to walrus npc
 public class AmmoScript extends Script<NPC> implements SoundController {
-    private float counter;
-    private Stopwatch watch = new Stopwatch();
     public static boolean ammoScriptRunning = false;
     public static boolean notEnoughFunds = false;
     private Timer timer = new Timer();
@@ -65,23 +63,18 @@ public class AmmoScript extends Script<NPC> implements SoundController {
             ammoScriptRunning = true;
 
 
-            watch.setWaitTime(90000);
         } else {
 
-        if (counter == 0.0f){
-            unsetFlag("hasTalkedToGunsmith");
-            watch.reset();
-        } 
-        counter = (((90000 - watch.getTimeLeft()) / 1000) %  60);
         // this line will eventually be changed according to the script kyle will voice record
         try {
             addTextToTextboxQueue("Woah, what are you doing here?! Don’t make\n this awkward..." );
-            addTextToTextboxQueue("Please wait " + counter + " seconds");
+
                 playSE(9);
          } catch(Exception e) {
             e.printStackTrace();
          }
     }
+
         entity.facePlayer(player);
     }
 

@@ -353,6 +353,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					noAmmo = true;
 				} else {
 					if (noAmmo == true) {
+						ammoCount.setText("0" + "/" + "0");
 					} else {
 						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 					}
@@ -434,11 +435,13 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				}
 
 				if (weapons.check) {
+//					AssaultRifle.check = false;
+//					MachineGun.check = false;
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
 					TimerPlayerOnePistol.isTimeUp();
 					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -466,11 +469,12 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				if (AssaultRifle.check) {
 					weapons.check = false;
 					MachineGun.check = false;
+
 					alexWithARifle.update();
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
 					if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne ) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -502,7 +506,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
 					if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -525,7 +529,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						playAlexVoiceLines();
 					}
 				}
-				weapons.check = true;
+				int i = 0;
+				if(i == 0) {
+					weapons.check = true;
+					i = 1;
+				}
 				break;
 			// if level has been completed, bring up level cleared screen
 			case LEVEL_COMPLETED:

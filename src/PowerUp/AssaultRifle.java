@@ -47,17 +47,41 @@ public class AssaultRifle extends NPC implements SoundController{
 			if ((player instanceof SecondPlayer || player instanceof Alex2WithAPistol || player instanceof Alex2WithMachineGun) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING){
 				second = true;
 				this.setIsHidden(true);
+				AssaultRifle.check = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 			}
 
 	        if ( (player instanceof Alex || player instanceof AlexWithAPistol || player instanceof AlexWithMachineGun) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
 	            this.setIsHidden(true);
+
 	        	randomVoiceLine = random.nextInt(30);
 			if (randomVoiceLine <= 15) {
 				playSE(21);
 			} else if (randomVoiceLine <= 30 && randomVoiceLine > 15) {
 				playSE(20);
 			}
+
+	            AssaultRifle.second = true;
+				weapons.check = false;
+				weapons.second = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
+	        	// PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
+				// playLevelScreen.initialize();
+				// playLevelScreen.update();
+	            try {
+	                playSE(0);
+	       
+	             } catch(Exception e) {
+	                System.out.println("toString(): " + e.toString());
+	                System.out.println("getMessage(): " + e.getMessage());
+	                System.out.println("StackTrace: ");
+	                e.printStackTrace();
+	             }
 
 	        }
 			super.update(player);

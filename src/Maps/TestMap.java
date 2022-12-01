@@ -86,7 +86,7 @@ public class TestMap extends Map {
         ammonpc.setInteractScript(new AmmoScript());
         npcs.add(ammonpc);
 
-        Gunsmith gunsmith = new Gunsmith(7, getMapTile(20, 28).getLocation().subtractY(40));
+        Gunsmith gunsmith = new Gunsmith(7, getMapTile(20, 10).getLocation().subtractY(40));
         gunsmith.setInteractScript(new GunsmithScript());
         npcs.add(gunsmith);
 

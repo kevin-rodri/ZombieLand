@@ -16,7 +16,7 @@ public class CoopWinScreen {
 	protected SpriteFont shots;
 	protected SpriteFont kills;
 	protected SpriteFont numberOfWaves;
-	protected SpriteFont timeSurvived;
+	//protected SpriteFont timeSurvived;
 	protected KeyLocker keyLocker = new KeyLocker();
 	protected CoopScreen coopScreen;
 	protected final int waves = CoopScreen.numberOfWaves++;
@@ -33,8 +33,8 @@ public class CoopWinScreen {
 		kills = new SpriteFont("Number Of Kills: " + Shooting.numberOfKills, 600, 500, "Comic Sans", 30, Color.white);
 		numberOfWaves = new SpriteFont("Number Of Waves: " + CoopScreen.numberOfWaves, 600, 600, "Comic Sans", 30,
 				Color.white);
-		timeSurvived = new SpriteFont("Time Survived: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " Seconds ", 600,
-				700, "Comic Sans", 30, Color.white);
+		//timeSurvived = new SpriteFont("Time Survived: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " Seconds ", 600,
+				//700, "Comic Sans", 30, Color.white);
 		instructions = new SpriteFont("Press Escape to close the game ", 600, 300, "Comic Sans", 20, Color.white);
 		keyLocker.unlockKey(Key.SPACE);
 		keyLocker.unlockKey(Key.ESC);
@@ -59,7 +59,7 @@ public class CoopWinScreen {
 		instructions.draw(graphicsHandler);
 		shots.draw(graphicsHandler);
 		kills.draw(graphicsHandler);
-		timeSurvived.draw(graphicsHandler);
+		//timeSurvived.draw(graphicsHandler);
 		numberOfWaves.draw(graphicsHandler);
 
 	}

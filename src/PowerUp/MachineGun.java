@@ -44,11 +44,18 @@ public class MachineGun extends NPC implements SoundController {
 
 	public void update(Player player) {
 
+
 		if ((player instanceof SecondPlayer || player instanceof Alex2WithAPistol
 				|| player instanceof Alex2WithAssaultRifle) && player.overlaps(this)
 				&& player.getPlayerState() == PlayerState.WALKING) {
 			second = true;
 			this.setIsHidden(true);
+      this.setIsHidden(true);
+				    MachineGun.check = true;
+					weapons.check = false;
+					weapons.second = false;
+					AssaultRifle.check = false;
+					AssaultRifle.second = false;
 			randomVoiceLine = random.nextInt(30);
 			if (randomVoiceLine <= 15) {
 				playSE(30);
@@ -61,6 +68,11 @@ public class MachineGun extends NPC implements SoundController {
 				&& player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 			check = true;
 			this.setIsHidden(true);
+				    MachineGun.check = true;
+					weapons.check = false;
+					weapons.second = false;
+					AssaultRifle.check = false;
+					AssaultRifle.second = false;
 			randomVoiceLine = random.nextInt(30);
 			if (randomVoiceLine <= 15) {
 				playSE(21);
@@ -91,6 +103,9 @@ public class MachineGun extends NPC implements SoundController {
 	public void draw(GraphicsHandler graphicsHandler) {
 		super.draw(graphicsHandler);
 	}
+
+  
+	    
 }
 
 	

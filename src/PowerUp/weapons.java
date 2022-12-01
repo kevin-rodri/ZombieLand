@@ -42,10 +42,20 @@ public class weapons extends NPC implements SoundController{
 			if ((player instanceof SecondPlayer || player instanceof Alex2WithAssaultRifle || player instanceof Alex2WithMachineGun) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING){
 				second = true;
 				this.setIsHidden(true);
+				weapons.check = true;
+				AssaultRifle.second = false;
+				AssaultRifle.check = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 			}
 
 	        if ( (player instanceof Alex || player instanceof AlexWithAssaultRifle || player instanceof AlexWithMachineGun) && player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
 	        	check = true;
+				weapons.second = true;
+	        	AssaultRifle.second = false;
+				AssaultRifle.check = false;
+				MachineGun.check = false;
+				MachineGun.second = false;
 	            this.setIsHidden(true);
 	        	PlayLevelScreen playLevelScreen = new PlayLevelScreen(null);
 				playLevelScreen.initialize();
