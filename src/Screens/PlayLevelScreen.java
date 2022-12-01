@@ -427,7 +427,7 @@ public class PlayLevelScreen extends Screen implements SoundController {
 						AssaultRifle assaultRifle = new AssaultRifle(8, new Point(672, 296));
 						map.addNPC(assaultRifle);
 						// Case Three: A machine gun will appear on the map
-					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount <= 500) {
+					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 500) {
 						MoneyBase.buyMG();
 						MachineGun machineGun = new MachineGun(9, new Point(1104, 824));
 						map.addNPC(machineGun);
