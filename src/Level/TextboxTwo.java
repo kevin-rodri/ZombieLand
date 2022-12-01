@@ -1,20 +1,15 @@
 package Level;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.awt.*;
 import Engine.GraphicsHandler;
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
 import SpriteFont.SpriteFont;
 
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.Queue;
-
-// Represents the game's textbox
-// will display the text it is given to its textQueue
-// each String in the textQueue will be displayed in the textbox, and hitting the interact key will cycle between additional Strings in the queue
-// use the newline character in a String in the textQueue to break the text up into a second line if needed
-public class Textbox {
+public class TextboxTwo {
     protected boolean isActive;
     protected final int x = 22;
     protected final int bottomY = 460;
@@ -24,17 +19,16 @@ public class Textbox {
     protected final int fontTopY = 62;
     protected final int width = 750;
     protected final int height = 100;
-
     private Queue<String> textQueue = new LinkedList<String>();
     private SpriteFont text = null;
     private KeyLocker keyLocker = new KeyLocker();
-    protected Map map;
-    private Key interactKey = Key.SPACE;
+    private Key interactKey = Key.X;
+    private Map map;
 
-    public Textbox(Map map) {
-        this.map = map;
+    public TextboxTwo(Map map) {
+       this.map = map;
+         
     }
-
     public void addText(String text) {
         if (textQueue.isEmpty()) {
             keyLocker.lockKey(interactKey);
@@ -65,7 +59,7 @@ public class Textbox {
             // if camera is at bottom of screen, text is drawn at top of screen instead of the bottom like usual
             // to prevent it from covering the player
             int fontY;
-            if (!map.getCamera().isAtBottomOfMap()) {
+            if (!map.getCamera2().isAtBottomOfMap()) {
                 fontY = fontBottomY;
             }
             else {
@@ -88,7 +82,7 @@ public class Textbox {
     public void draw(GraphicsHandler graphicsHandler) {
         // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
         // to prevent it from covering the player
-        if (!map.getCamera().isAtBottomOfMap()) {
+        if (!map.getCamera2().isAtBottomOfMap()) {
             graphicsHandler.drawFilledRectangleWithBorder(x, bottomY, width, height, Color.white, Color.black, 2);
         }
         else {
@@ -111,4 +105,5 @@ public class Textbox {
         this.interactKey = interactKey;
     }
 
+    
 }

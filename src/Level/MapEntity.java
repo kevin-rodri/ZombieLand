@@ -25,6 +25,8 @@ public class MapEntity extends GameObject {
     // script that executes when entity is interacted with by the player
     protected Script interactScript;
 
+    protected ScriptTwo interact;
+
     public MapEntity(float x, float y, SpriteSheet spriteSheet, String startingAnimation) {
         super(spriteSheet, x, y, startingAnimation);
     }
@@ -72,11 +74,18 @@ public class MapEntity extends GameObject {
     }
     
     public Script getInteractScript() { return interactScript; }
+    public ScriptTwo getScriptTwo(){ return interact;}
     public void setInteractScript(Script interactScript) {
         this.interactScript = interactScript;
         this.interactScript.setMapEntity(this);
     }
-
+    public void setInteractScript(ScriptTwo interactScript) {
+        this.interact = interactScript;
+        this.interact.setMapEntity(this);
+    }
+    protected ScriptTwo loadScriptTwo() {
+        return null;
+    }
     protected Script loadScript() {
         return null;
     }

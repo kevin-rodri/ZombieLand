@@ -66,6 +66,7 @@ public abstract class Map {
 
    
     protected Script activeInteractScript;
+    protected ScriptTwo activeScript;
 
     // if set to false, camera will not move as player moves
     protected boolean adjustCamera = true;
@@ -78,6 +79,7 @@ public abstract class Map {
 
     // map's textbox instance
     protected Textbox textbox;
+    protected TextboxTwo text;
 
     public Map(String mapFileName, Tileset tileset) {
         this.mapFileName = mapFileName;
@@ -125,6 +127,7 @@ public abstract class Map {
         this.camera2 = new Camera2(475, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
         this.textbox = new Textbox(this);
+        this.text = new TextboxTwo(this);
        
     }
 
@@ -334,10 +337,16 @@ public abstract class Map {
     public Script getActiveInteractScript() {
         return activeInteractScript;
     }
+    public ScriptTwo getActiveScript(){
+        return activeScript;
+    }
 
     // this method is only used to set activeInteractScript back to null after the script is finished running
     public void setActiveInteractScript(Script script) {
         activeInteractScript = script;
+    }
+    public void setActivetScript(ScriptTwo script) {
+        activeScript = script;
     }
 
     public NPC getNPCById(int id) {
@@ -426,6 +435,7 @@ public abstract class Map {
                 playerTouchingMapEntities.add(mapEntity);
             }
         }
+    
         MapEntity interactedEntity = null;
         if (playerTouchingMapEntities.size() == 1) {
             if (isInteractedEntityValid(playerTouchingMapEntities.get(0), player)) {
@@ -449,6 +459,44 @@ public abstract class Map {
         if (interactedEntity != null) {
             interactedEntity.getInteractScript().setIsActive(true);
             activeInteractScript = interactedEntity.getInteractScript();
+        }
+
+    }
+
+    public void entityInteractTwo(Player player){
+        ArrayList<MapEntity> surroundingMapEntities = getSurroundingMapEntities(player);
+        ArrayList<MapEntity> playerTouchingMapEntitiesTwo = new ArrayList<>();
+        MapEntity interactedEntityTwo = null;
+        if (playerTouchingMapEntitiesTwo.size() == 1) {
+            if (isInteractedEntityValid(playerTouchingMapEntitiesTwo.get(0), player)) {
+                interactedEntityTwo = playerTouchingMapEntitiesTwo.get(0);
+            }
+        }
+        else if (playerTouchingMapEntitiesTwo.size() > 1) {
+            MapEntity currentLargestAreaOverlappedEntity = null;
+            float currentLargestAreaOverlapped = 0;
+            for (MapEntity mapEntity : playerTouchingMapEntitiesTwo) {
+                if (isInteractedEntityValid(mapEntity, player)) {
+                    float areaOverlapped = mapEntity.getAreaOverlapped(player.getInteractionRange());
+                    if (areaOverlapped > currentLargestAreaOverlapped) {
+                        currentLargestAreaOverlappedEntity = mapEntity;
+                        currentLargestAreaOverlapped = areaOverlapped;
+                    }
+                }
+            }
+            interactedEntityTwo = currentLargestAreaOverlappedEntity;
+        }
+        
+        for (MapEntity mapEntity : surroundingMapEntities) {
+            if (mapEntity.getScriptTwo() != null && mapEntity.intersects(player.getInteractionRange())) {
+                playerTouchingMapEntitiesTwo.add(mapEntity);
+            }
+        }
+       
+
+        if (interactedEntityTwo != null) {
+            interactedEntityTwo.getScriptTwo().setIsActive(true);
+            activeScript = interactedEntityTwo.getScriptTwo();
         }
     }
     
@@ -674,6 +722,9 @@ public abstract class Map {
         if (textbox.isActive()) {
             textbox.draw(graphicsHandler);
         }
+        if (text.isActive()) {
+            text.draw(graphicsHandler);
+        }
     }
     
     public void draw(Player player, GraphicsHandler graphicsHandler) {
@@ -685,8 +736,8 @@ public abstract class Map {
     
     public void draw2(Player player, GraphicsHandler graphicsHandler) {
         camera2.draw(player, graphicsHandler);
-        if (textbox.isActive()) {
-            textbox.draw(graphicsHandler);
+        if (text.isActive()) {
+            text.draw(graphicsHandler);
         }
     }
     
@@ -701,8 +752,8 @@ public abstract class Map {
     	else if(cameraNumber==2)
     	{
     		camera2.draw(player,player2, graphicsHandler);
-            if (textbox.isActive()) {
-                textbox.draw(graphicsHandler);
+            if (text.isActive()) {
+                text.draw(graphicsHandler);
             }
     	}    
     }
@@ -713,6 +764,7 @@ public abstract class Map {
     }
 
     public Textbox getTextbox() { return textbox; }
+    public TextboxTwo getTextboxTwo() { return text; }
 
     public int getEndBoundX() { return endBoundX; }
     public int getEndBoundY() { return endBoundY; }

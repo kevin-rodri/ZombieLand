@@ -5,10 +5,12 @@ import Builders.FrameBuilder;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.Key;
+import Engine.Keyboard;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Player;
+import Level.PlayerState;
 
 import java.util.HashMap;
 
@@ -30,6 +32,8 @@ this.INTERACT_KEY = Key.X;
         super.update();
     }
 
+   
+    
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
     //   drawBounds(graphicsHandler, new Color(255, 0, 0, 170));

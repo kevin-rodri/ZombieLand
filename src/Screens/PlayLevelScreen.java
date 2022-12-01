@@ -59,9 +59,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 	protected ScreenCoordinator screenCoordinator;
 	protected Map map;
 	protected Player player;
-	protected Player alexWithAPistol; // alex with pistol
-	protected Player alexWithARifle;
-	protected Player alexWithAMachineGun;
+	protected AlexWithAPistol alexWithAPistol; // alex with pistol
+	protected AlexWithAssaultRifle alexWithARifle;
+	protected AlexWithMachineGun alexWithAMachineGun;
 	public Player player2;
 	protected Player coOp;
 	protected PlayLevelScreenState playLevelScreenState;
@@ -290,6 +290,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 
 		// let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
+		map.getTextboxTwo().setInteractKey(Key.X);
 		// setup map scripts to have references to the map and player
 		for (MapTile mapTile : map.getMapTiles()) {
 			if (mapTile.getInteractScript() != null) {
@@ -315,6 +316,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				trigger.getTriggerScript().setPlayer(player);
 			}
 		}
+
+		
 		startWave(z, sz);
 	}
 
@@ -440,8 +443,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}  if (AssaultRifle.check) {
-					weapons.check = false;
-					MachineGun.check = false;
+					// weapons.check = false;
+					// MachineGun.check = false;
 					alexWithARifle.update();
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
@@ -469,8 +472,8 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					}
 
 				}  if (MachineGun.check) {
-					weapons.check = false;
-					AssaultRifle.check = false;
+					// weapons.check = false;
+					// AssaultRifle.check = false;
 					alexWithAMachineGun.update();
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
@@ -520,12 +523,12 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.draw(alexWithAPistol, graphicsHandler);
 				}  if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
-					weapons.check = false;
-					AssaultRifle.check = false;
+					// weapons.check = false;
+					// AssaultRifle.check = false;
 				}  if (AssaultRifle.check) {
 					map.draw(alexWithARifle, graphicsHandler);
-					weapons.check = false;
-					MachineGun.check = false;
+					// weapons.check = false;
+					// MachineGun.check = false;
 				}
 				// pasue game logic was moved to here
 				if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {

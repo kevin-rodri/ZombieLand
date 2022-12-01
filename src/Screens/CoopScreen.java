@@ -267,7 +267,7 @@ public class CoopScreen extends Screen {
 		flagManager.addFlag("hasFoundBall", false);
 		flagManager.addFlag("hasTalkedToAmmoNPC", false);
 		flagManager.addFlag("hasTalkedToGunsmith", false);
-
+		flagManager.addFlag("hasTalkedToGunsmithTwo", false);
 		// define/setup map
 		this.map = new TestMap();
 		map.reset();
@@ -315,7 +315,16 @@ public class CoopScreen extends Screen {
 //		 let pieces of map know which button to listen for as the "interact" button
 		map.getTextbox().setInteractKey(player.getInteractKey());
 
+		map.getTextboxTwo().setInteractKey(coOp.getInteractKey());
+
 		// setup map scripts to have references to the map and player
+		for (NPC npc : map.getNPCs()) {
+			if (npc.getInteractScript() != null) {
+				npc.getInteractScript().setMap(map);
+				npc.getInteractScript().setPlayer(alexTwoWithPistol);
+			}
+		}
+
 		for (MapTile mapTile : map.getMapTiles()) {
 			if (mapTile.getInteractScript() != null) {
 				mapTile.getInteractScript().setMap(map);
@@ -338,6 +347,31 @@ public class CoopScreen extends Screen {
 			if (trigger.getTriggerScript() != null) {
 				trigger.getTriggerScript().setMap(map);
 				trigger.getTriggerScript().setPlayer(player);
+			}
+		}
+
+		for (MapTile mapTile : map.getMapTiles()) {
+			if (mapTile.getScriptTwo() != null) {
+				mapTile.getScriptTwo().setMap(map);
+				mapTile.getScriptTwo().setPlayer(player);
+			}
+		}
+		for (NPC npc : map.getNPCs()) {
+			if (npc.getScriptTwo() != null) {
+				npc.getScriptTwo().setMap(map);
+				npc.getScriptTwo().setPlayer(player);
+			}
+		}
+		for (EnhancedMapTile enhancedMapTile : map.getEnhancedMapTiles()) {
+			if (enhancedMapTile.getScriptTwo() != null) {
+				enhancedMapTile.getScriptTwo().setMap(map);
+				enhancedMapTile.getScriptTwo().setPlayer(player);
+			}
+		}
+		for (Trigger trigger : map.getTriggers()) {
+			if (trigger.getScriptTwo() != null) {
+				trigger.getScriptTwo().setMap(map);
+				trigger.getScriptTwo().setPlayer(player);
 			}
 		}
 		map.getCamera().setWidth(map.getCamera().getWidth() - 15);

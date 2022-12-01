@@ -96,7 +96,14 @@ public abstract class Player extends GameObject {
         if (!keyLocker.isKeyLocked(INTERACT_KEY) && Keyboard.isKeyDown(INTERACT_KEY)) {
             keyLocker.lockKey(INTERACT_KEY);
             map.entityInteract(this);
+            map.entityInteractTwo(this);
         }
+
+        if (!keyLocker.isKeyLocked(Key.X) && Keyboard.isKeyDown(Key.X)) {
+            keyLocker.lockKey(Key.X);
+            map.entityInteractTwo(this);
+        }
+        
 
         // if a walk key is pressed, player enters WALKING state
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(MOVE_UP_KEY) || Keyboard.isKeyDown(MOVE_DOWN_KEY)) {
@@ -109,7 +116,13 @@ public abstract class Player extends GameObject {
         if (!keyLocker.isKeyLocked(INTERACT_KEY) && Keyboard.isKeyDown(INTERACT_KEY)) {
             keyLocker.lockKey(INTERACT_KEY);
             map.entityInteract(this);
+            map.entityInteractTwo(this);
         }
+        if (!keyLocker.isKeyLocked(Key.X) && Keyboard.isKeyDown(Key.X)) {
+            keyLocker.lockKey(Key.X);
+           
+        }
+        
 
         // if walk left key is pressed, move player to the left
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY)) {
@@ -164,6 +177,10 @@ public abstract class Player extends GameObject {
         if (Keyboard.isKeyUp(INTERACT_KEY) && playerState != PlayerState.INTERACTING) {
             keyLocker.unlockKey(INTERACT_KEY);
         }
+        if (!keyLocker.isKeyLocked(Key.X) && Keyboard.isKeyDown(Key.X)) {
+            keyLocker.unlockKey(Key.X);
+        }
+        
     }
 
     // anything extra the player should do based on interactions can be handled here

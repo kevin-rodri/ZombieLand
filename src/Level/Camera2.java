@@ -86,8 +86,8 @@ public class Camera2 extends Rectangle {
     // only one script should be able to be running (active) at a time
     private void updateScripts() {
         // if there is an active interact script, update the script
-        if (map.getActiveInteractScript() != null) {
-            map.getActiveInteractScript().update();
+        if (map.getActiveScript() != null) {
+            map.getActiveScript().update();
         }
 
         // if there is an active trigger, update the script
