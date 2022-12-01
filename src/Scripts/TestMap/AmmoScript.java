@@ -65,14 +65,40 @@ public class AmmoScript extends Script<NPC> implements SoundController {
 
         } else {
 
-        // this line will eventually be changed according to the script kyle will voice record
-        try {
-            addTextToTextboxQueue("Woah, what are you doing here?! Don’t make\n this awkward..." );
+            addTextToTextboxQueue( "Woah, it’s you Alex! What brings you here today?");
+            playSE(5);
+        
 
-                playSE(9);
-         } catch(Exception e) {
-            e.printStackTrace();
-         }
+            addTextToTextboxQueue( "Oh right… they’re everywhere. I think I can help with \nthat.");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    playSE(6);
+                }
+            }, 5000);
+           
+            addTextToTextboxQueue( "I have plenty of options to choose from: \n1) 30 - $100 2) 60 - $150 3) 120 - $200");
+             
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // TODO: Compress the four sound files to one.
+                        playSE(7);
+                    }
+                }, 10000);
+
+            
+                addTextToTextboxQueue( "Alright, good luck. Watch out for the crazy’s... ");
+               timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // TODO: Compress the four sound files to one.
+                        playSE(8);
+                    }
+                }, 20000);
+                
+            
     }
 
         entity.facePlayer(player);
