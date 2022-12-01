@@ -818,16 +818,7 @@ public class CoopScreen extends Screen implements SoundController {
 						new Color(40, 40, 40), new Color(40, 40, 40), 30);
 				break;
 			case LEVEL_COMPLETED:
-				try {
-					CreateFile.record();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					CreateFile.recordMin();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+
 				winScreen.initialize();
 				winScreen.draw(graphicsHandler);
 
@@ -900,16 +891,6 @@ public class CoopScreen extends Screen implements SoundController {
 				graphicsHandler.drawImage(subImage2, Config.GAME_WINDOW_WIDTH / 2, 0);
 				break;
 			case LEVEL_COMPLETED:
-				try {
-					CreateFile.record();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					CreateFile.recordMin();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 				winScreen.initialize();
 				winScreen.draw(graphicsHandler);
 				// screenCoordinator.setGameState(GameState.WinScreen);
