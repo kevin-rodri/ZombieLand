@@ -15,7 +15,7 @@ public class GameWindow {
 	private GridLayout layout;
 
 	public GameWindow() {
-		gameWindow = new JFrame("Game");
+		gameWindow = new JFrame("Project Z");
 		gamePanel = new GamePanel();
 		gameWindow.setLayout(new GridLayout(0,1));
 	//	gamePanel2 = new GamePanel();
