@@ -22,7 +22,7 @@ this.MOVE_RIGHT_KEY = Key.D;
 this.MOVE_UP_KEY = Key.W;
 this.MOVE_DOWN_KEY = Key.S;
 this.INTERACT_KEY = Key.X;
-        walkSpeed = 4.0f;
+        walkSpeed = 5.0f;
     }
     
 

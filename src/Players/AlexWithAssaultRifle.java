@@ -16,7 +16,7 @@ public class AlexWithAssaultRifle extends Player {
 
     public AlexWithAssaultRifle(float x, float y) {
         super(new SpriteSheet(ImageLoader.load("AlexWithAAssaultRifle.png"), 24, 24), x, y, "STAND_RIGHT");
-        walkSpeed = 4.0f;
+        walkSpeed = 5.0f;
     }
     
 
