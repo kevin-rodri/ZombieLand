@@ -94,7 +94,11 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	Random randomize = new Random();
 	protected Stopwatch stopwatch = new Stopwatch();
 	Boolean clearedForLines = true;
-
+	public static int numberOfWeaponsPicked;
+	public static int j = 0;
+	public static int k = 0;
+	public static int l = 0;
+	
 	int m = 1;
 	int z = 10;
 	int sz = 10;
@@ -437,6 +441,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				if (weapons.check) {
 //					AssaultRifle.check = false;
 //					MachineGun.check = false;
+					if(j == 0) {
+						numberOfWeaponsPicked++;
+						j++;
+					}
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
 					TimerPlayerOnePistol.isTimeUp();
@@ -467,6 +475,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 				}
 				if (AssaultRifle.check) {
+					if(k == 0) {
+						numberOfWeaponsPicked++;
+						k++;
+					}
 					weapons.check = false;
 					MachineGun.check = false;
 
@@ -499,6 +511,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 
 				}
 				if (MachineGun.check) {
+					if(l == 0) {
+						numberOfWeaponsPicked++;
+						l++;
+					}
 					weapons.check = false;
 					AssaultRifle.check = false;
 					alexWithAMachineGun.update();

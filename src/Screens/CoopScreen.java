@@ -107,7 +107,12 @@ public class CoopScreen extends Screen implements SoundController {
 	public static int fullGameTime = 0;
 	public static int fullGameMin = 0;
 	public static boolean NoAmmo = PlayLevelScreen.noAmmo;
+	public static int numberOfWeaponsPicked;
+	public static int j = 0;
+	public static int k = 0;
+	public static int l = 0;
 
+	
 	int m = 1;
 	Timer t;
 	Timer xp;
@@ -464,6 +469,11 @@ public class CoopScreen extends Screen implements SoundController {
 
 
 				if (weapons.second) {
+					if(j == 0) {
+						numberOfWeaponsPicked++;
+						j++;
+					}
+					
 					alexTwoWithPistol.update();
 					map.update2(alexTwoWithPistol);
 					updating2 = alexTwoWithPistol;
@@ -498,6 +508,10 @@ public class CoopScreen extends Screen implements SoundController {
 
 
 				if (weapons.check) {
+					if(j == 0) {
+						numberOfWeaponsPicked++;
+						j++;
+					}
 					alexWithAPistol.update();
 					map.update(alexWithAPistol);
 					TimerPlayerOnePistol.isTimeUp();
@@ -532,6 +546,10 @@ public class CoopScreen extends Screen implements SoundController {
 				}
 
 				if (AssaultRifle.check) {
+					if(k == 0) {
+						numberOfWeaponsPicked++;
+						k++;
+					}
 					AssaultRifle.second = true;
 					weapons.check = false;
 					weapons.second = false;
@@ -570,6 +588,10 @@ public class CoopScreen extends Screen implements SoundController {
 				}
 
 				if (AssaultRifle.second) {
+					if(k == 0) {
+						numberOfWeaponsPicked++;
+						k++;
+					}
 					AssaultRifle.check = true;
 					weapons.check = false;
 					weapons.second = false;
@@ -606,6 +628,10 @@ public class CoopScreen extends Screen implements SoundController {
 				}
 
 				if (MachineGun.check) {
+					if(l == 0) {
+						numberOfWeaponsPicked++;
+						l++;
+					}
 					System.out.println("Yes it is updating");
 					MachineGun.second = true;
 					weapons.check = false;
@@ -643,6 +669,10 @@ public class CoopScreen extends Screen implements SoundController {
 				}
 
 				if (MachineGun.second) {
+					if(l == 0) {
+						numberOfWeaponsPicked++;
+						l++;
+					}
 					MachineGun.check = true;
 					weapons.check = false;
 					weapons.second = false;
