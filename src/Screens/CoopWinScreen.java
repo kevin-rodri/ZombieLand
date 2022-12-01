@@ -16,7 +16,7 @@ public class CoopWinScreen {
 	protected SpriteFont shots;
 	protected SpriteFont kills;
 	protected SpriteFont numberOfWaves;
-	protected SpriteFont timeSurvived;
+	//protected SpriteFont timeSurvived;
 	protected KeyLocker keyLocker = new KeyLocker();
 	protected CoopScreen coopScreen;
 	protected final int waves = CoopScreen.numberOfWaves++;
@@ -59,7 +59,7 @@ public class CoopWinScreen {
 		instructions.draw(graphicsHandler);
 		shots.draw(graphicsHandler);
 		kills.draw(graphicsHandler);
-		timeSurvived.draw(graphicsHandler);
+		//timeSurvived.draw(graphicsHandler);
 		numberOfWaves.draw(graphicsHandler);
 
 	}
