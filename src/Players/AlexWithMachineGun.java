@@ -1,7 +1,7 @@
 package Players;
 
 import Level.Player;
-
+import Scripts.TestMap.SoundController;
 import Builders.FrameBuilder;
 
 import Engine.GraphicsHandler;
@@ -23,6 +23,8 @@ public class AlexWithMachineGun extends Player {
 
     public void update() {
         super.update();
+       
+        
     }
 
     public void draw(GraphicsHandler graphicsHandler) {

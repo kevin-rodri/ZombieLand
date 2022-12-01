@@ -14,7 +14,7 @@ import java.awt.*;
 import java.io.IOException;
 
 // This is the class for the main menu screen
-public class MenuScreen extends Screen {
+public class MenuScreen extends Screen implements SoundController{
     protected ScreenCoordinator screenCoordinator;
     protected int currentMenuItemHovered = 0; // current menu item being "hovered" over
     protected int menuItemSelected = -1;
@@ -121,10 +121,12 @@ public class MenuScreen extends Screen {
             if (menuItemSelected == 0) 
             {
                 screenCoordinator.setGameState(GameState.LEVEL);
+                playSE(20);
             } 
             else if(menuItemSelected == 1)
             {
             	screenCoordinator.setGameState(GameState.COOP);
+                playSE(30);
             }
             else if (menuItemSelected == 2) {
                 screenCoordinator.setGameState(GameState.CREDITS);
