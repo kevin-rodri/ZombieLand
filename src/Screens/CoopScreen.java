@@ -470,7 +470,7 @@ public class CoopScreen extends Screen implements SoundController {
 					TimerPlayerTwoPistol.isTimeUp();
 
 					if (TimerPlayerTwoPistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -503,7 +503,7 @@ public class CoopScreen extends Screen implements SoundController {
 					TimerPlayerOnePistol.isTimeUp();
 
 					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -543,7 +543,7 @@ public class CoopScreen extends Screen implements SoundController {
 
 					TimerPlayerOneAssaultRifle.isTimeUp();
 					if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -579,7 +579,7 @@ public class CoopScreen extends Screen implements SoundController {
 					map.update2(alexTwoWithAssaultRifle);
 					TimerPlayerTwoAssaultRifle.isTimeUp();
 					if (TimerPlayerTwoAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -616,7 +616,7 @@ public class CoopScreen extends Screen implements SoundController {
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
 					if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -652,7 +652,7 @@ public class CoopScreen extends Screen implements SoundController {
 					map.update2(alexTwoWithMachineGun);
 					TimerPlayerTwoMachineGun.isTimeUp();
 					if (TimerPlayerTwoMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+							&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
