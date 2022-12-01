@@ -374,6 +374,7 @@ public class CoopScreen extends Screen implements SoundController {
 					LightAmmo.ammoClip = 120;
 					// ammoCount.setText("NO AMMO");
 				}
+				
 				if (Nuke.usedNuke == true) {
 					map.getEnemies().removeAll(map.getEnemies());
 					Nuke.usedNuke = false;
