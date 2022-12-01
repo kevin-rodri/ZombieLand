@@ -75,6 +75,7 @@ public class CoopScreen extends Screen implements SoundController {
 	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
 	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
 	private final Key pauseKey = Key.P;
+	private final Key muteKey = Key.M;
 	protected Key movingForPlayer2W = Key.W; // shooting key for second
 	protected Key movingForPlayer2A = Key.A;
 	protected Key movingForPlayer2S = Key.S;
@@ -694,7 +695,11 @@ public class CoopScreen extends Screen implements SoundController {
 		}
 
 		// if flag is set at any point during gameplay, game is "won"
+		if (Keyboard.isKeyDown(muteKey)) {
+			stopMuisc();
+			System.out.println("m pressed");
 
+		}
 	}
 
 	public void playAlexVoiceLines() {
@@ -728,6 +733,7 @@ public class CoopScreen extends Screen implements SoundController {
 		}
 
 	}
+
 	public void playFalexVoiceLines() {
 
 		if (clearedForLines.equals(true)) {
@@ -739,7 +745,7 @@ public class CoopScreen extends Screen implements SoundController {
 				playSE(32);
 			} else if (randomVoiceLine > 10 && randomVoiceLine < 20) {
 				playSE(33);
-			
+
 			}
 		}
 	}

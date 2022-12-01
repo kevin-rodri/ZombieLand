@@ -7,6 +7,7 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 
 public class SoundFX {
@@ -54,9 +55,15 @@ public class SoundFX {
         soundeffects[22] = ".//Resources/sounds/a-i-eat-zombies-for-breakfast.wav";
         soundeffects[23] = ".//Resources/sounds/a-show-me-the-money_EXCITED.wav";
         soundeffects[24] = ".//Resources/sounds/a-is-that-all-youve-got_SERIOUSLY.wav";
+        soundeffects[25] = ".//Resources/sounds/a-a-for-annihilated.wav";
         // Phalex voice lines
         soundeffects[30] = ".//Resources/sounds/f-meet-your-maker.wav";
+        soundeffects[31] = ".//Resources/sounds/f-reloading.wav";
+        soundeffects[32] = ".//Resources/sounds/f-lets-make-it-rain.wav";
+        soundeffects[33] = ".//Resources/sounds/f-bubblegum.wav";
+        soundeffects[34] = ".//Resources/sounds/f-papas-got-a-new-toy.wav";
     }
+
 
     public String[] getSoundEffects() {
         return soundeffects;
@@ -96,6 +103,7 @@ public class SoundFX {
     }
 
     public void stop() {
+       
         clip.stop();
 
     }
