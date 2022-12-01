@@ -10,3 +10,5 @@ classes/
 out/
 TestResources/
 _site
+Resources/record.txt
+Resources/recordMin.txt
