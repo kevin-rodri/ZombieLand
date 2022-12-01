@@ -19,7 +19,7 @@ import java.util.HashMap;
  * The following code is a zombie class and will be one of the zombies that are apart of the game 
  * Code is from the SER-225 platformer game 
  */
-public class Zombie extends Enemy{
+public class SmallZombie extends Enemy{
 
 	private float zombieSpeed = 1.5f;
 	private Direction startFacingDirection;
@@ -28,7 +28,7 @@ public class Zombie extends Enemy{
 	public static boolean check = true;
 
 
-	public Zombie(Point location, Direction facingDirection) {
+	public SmallZombie(Point location, Direction facingDirection) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 24, 24), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
 		this.initialize();
