@@ -87,7 +87,7 @@ public class SmallZombie extends Enemy {
     if (player.intersects(this) && player.getPlayerState() == PlayerState.WALKING){
             this.setIsHidden(true);
             HealthSystem.zombieTouchPlayer();
-            MoneyBase.addMoneyMini();
+            //MoneyBase.addMoneyMini();
             if(HealthSystem.healthCount <= 0){
 
                 //System.out.println("Game Over!");
