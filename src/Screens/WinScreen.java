@@ -42,11 +42,12 @@ public class WinScreen extends Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         winMessage = new SpriteFont("Game Over!", 650, 270, "Comic Sans", 30, Color.white);
         shots = new SpriteFont("Shots Fired: " + PlayLevelScreen.numberShotsFired, 600, 400, "Comic Sans", 30, Color.white);
         kills = new SpriteFont("Number Of Kills: " + Shooting.numberOfKills, 600, 500, "Comic Sans", 30, Color.white);
         numberOfWaves = new SpriteFont("Number Of Waves: " + PlayLevelScreen.numberOfWaves, 600, 600, "Comic Sans", 30, Color.white);
-        timeSurvived = new SpriteFont("Time Survived: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " Seconds ", 600, 700, "Comic Sans", 30, Color.white);
+        //timeSurvived = new SpriteFont("Time Survived: " + CreateFile.recordValue + " Minutes " + CreateFile.recordMinStr + " Seconds ", 600, 700, "Comic Sans", 30, Color.white);
         instructions = new SpriteFont("Press Escape to close the game ", 600, 300,"Comic Sans", 20, Color.white);
         keyLocker.unlockKey(Key.SPACE);
         keyLocker.unlockKey(Key.ESC);
@@ -72,7 +73,7 @@ public class WinScreen extends Screen {
         instructions.draw(graphicsHandler);
         shots.draw(graphicsHandler);
         kills.draw(graphicsHandler);
-        timeSurvived.draw(graphicsHandler);
+        //timeSurvived.draw(graphicsHandler);
         numberOfWaves.draw(graphicsHandler);
 
     }
