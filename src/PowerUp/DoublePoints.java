@@ -16,10 +16,13 @@ import Screens.PlayLevelScreen;
 import com.sun.jdi.event.MonitorWaitedEvent;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // This class is for DoublePoints
 public class DoublePoints extends NPC implements SoundController {
     protected int counter = 0;
+    private Timer timer = new Timer();
     public DoublePoints(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("doublepoints.png"), 50, 43), "STAND_RIGHT");
     }
@@ -28,18 +31,15 @@ public class DoublePoints extends NPC implements SoundController {
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             this.setIsHidden(true);
             MoneyBase.addMoneyX2();
+            playSE(18);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    
+                }
+            }, 1000);
+            
 
-
-            try {
-                playSE(1);
-       
-             } catch(Exception e) {
-                System.out.println("toString(): " + e.toString());
-                System.out.println("getMessage(): " + e.getMessage());
-                System.out.println("StackTrace: ");
-                e.printStackTrace();
-             }
-         
              if(PlayLevelScreen.x2End == true){
                 this.setIsHidden(true);
     

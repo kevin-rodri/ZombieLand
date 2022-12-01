@@ -4,14 +4,17 @@ import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import GameObject.GameObject;
 import GameObject.Rectangle;
+import Scripts.TestMap.SoundController;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 // This class represents a Map's "Camera", aka a piece of the map that is currently included in a level's update/draw logic based on what should be shown on screen.
 // A majority of its job is just determining which map tiles, enemies, npcs, and enhanced map tiles are "active" each frame (active = included in update/draw cycle)
-public class Camera extends Rectangle {
-
+public class Camera extends Rectangle implements SoundController {
+    int randomVoiceLine = 0;
+    Random random = new Random();
 	// the current map this camera is attached to
 	private Map map;
 
@@ -162,6 +165,7 @@ public class Camera extends Rectangle {
 				enemy.setMapEntityStatus(MapEntityStatus.INACTIVE);
 			} else if (enemy.getMapEntityStatus() == MapEntityStatus.REMOVED) {
 				map.getEnemies().remove(i);
+			
 			}
 		}
 		return activeEnemies;
