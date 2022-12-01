@@ -89,6 +89,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 	protected int x2counter = 0;
 	public static boolean noAmmo = false;
 	public static boolean x2End = false;
+	public static boolean gameEnd = false;
 
 	int m = 1;
 	int z = 10;
@@ -129,8 +130,12 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			public void actionPerformed(ActionEvent e) {
 				if(flagManager.isFlagSet("hasDied")){
 
+
 					fuGame.stop();
 
+				}
+				else if (gameEnd == true){
+					fuGame.stop();
 				}
 				if(fullGameTime>59){
 					fullGameTime = 0;
@@ -146,6 +151,9 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(flagManager.isFlagSet("hasDied")){
+					fuGameMin.stop();
+				}
+				else if (gameEnd == true){
 					fuGameMin.stop();
 				}
 
@@ -346,9 +354,12 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 				}
 
 				if (HealthSystem.healthCount <= 0) {
+
 					flagManager.setFlag("hasDied");
+					//PlayLevelScreen.gameEnd == true;
 					HealthSystem.setMaxHealth();
 				}
+
 
 				healthBar.setText("" + HealthSystem.healthCount);
 				money.setText("$" + MoneyBase.moneyCount);
@@ -558,6 +569,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 
 				break;
 			case LEVEL_COMPLETED:
+
 
 				try {
 					CreateFile.record();
