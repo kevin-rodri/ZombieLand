@@ -576,13 +576,10 @@ public class PlayLevelScreen extends Screen implements SoundController {
 				}
 				if (MachineGun.check) {
 					map.draw(alexWithAMachineGun, graphicsHandler);
-
-					// playSE(21);
-				} else if (AssaultRifle.check) {
-
 					weapons.check = false;
 					AssaultRifle.check = false;
-				}
+					// playSE(21);
+				} 
 				if (AssaultRifle.check) {
 
 					map.draw(alexWithARifle, graphicsHandler);
