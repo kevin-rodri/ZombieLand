@@ -339,6 +339,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					noAmmo = true;
 				} else {
 					if (noAmmo == true) {
+						ammoCount.setText("0" + "/" + "0");
 					} else {
 						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 					}
@@ -419,7 +420,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.update(alexWithAPistol);
 					TimerPlayerOnePistol.isTimeUp();
 					if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -448,7 +449,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.update(alexWithARifle);
 					TimerPlayerOneAssaultRifle.isTimeUp();
 					if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne ) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;
@@ -477,7 +478,7 @@ public class PlayLevelScreen extends Screen  implements SoundController {
 					map.update(alexWithAMachineGun);
 					TimerPlayerOneMachineGun.isTimeUp();
 					if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-							&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+							&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && noAmmo == false) {
 						float fireballX;
 						float movementSpeed;
 						LightAmmo.ammoCount -= 1;

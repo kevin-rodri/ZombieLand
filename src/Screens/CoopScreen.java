@@ -101,6 +101,7 @@ public class CoopScreen extends Screen {
 	private boolean playerTwoIntersectsPistol = false;
 	public static int fullGameTime = 0;
 	public static int fullGameMin = 0;
+	public static boolean NoAmmo = PlayLevelScreen.noAmmo;
 
 	int m = 1;
 	Timer t;
@@ -249,6 +250,8 @@ public class CoopScreen extends Screen {
 		money.setOutlineColor(Color.black);
 		money.setOutlineThickness(5);
 		time();
+		gameMin();
+		gameTime();
 		healthBar.setOutlineColor(Color.black);
 		healthBar.setOutlineThickness(5);
 		Point HealthHUD = new Point(600, 10);
@@ -352,16 +355,11 @@ public class CoopScreen extends Screen {
 		// if level is "running" update player and map to keep game logic for the
 		// platformer level going
 		case RUNNING:
-			if (LightAmmo.ammoCount <= 0) {
+			if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip > 0) {
 				LightAmmo.ammoClip -= 30;
 				LightAmmo.ammoCount += 30;
 			}
-			if (LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <= 0) {
-				// For now setting it back to max but should be set to 0 and say no AMMO
-				LightAmmo.ammoCount = 30;
-				LightAmmo.ammoClip = 120;
-				// ammoCount.setText("NO AMMO");
-			}
+
 			if (Nuke.usedNuke == true) {
 				map.getEnemies().removeAll(map.getEnemies());
 				Nuke.usedNuke = false;
@@ -458,7 +456,7 @@ public class CoopScreen extends Screen {
 				TimerPlayerTwoPistol.isTimeUp();
 
 				if (TimerPlayerTwoPistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
@@ -489,7 +487,7 @@ public class CoopScreen extends Screen {
 				TimerPlayerOnePistol.isTimeUp();
 
 				if (TimerPlayerOnePistol.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
@@ -521,7 +519,7 @@ public class CoopScreen extends Screen {
 
 				TimerPlayerOneAssaultRifle.isTimeUp();
 				if (TimerPlayerOneAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
@@ -551,7 +549,7 @@ public class CoopScreen extends Screen {
 				map.update2(alexTwoWithAssaultRifle);
 				TimerPlayerTwoAssaultRifle.isTimeUp();
 				if (TimerPlayerTwoAssaultRifle.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
@@ -582,7 +580,7 @@ public class CoopScreen extends Screen {
 				map.update(alexWithAMachineGun);
 				TimerPlayerOneMachineGun.isTimeUp();
 				if (TimerPlayerOneMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyForPlayerOne)
-						&& Keyboard.isKeyDown(shootingKeyForPlayerOne)) {
+						&& Keyboard.isKeyDown(shootingKeyForPlayerOne) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
@@ -611,7 +609,7 @@ public class CoopScreen extends Screen {
 				map.update2(alexTwoWithMachineGun);
 				TimerPlayerTwoMachineGun.isTimeUp();
 				if (TimerPlayerTwoMachineGun.isTimeUp() && !keyLocker.isKeyLocked(shootingKeyforPlayerTwo)
-						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo)) {
+						&& Keyboard.isKeyDown(shootingKeyforPlayerTwo) && PlayLevelScreen.noAmmo == false) {
 					float fireballX;
 					float movementSpeed;
 					LightAmmo.ammoCount -= 1;
