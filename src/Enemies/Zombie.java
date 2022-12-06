@@ -32,7 +32,7 @@ public class Zombie extends Enemy implements SoundController{
 
 
 	public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 24, 24), "WALK_RIGHT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("thumbnail_Zombie.png"), 46, 61), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
@@ -169,14 +169,14 @@ public class Zombie extends Enemy implements SoundController{
        return new HashMap<String, Frame[]>() {{
         put("STAND_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(0, 0))
-                    .withScale(3)
+                    .withScale(1)
                     .withBounds(6, 12, 12, 7)
                     .build()
     });
 
     put("STAND_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(0, 0))
-                    .withScale(3)
+                    .withScale(1)
                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .withBounds(6, 12, 12, 7)
                     .build()
@@ -184,41 +184,50 @@ public class Zombie extends Enemy implements SoundController{
 
     put("WALK_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
-                    .withScale(3)
+                    .withScale(1)
+                    .withBounds(6, 12, 12, 7)
+                    .build(),
+            new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
+                    .withScale(1)
                     .withBounds(6, 12, 12, 7)
                     .build()
     });
 
     put("WALK_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
-                    .withScale(3)
+                    .withScale(1)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .withBounds(6, 12, 12, 7)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
-                    .withScale(3)
+                    .withScale(1)
+                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                    .withBounds(6, 12, 12, 7)
+                    .build(),
+            new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
+                    .withScale(1)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                     .withBounds(6, 12, 12, 7)
                     .build()
