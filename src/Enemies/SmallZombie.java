@@ -167,7 +167,7 @@ public class SmallZombie extends Enemy{
         put("STAND_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(0, 0))
                     .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(10, 25, 28, 28)
                     .build()
     });
 
@@ -175,26 +175,26 @@ public class SmallZombie extends Enemy{
             new FrameBuilder(spriteSheet.getSprite(0, 0))
                     .withScale(1)
                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                   .withBounds(10, 25, 28, 28)
                     .build()
     });
 
     put("WALK_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
                     .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(10, 25, 28, 28)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
                     .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(10, 25, 28, 28)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
                     .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(10, 25, 28, 28)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
                     .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(10, 25, 28, 28)
                     .build()
     });
 
