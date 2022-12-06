@@ -33,6 +33,7 @@ public class Zombie extends Enemy implements SoundController{
 
 	public Zombie(Point location, Direction facingDirection) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("NewZombie.png"), 46, 61), "WALK_RIGHT");
+
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
@@ -163,7 +164,7 @@ public class Zombie extends Enemy implements SoundController{
     	 super.update();
     }
 
-    @Override
+   @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
        // hopefully will do after my issue with magenta
        return new HashMap<String, Frame[]>() {{
