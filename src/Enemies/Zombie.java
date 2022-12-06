@@ -32,7 +32,8 @@ public class Zombie extends Enemy implements SoundController{
 
 
 	public Zombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("thumbnail_Zombie.png"), 46, 61), "WALK_RIGHT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("NewZombie.png"), 46, 61), "WALK_RIGHT");
+
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
@@ -163,73 +164,64 @@ public class Zombie extends Enemy implements SoundController{
     	 super.update();
     }
 
-    @Override
+   @Override
     public HashMap<String, Frame[]> loadAnimations(SpriteSheet spriteSheet) {
        // hopefully will do after my issue with magenta
        return new HashMap<String, Frame[]>() {{
         put("STAND_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(0, 0))
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withScale(1.5f)
+                    .withBounds(11, 6, 26, 55)
                     .build()
     });
 
     put("STAND_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(0, 0))
-                    .withScale(1)
+                    .withScale(1.5f)
                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                   .withBounds(11, 6, 26, 55)
                     .build()
     });
 
     put("WALK_RIGHT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withScale(1.5f)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withScale(1.5f)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withScale(1.5f)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
-                    .build(),
-            new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
-                    .withScale(1)
-                    .withBounds(6, 12, 12, 7)
+                    .withScale(1.5f)
+                    .withBounds(11, 6, 26, 55)
                     .build()
     });
 
     put("WALK_LEFT", new Frame[] {
             new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                    .withScale(1)
+                    .withScale(1.5f)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-                    .withScale(1)
+                    .withScale(1.5f)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
-                    .withScale(1)
+                    .withScale(1.5f)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(11, 6, 26, 55)
                     .build(),
             new FrameBuilder(spriteSheet.getSprite(1, 3), 200)
-                    .withScale(1)
+                    .withScale(1.5f)
                     .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
-                    .build(),
-            new FrameBuilder(spriteSheet.getSprite(1, 4), 200)
-                    .withScale(1)
-                    .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                    .withBounds(6, 12, 12, 7)
+                    .withBounds(11, 6, 26, 55)
                     .build()
     });
 }};
