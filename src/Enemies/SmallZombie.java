@@ -29,7 +29,7 @@ public class SmallZombie extends Enemy{
 
 
 	public SmallZombie(Point location, Direction facingDirection) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("NewSmallZombie.png"), 49, 41), "WALK_RIGHT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("NewSmallZombie.png"), 49, 42), "WALK_RIGHT");
         this.startFacingDirection = facingDirection;
 		this.initialize();
 	}
