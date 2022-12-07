@@ -368,19 +368,13 @@ public class CoopScreen extends Screen implements SoundController {
 			// if level is "running" update player and map to keep game logic for the
 			// platformer level going
 			case RUNNING:
-				if (LightAmmo.ammoCount <= 0) {
+				if (LightAmmo.ammoCount == 0 && LightAmmo.ammoClip > 0) {
 					LightAmmo.ammoClip -= 30;
 					LightAmmo.ammoCount += 30;
 					// Alex reload voice line
 					playSE(14);
 					// Weapon reload FX
 					playSE(16);
-				}
-				if (LightAmmo.ammoClip <= 0 && LightAmmo.ammoCount <= 0) {
-					// For now setting it back to max but should be set to 0 and say no AMMO
-					LightAmmo.ammoCount = 30;
-					LightAmmo.ammoClip = 120;
-					// ammoCount.setText("NO AMMO");
 				}
 				
 				if (Nuke.usedNuke == true) {
@@ -392,6 +386,7 @@ public class CoopScreen extends Screen implements SoundController {
 					PlayLevelScreen.noAmmo = true;
 				} else {
 					if (PlayLevelScreen.noAmmo == true) {
+						ammoCount.setText("0" + "/" + "0");
 					} else {
 						ammoCount.setText(LightAmmo.ammoCount + "/" + LightAmmo.ammoClip);
 					}
