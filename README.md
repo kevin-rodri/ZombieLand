@@ -19,9 +19,9 @@ It can be accessed at [https://a-r-t.github.io/SER-225-Game-RPG/](https://a-r-t.
 Changes to content in the `docs` folder will not show up on the website unless they are pushed to the `master` branch.
 
 ## Credits
-**Alex Thimineur**: Programmed the game, made the art.
+**Alex Thimineur**: Programmed the game engine.
 
-**Kevin Rodriguez, Harsh Gandhi, Brian Wanamaker, Aaryan Kapoor, Matt Nova**: Modified game
+**Kevin Rodriguez, Harsh Gandhi, Brian Wanamaker, Aaryan Kapoor, Matt Nova**: Developed the game
 
 
 
