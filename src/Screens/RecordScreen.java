@@ -58,7 +58,6 @@ class CreateFile
                 fr.read(chars);
 
                 String fileContent = new String(chars);
-                System.out.println(fileContent);
                 recordMinStr = fileContent;
             }
 
@@ -78,7 +77,6 @@ class CreateFile
             frm.read(charsm);
 
             String fileContent = new String(charsm);
-            System.out.println(fileContent);
             recordValue = fileContent;
         }
 

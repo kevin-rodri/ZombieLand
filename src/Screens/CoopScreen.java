@@ -627,7 +627,6 @@ public class CoopScreen extends Screen implements SoundController {
 						numberOfWeaponsPicked++;
 						l++;
 					}
-					System.out.println("Yes it is updating");
 					MachineGun.second = true;
 					weapons.check = false;
 					weapons.second = false;
@@ -715,7 +714,6 @@ public class CoopScreen extends Screen implements SoundController {
 		}
 
 		if (map.getFlagManager().isFlagSet("hasDied")) {
-			System.out.println("True");
 			System.exit(0);
 			playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
 		}
@@ -723,7 +721,6 @@ public class CoopScreen extends Screen implements SoundController {
 		// if flag is set at any point during gameplay, game is "won"
 		if (Keyboard.isKeyDown(muteKey)) {
 			stopMuisc();
-			System.out.println("m pressed");
 
 		}
 	}
@@ -809,7 +806,6 @@ public class CoopScreen extends Screen implements SoundController {
 				}
 				if (AssaultRifle.check) {
 					// map.draw(alexWithARifle, coOp, graphicsHandler);
-					System.out.println("Yes it is updating11111");
 					map.draw3(alexWithARifle, alexTwoWithAssaultRifle, graphicsHandler, 1);
 					AssaultRifle.second = true;
 					weapons.check = false;
@@ -881,7 +877,6 @@ public class CoopScreen extends Screen implements SoundController {
 					AssaultRifle.second = false;
 				}
 				if (AssaultRifle.second) {
-					System.out.println("Yes it is updating bruh");
 					map.draw3(alexTwoWithAssaultRifle, alexWithARifle, graphicsHandler, 2);
 					AssaultRifle.check = true;
 					weapons.check = false;
