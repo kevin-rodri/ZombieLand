@@ -844,8 +844,6 @@ public class CoopScreen extends Screen implements SoundController {
 				ammoCount.draw(graphicsHandler);
 				graphicsHandler.setGraphics(tempG);
 				graphicsHandler.drawImage(subImage, 0, 0);
-				graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH / 2, 0, 25, 1000,
-						new Color(40, 40, 40), new Color(40, 40, 40), 30);
 				break;
 			case LEVEL_COMPLETED:
 
@@ -918,6 +916,8 @@ public class CoopScreen extends Screen implements SoundController {
 				healthBar.draw(graphicsHandler);
 				ammoCount.draw(graphicsHandler);
 				graphicsHandler.setGraphics(tempG2);
+				graphicsHandler.drawFilledRectangleWithBorder(Config.GAME_WINDOW_WIDTH / 2, 0, 25, 1000,
+						new Color(40, 40, 40), new Color(40, 40, 40), 30);
 				graphicsHandler.drawImage(subImage2, Config.GAME_WINDOW_WIDTH / 2, 0);
 				break;
 			case LEVEL_COMPLETED:
