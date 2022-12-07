@@ -73,8 +73,8 @@ public class PlayLevelScreen extends Screen implements SoundController {
 	private SpriteFont gameOver;
 	public static int numberShotsFired = 0;
 	public static int numberOfWaves = 0;
-	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
-	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
+	protected Key shootingKeyforPlayerTwo = Key.ENTER; // shooting key for second
+	protected Key shootingKeyForPlayerOne = Key.F; // shooting key for first
 	private final Key pauseKey = Key.P;
 	private boolean isGamePaused = false;
 	protected KeyLocker keyLocker = new KeyLocker();

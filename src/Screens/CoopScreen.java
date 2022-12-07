@@ -72,8 +72,8 @@ public class CoopScreen extends Screen implements SoundController {
 	protected FlagManager flagManager;
 	protected Lives health;
 	private SpriteFont pauseLabel;
-	protected Key shootingKeyforPlayerTwo = Key.F; // shooting key for second
-	protected Key shootingKeyForPlayerOne = Key.K; // shooting key for first
+	protected Key shootingKeyforPlayerTwo = Key.ENTER; // shooting key for second
+	protected Key shootingKeyForPlayerOne = Key.F; // shooting key for first
 	private final Key pauseKey = Key.P;
 	private final Key muteKey = Key.M;
 	protected Key movingForPlayer2W = Key.W; // shooting key for second
