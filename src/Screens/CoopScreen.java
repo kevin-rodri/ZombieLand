@@ -442,6 +442,20 @@ public class CoopScreen extends Screen implements SoundController {
 				machineGun.setIsHidden(true);
 				map.addNPC(machineGun);
 
+				// Will check to see if the AmmoSmith script is running
+				if (AmmoScript.ammoScriptRunning == true) {
+					if (Keyboard.isKeyDown(Key.ONE) && MoneyBase.moneyCount >= 100) {
+						MoneyBase.buy30Rounds();
+						LightAmmo.ammoClip += 30;
+					} else if (Keyboard.isKeyDown(Key.TWO) && MoneyBase.moneyCount >= 150) {
+						MoneyBase.buy60Rounds();
+						LightAmmo.ammoClip += 60;
+					} else if (Keyboard.isKeyDown(Key.THREE) && MoneyBase.moneyCount >= 200) {
+						MoneyBase.buy120Rounds();
+						LightAmmo.ammoClip += 120;
+					}
+				}
+
 				// Will check to see if the GunSmith script is running
 				if (GunsmithScript.runningGUNSMITH == true) {
 					// Case One: A pistol will appear on the map
