@@ -7,7 +7,7 @@ public class HealthSystem {
         healthCount -= 5;
     }
     public static void setMaxHealth(){
-        healthCount = 100;
+        healthCount += 50;
     }
 
 }
